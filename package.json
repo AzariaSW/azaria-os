@@ -1,0 +1,24 @@
+{
+  "name": "azaria-os",
+  "version": "1.0.0",
+  "description": "AzariaOS - Backend focused developer portfolio",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "install:all": "npm install --workspaces",
+    "build": "npm run build --workspaces"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "keywords": [
+    "portfolio",
+    "backend",
+    "express",
+    "react",
+    "postgresql"
+  ],
+  "author": "Azaria Abenet",
+  "license": "MIT"
+}
