@@ -11,7 +11,7 @@ datasource db {
 
 model Profile {
 
-  id String @id @default(uuid())
+  id String @id
 
   fullName String
 
@@ -46,7 +46,7 @@ model Skill {
   id String @id @default(uuid())
 
 
-  name String
+  name String @unique
 
   category String
 
@@ -70,7 +70,7 @@ model Project {
   id String @id @default(uuid())
 
 
-  title String
+  title String @unique
 
   description String
 
@@ -105,6 +105,7 @@ model Experience {
 
   role String
 
+  @@unique([company, role])
 
   description String
 
@@ -131,6 +132,7 @@ model Education {
 
   degree String
 
+  @@unique([institution, degree])
 
   field String?
 
@@ -158,6 +160,7 @@ model Certificate {
 
   issuer String
 
+  @@unique([name, issuer])
 
   issueDate DateTime
 
