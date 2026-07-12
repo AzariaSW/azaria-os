@@ -1,20 +1,58 @@
-export function health(req,res){
+import prisma from "../prisma/client.js";
 
-    res.json({
 
-        status:"healthy",
+export async function healthCheck(req,res){
 
-        service:"AzariaOS API",
 
-        timestamp:
-        new Date(),
+    const startTime = Date.now();
 
-        uptime:
-        process.uptime(),
 
-        environment:
-        process.env.NODE_ENV
+    try{
 
-    });
+
+        await prisma.$queryRaw`SELECT 1`;
+
+
+        res.status(200).json({
+
+            success:true,
+
+            data:{
+
+                status:"healthy",
+
+                database:"connected",
+
+                uptime:
+                process.uptime(),
+
+                responseTime:
+                `${Date.now()-startTime}ms`
+
+            }
+
+        });
+
+
+    }
+    catch(error){
+
+
+        res.status(503).json({
+
+            success:false,
+
+            data:{
+
+                status:"unhealthy",
+
+                database:"disconnected"
+
+            }
+
+        });
+
+
+    }
 
 }
