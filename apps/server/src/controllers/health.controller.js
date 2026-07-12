@@ -1,58 +1,25 @@
 import prisma from "../prisma/client.js";
 
+import ApiResponse from "../utils/ApiResponse.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
-export async function healthCheck(req,res){
-
-
+export const healthCheck =
+asyncHandler(async(req,res)=>{
     const startTime = Date.now();
 
+    await prisma.$queryRaw`SELECT 1`;
 
-    try{
-
-
-        await prisma.$queryRaw`SELECT 1`;
-
-
-        res.status(200).json({
-
-            success:true,
-
-            data:{
-
-                status:"healthy",
-
-                database:"connected",
-
-                uptime:
-                process.uptime(),
-
-                responseTime:
-                `${Date.now()-startTime}ms`
-
-            }
-
-        });
-
-
-    }
-    catch(error){
-
-
-        res.status(503).json({
-
-            success:false,
-
-            data:{
-
-                status:"unhealthy",
-
-                database:"disconnected"
-
-            }
-
-        });
-
-
-    }
-
-}
+    res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          status: "healthy",
+          database: "connected",
+          uptime: process.uptime(),
+          responseTime: `${Date.now() - startTime}ms`,
+        },
+        "Health check successful",
+      ),
+    );
+        
+});

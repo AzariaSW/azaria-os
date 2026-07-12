@@ -1,13 +1,6 @@
 import "dotenv/config";
-import helmet from "helmet";
-import cors from "cors";
-import compression from "compression";
 
-import express from "express";
-
-import requestId from "./middleware/requestId.js";
-import httpLogger from "./middleware/logger.js";
-import apiRoutes from "./routes/index.js";
+import app from "./app.js";
 
 import {
     connectDatabase,
@@ -16,31 +9,10 @@ import {
 from "./config/database.js";
 
 
-const app = express();
 
 
 const PORT =
 process.env.PORT || 5000;
-
-
-
-app.use(express.json());
-
-app.use(helmet());
-
-app.use(cors());
-
-app.use(compression());
-
-app.use(requestId);
-
-app.use(httpLogger);
-
-app.use(
-    "/api",
-    apiRoutes
-);
-
 
 
 async function startServer(){
@@ -64,11 +36,7 @@ async function startServer(){
 
 }
 
-
-
 startServer();
-
-
 
 
 process.on(

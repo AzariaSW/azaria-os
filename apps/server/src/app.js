@@ -1,4 +1,5 @@
 import express from "express";
+import compression from "compression";
 
 import {
     securityMiddleware,
@@ -8,11 +9,11 @@ from "./middleware/security.js";
 
 import requestId from "./middleware/requestId.js";
 
-import loggerMiddleware 
+import httpLogger 
 from "./middleware/logger.js";
 
-import healthRoutes 
-from "./routes/health.routes.js";
+import apiRoutes 
+from "./routes/index.js";
 
 import notFound 
 from "./middleware/notFound.js";
@@ -28,6 +29,9 @@ securityMiddleware.forEach(
     middleware => app.use(middleware)
 );
 
+app.use(
+    compression()
+);
 
 app.use(
     limiter
@@ -40,7 +44,7 @@ app.use(
 
 
 app.use(
-    loggerMiddleware
+    httpLogger
 );
 
 
@@ -51,8 +55,8 @@ app.use(
 
 
 app.use(
-    "/api/health",
-    healthRoutes
+    "/api",
+    apiRoutes
 );
 
 
@@ -65,7 +69,6 @@ app.use(
 app.use(
     errorHandler
 );
-
 
 
 export default app;
