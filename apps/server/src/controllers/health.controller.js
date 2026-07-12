@@ -1,4 +1,7 @@
-import prisma from "../prisma/client.js";
+import {
+    checkDatabase
+}
+from "../services/health.service.js";
 
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
@@ -7,7 +10,7 @@ export const healthCheck =
 asyncHandler(async(req,res)=>{
     const startTime = Date.now();
 
-    await prisma.$queryRaw`SELECT 1`;
+    await checkDatabase();
 
     res.status(200).json(
       new ApiResponse(
