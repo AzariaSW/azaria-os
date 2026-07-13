@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import healthRoutes from "../health.routes.js";
 import projectRoutes from "../project.routes.js";
+import profileRoutes from "../profile.routes.js";
 
 const router = Router();
 
@@ -13,6 +14,11 @@ router.use(
 router.use(
     "/projects",
     projectRoutes
+);
+
+router.use(
+    "/profile",
+    profileRoutes
 );
 
 export default router;
