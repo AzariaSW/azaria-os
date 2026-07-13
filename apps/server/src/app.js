@@ -24,6 +24,13 @@ from "./middleware/errorHandler.js";
 
 const app = express();
 
+app.set(
+    "trust proxy",1
+);
+
+app.disable(
+    "x-powered-by"
+);
 
 securityMiddleware.forEach(
     middleware => app.use(middleware)
@@ -49,10 +56,15 @@ app.use(
 
 
 app.use(
-    express.json()
+    express.json({
+        limit:"100kb"
+    })
 );
 
-
+app.use(express.urlencoded({
+    extended: true,
+    limit: "100kb"
+}));
 
 app.use(
     "/api",
