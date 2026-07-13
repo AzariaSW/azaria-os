@@ -1,14 +1,17 @@
 import { Router } from "express";
 
-import healthRoutes from "./health.routes.js";
+import { API } from "../constants/index.js";
+
+import v1Routes from "./v1/index.js";
 
 const router = Router();
 
-
 router.use(
-    "/health",
-    healthRoutes
-);
 
+    `/${API.VERSION}`,
+
+    v1Routes
+
+);
 
 export default router;
