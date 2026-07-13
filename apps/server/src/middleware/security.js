@@ -2,7 +2,7 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import env from "../config/env.js";
-import { CACHE } from "../constants/index.js";
+import Git from "../config/github.config.js";
 
 export const securityMiddleware = [
   helmet({
@@ -27,7 +27,7 @@ export const securityMiddleware = [
 ];
 
 export const limiter = rateLimit({
-  windowMs: CACHE.GITHUB,
+  windowMs: Git.cache.ttl,
 
   max: 100,
 

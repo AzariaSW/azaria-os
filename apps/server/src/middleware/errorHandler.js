@@ -1,5 +1,5 @@
 import logger from "../logger/logger.js";
-import {HTTP_STATUS} from "../constants/httpstatus.js";
+import {HTTP_STATUS} from "../constants/index.js";
 
 export default function errorHandler(err, req, res, next) {
   

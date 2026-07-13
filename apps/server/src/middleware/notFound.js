@@ -1,4 +1,4 @@
-import {HTTP_STATUS} from "../constants/httpStatus.js";
+import {HTTP_STATUS} from "../constants/index.js";
 
 export default function notFound(
     req,

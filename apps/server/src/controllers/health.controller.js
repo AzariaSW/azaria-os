@@ -1,5 +1,5 @@
 import {checkDatabase} from "../services/health.service.js";
-import {HTTP_STATUS} from "../constants/httpStatus.js";
+import {HTTP_STATUS} from "../constants/index.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
