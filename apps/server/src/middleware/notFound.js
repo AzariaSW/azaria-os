@@ -1,9 +1,11 @@
+import {HTTP_STATUS} from "../constants/httpStatus.js";
+
 export default function notFound(
     req,
     res
 ){
 
-    res.status(404)
+    res.status(HTTP_STATUS.NOT_FOUND)
     .json({
 
         success:false,

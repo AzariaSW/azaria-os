@@ -1,4 +1,5 @@
 import logger from "../logger/logger.js";
+import {HTTP_STATUS} from "../constants/httpstatus.js";
 
 export default function errorHandler(err, req, res, next) {
   
@@ -11,14 +12,14 @@ export default function errorHandler(err, req, res, next) {
 
     ip: req.ip,
 
-    statusCode: err.statusCode || err.status || 500,
+    statusCode: err.statusCode || err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR,
 
     message: err.message,
 
     stack: err.stack,
   });
 
-  const statusCode = err.statusCode || err.status || 500;
+  const statusCode = err.statusCode || err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR;
 
   const message = err.success === false ? err.message : "Internal Server Error";
 

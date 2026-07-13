@@ -1,4 +1,5 @@
 import ApiError from "../utils/ApiError.js";
+import {HTTP_STATUS} from "../constants/httpStatus.js";
 
 export default function validate(schema) {
   return (req, res, next) => {
@@ -13,7 +14,7 @@ export default function validate(schema) {
     if (!result.success) {
       return next(
         new ApiError(
-          400,
+          HTTP_STATUS.BAD_REQUEST,
 
           "Validation failed",
 

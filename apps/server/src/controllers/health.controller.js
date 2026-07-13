@@ -1,8 +1,5 @@
-import {
-    checkDatabase
-}
-from "../services/health.service.js";
-
+import {checkDatabase} from "../services/health.service.js";
+import {HTTP_STATUS} from "../constants/httpStatus.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
@@ -12,9 +9,9 @@ asyncHandler(async(req,res)=>{
 
     await checkDatabase();
 
-    res.status(200).json(
+    res.status(HTTP_STATUS.OK).json(
       new ApiResponse(
-        200,
+        HTTP_STATUS.OK,
         {
           status: "healthy",
           database: "connected",
