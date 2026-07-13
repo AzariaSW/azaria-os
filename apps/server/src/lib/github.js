@@ -22,7 +22,7 @@ export async function githubRequest(endpoint) {
 
   if (!response.ok) {
     throw new ApiError(
-      HTTP_STATUS.NOT_FOUND,
+      HTTP_STATUS.SERVICE_UNAVAILABLE,
       "GitHub service temporarily unavailable.",
     );
   }

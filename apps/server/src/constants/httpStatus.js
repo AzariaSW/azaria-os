@@ -20,4 +20,6 @@ export const HTTP_STATUS = Object.freeze({
   TOO_MANY_REQUESTS: 429,
 
   INTERNAL_SERVER_ERROR: 500,
+
+  SERVICE_UNAVAILABLE: 503
 });
