@@ -1,23 +1,29 @@
-const githubConfig = Object.freeze({
-  apiBaseUrl: "https://api.github.com",
+const GITHUB = Object.freeze({
+  API_URL: "https://api.github.com",
 
-  username: "AzariaSW",
+  USERNAME: "AzariaSW",
 
-  timeout: 10000,
+  USER_AGENT: "AzariaPortfolio",
 
-  cache: {
-    ttl: 15 * 60 * 1000,
+  TIMEOUT: 10000,
+
+  CACHE: {
+    TTL: 15 * 60 * 1000,
 
     PROJECTS: 5 * 60 * 1000,
 
     PROFILE: 60 * 60 * 1000,
 
-    keys: {
-      activity: "github:activity",
+    KEYS: {
+      ACTIVITY: "github:activity",
 
-      repositories: "github:repositories",
+      PROFILE: "github:profile",
+
+      REPOSITORIES: "github:repositories",
+
+      EVENTS: "github:events",
     },
   },
 });
 
-export default githubConfig;
+export default GITHUB;

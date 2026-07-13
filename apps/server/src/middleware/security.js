@@ -27,7 +27,7 @@ export const securityMiddleware = [
 ];
 
 export const limiter = rateLimit({
-  windowMs: Git.cache.ttl,
+  windowMs: Git.CACHE.TTL,
 
   max: 100,
 
