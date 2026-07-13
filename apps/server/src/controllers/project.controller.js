@@ -3,115 +3,63 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
+  getProjects,
+  getProjectById,
+  getFeaturedProjects,
+} from "../services/project.service.js";
 
-    getProjects,
+export const getAllProjects = asyncHandler(async (req, res) => {
+  const result = await getProjects(req.query);
 
-    getProjectById,
+  res
 
-    getFeaturedProjects
+    .status(HTTP_STATUS.OK)
 
-}
+    .json(
+      new ApiResponse(
+        HTTP_STATUS.OK,
 
-from "../services/project.service.js";
+        result.projects,
 
+        "Projects retrieved successfully",
 
+        result.pagination,
+      ),
+    );
+});
 
-export const getAllProjects = asyncHandler(
+export const getProject = asyncHandler(async (req, res) => {
+  const project = await getProjectById(req.params.id);
 
-    async(req,res)=>{
+  res
 
-        const result =
+    .status(HTTP_STATUS.OK)
 
-            await getProjects(req.query);
+    .json(
+      new ApiResponse(
+        HTTP_STATUS.OK,
 
-        res
+        project,
 
-            .status(HTTP_STATUS.OK)
+        "Project retrieved successfully",
+      ),
+    );
+});
 
-            .json(
+export const getFeatured = asyncHandler(async (req, res) => {
+  const projects = await getFeaturedProjects();
 
-                new ApiResponse(
+  res
 
-                    HTTP_STATUS.OK,
+    .status(HTTP_STATUS.OK)
 
-                    result.projects,
+    .json(
+      new ApiResponse(
+        HTTP_STATUS.OK,
 
-                    "Projects retrieved successfully",
+        projects,
 
-                    result.pagination
-
-                )
-
-            );
-
-    }
-
-);
-
-
-
-export const getProject = asyncHandler(
-
-    async(req,res)=>{
-
-        const project =
-
-            await getProjectById(
-
-                req.params.id
-
-            );
-
-        res
-
-            .status(HTTP_STATUS.OK)
-
-            .json(
-
-                new ApiResponse(
-
-                    HTTP_STATUS.OK,
-
-                    project,
-
-                    "Project retrieved successfully"
-
-                )
-
-            );
-
-    }
-
-);
-
-
-
-export const getFeatured = asyncHandler(
-
-    async(req,res)=>{
-
-        const projects =
-
-            await getFeaturedProjects();
-
-        res
-
-            .status(HTTP_STATUS.OK)
-
-            .json(
-
-                new ApiResponse(
-
-                    HTTP_STATUS.OK,
-
-                    projects,
-
-                    "Featured projects retrieved successfully"
-
-                )
-
-            );
-
-    }
-
-);
+        "Featured projects retrieved successfully",
+      ),
+    );
+});

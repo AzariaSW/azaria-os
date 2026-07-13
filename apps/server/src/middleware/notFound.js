@@ -1,19 +1,11 @@
-import {HTTP_STATUS} from "../constants/index.js";
+import { HTTP_STATUS } from "../constants/index.js";
 
-export default function notFound(
-    req,
-    res
-){
+export default function notFound(req, res) {
+  res.status(HTTP_STATUS.NOT_FOUND).json({
+    success: false,
 
-    res.status(HTTP_STATUS.NOT_FOUND)
-    .json({
+    message: "Endpoint not found",
 
-        success:false,
-
-        message:"Endpoint not found",
-
-        path:req.originalUrl
-
-    });
-
+    path: req.originalUrl,
+  });
 }

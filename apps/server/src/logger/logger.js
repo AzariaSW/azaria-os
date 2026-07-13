@@ -2,12 +2,9 @@ import winston from "winston";
 import fs from "fs";
 import path from "path";
 
-
 const logDirectory = "logs";
 if (!fs.existsSync(logDirectory)) {
-
-    fs.mkdirSync(logDirectory);
-
+  fs.mkdirSync(logDirectory);
 }
 
 const logger = winston.createLogger({
@@ -43,23 +40,21 @@ const logger = winston.createLogger({
     }),
 
     new winston.transports.File({
-      filename: "logs/combined.log"
-    })
-
+      filename: "logs/combined.log",
+    }),
   ],
 
-  exceptionHandlers:[
-        new winston.transports.File({
-            filename:"logs/exceptions.log"
-        })  
-    ],
+  exceptionHandlers: [
+    new winston.transports.File({
+      filename: "logs/exceptions.log",
+    }),
+  ],
 
-    rejectionHandlers:[
-        new winston.transports.File({
-            filename:"logs/rejections.log"
-        })
-    ],
-
+  rejectionHandlers: [
+    new winston.transports.File({
+      filename: "logs/rejections.log",
+    }),
+  ],
 });
 
 export default logger;

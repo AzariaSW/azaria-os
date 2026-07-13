@@ -1,85 +1,51 @@
 import express from "express";
 import compression from "compression";
 
-import {
-    securityMiddleware,
-    limiter
-}
-from "./middleware/security.js";
+import { securityMiddleware, limiter } from "./middleware/security.js";
 
 import requestId from "./middleware/requestId.js";
 
-import httpLogger 
-from "./middleware/logger.js";
+import httpLogger from "./middleware/logger.js";
 
-import apiRoutes 
-from "./routes/index.js";
+import apiRoutes from "./routes/index.js";
 
-import notFound 
-from "./middleware/notFound.js";
+import notFound from "./middleware/notFound.js";
 
-import errorHandler
-from "./middleware/errorHandler.js";
-
+import errorHandler from "./middleware/errorHandler.js";
 
 const app = express();
 
-app.set(
-    "trust proxy",1
-);
+app.set("trust proxy", 1);
 
-app.disable(
-    "x-powered-by"
-);
+app.disable("x-powered-by");
 
-securityMiddleware.forEach(
-    middleware => app.use(middleware)
+securityMiddleware.forEach((middleware) => app.use(middleware));
+
+app.use(compression());
+
+app.use(limiter);
+
+app.use(requestId);
+
+app.use(httpLogger);
+
+app.use(
+  express.json({
+    limit: "100kb",
+  }),
 );
 
 app.use(
-    compression()
-);
-
-app.use(
-    limiter
-);
-
-
-app.use(
-    requestId
-);
-
-
-app.use(
-    httpLogger
-);
-
-
-app.use(
-    express.json({
-        limit:"100kb"
-    })
-);
-
-app.use(express.urlencoded({
+  express.urlencoded({
     extended: true,
-    limit: "100kb"
-}));
-
-app.use(
-    "/api",
-    apiRoutes
+    limit: "100kb",
+  }),
 );
 
+app.use("/api", apiRoutes);
 
-app.use(
-    notFound
-);
+app.use(notFound);
 
-
-app.use(
-    errorHandler
-);
-
+app.use(errorHandler);
 
 export default app;

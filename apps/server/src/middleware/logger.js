@@ -2,29 +2,28 @@ import morgan from "morgan";
 import logger from "../logger/logger.js";
 
 const stream = {
-    write(message) {
-        logger.info(message.trim());
-    }
+  write(message) {
+    logger.info(message.trim());
+  },
 };
 
-const httpLogger = morgan((tokens, req, res) => {
-
+const httpLogger = morgan(
+  (tokens, req, res) => {
     return [
+      `[${req.id ?? "-"}]`,
 
-        `[${req.id ?? "-"}]`,
+      tokens.method(req, res),
 
-        tokens.method(req, res),
+      tokens.url(req, res),
 
-        tokens.url(req, res),
+      tokens.status(req, res),
 
-        tokens.status(req, res),
-
-        `${tokens["response-time"](req, res)} ms`
-
+      `${tokens["response-time"](req, res)} ms`,
     ].join(" ");
-
-}, {
-    stream
-});
+  },
+  {
+    stream,
+  },
+);
 
 export default httpLogger;

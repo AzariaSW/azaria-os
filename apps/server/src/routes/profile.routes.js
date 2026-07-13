@@ -1,15 +1,9 @@
-import {Router} from "express";
+import { Router } from "express";
 
-import {getMyProfile} from "../controllers/profile.controller.js";
+import { getMyProfile } from "../controllers/profile.controller.js";
 
 const router = Router();
 
-router.get(
-
-    "/",
-
-    getMyProfile
-
-);
+router.get("/", getMyProfile);
 
 export default router;

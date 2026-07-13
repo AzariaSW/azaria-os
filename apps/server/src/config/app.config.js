@@ -1,7 +1,5 @@
 const appConfig = Object.freeze({
-
-    portfolioName: "Azaria OS",
-
+  portfolioName: "Azaria OS",
 });
 
 export default appConfig;

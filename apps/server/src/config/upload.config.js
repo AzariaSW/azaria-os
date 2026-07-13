@@ -1,33 +1,15 @@
 const uploadConfig = Object.freeze({
+  image: {
+    maxSize: 5 * 1024 * 1024,
 
-    image:{
+    mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+  },
 
-        maxSize:5 * 1024 * 1024,
+  document: {
+    maxSize: 10 * 1024 * 1024,
 
-        mimeTypes:[
-
-            "image/jpeg",
-
-            "image/png",
-
-            "image/webp"
-
-        ]
-
-    },
-
-    document:{
-
-        maxSize:10 * 1024 * 1024,
-
-        mimeTypes:[
-
-            "application/pdf"
-
-        ]
-
-    }
-
+    mimeTypes: ["application/pdf"],
+  },
 });
 
 export default uploadConfig;

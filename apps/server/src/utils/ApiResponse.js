@@ -1,33 +1,25 @@
 class ApiResponse {
+  constructor(
+    statusCode,
 
-    constructor(
+    data = null,
 
-        statusCode,
+    message = "Success",
 
-        data = null,
+    metadata = null,
+  ) {
+    this.success = true;
 
-        message = "Success",
+    this.statusCode = statusCode;
 
-        metadata = null
+    this.message = message;
 
-    ){
+    this.data = data;
 
-        this.success = true;
-
-        this.statusCode = statusCode;
-
-        this.message = message;
-
-        this.data = data;
-
-        if(metadata){
-
-            this.metadata = metadata;
-
-        }
-
+    if (metadata) {
+      this.metadata = metadata;
     }
-
+  }
 }
 
 export default ApiResponse;

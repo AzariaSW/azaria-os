@@ -1,5 +1,5 @@
 import ApiError from "../utils/ApiError.js";
-import {HTTP_STATUS} from "../constants/index.js";
+import { HTTP_STATUS } from "../constants/index.js";
 
 export default function validate(schema) {
   return (req, res, next) => {

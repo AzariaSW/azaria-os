@@ -1,77 +1,51 @@
 class CacheService {
+  constructor() {
+    this.cache = new Map();
+  }
 
-    constructor(){
+  get(key) {
+    const entry = this.cache.get(key);
 
-        this.cache = new Map();
-
+    if (!entry) {
+      return null;
     }
 
-    get(key){
+    if (Date.now() > entry.expiresAt) {
+      this.cache.delete(key);
 
-        const entry = this.cache.get(key);
-
-        if(!entry){
-
-            return null;
-
-        }
-
-        if(Date.now() > entry.expiresAt){
-
-            this.cache.delete(key);
-
-            return null;
-
-        }
-
-        return entry.data;
-
+      return null;
     }
 
-    set(key, data, ttl){
+    return entry.data;
+  }
 
-        this.cache.set(
+  set(key, data, ttl) {
+    this.cache.set(
+      key,
 
-            key,
+      {
+        data,
 
-            {
+        expiresAt: Date.now() + ttl,
+      },
+    );
+  }
 
-                data,
+  delete(key) {
+    this.cache.delete(key);
+  }
 
-                expiresAt:
+  clear() {
+    this.cache.clear();
+  }
 
-                    Date.now() + ttl
+  has(key) {
+    return this.get(key) !== null;
+  }
 
-            }
-
-        );
-
-    }
-
-    delete(key){
-
-        this.cache.delete(key);
-
-    }
-
-    clear(){
-
-        this.cache.clear();
-
-    }
-
-    has(key){
-
-        return this.get(key) !== null;
-
-    }
-
-    size(){
-
-        return this.cache.size;
-
-    }
-
+  size() {
+    return this.cache.size;
+  }
 }
 
 export default new CacheService();

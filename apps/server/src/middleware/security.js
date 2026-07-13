@@ -31,9 +31,9 @@ export const limiter = rateLimit({
 
   max: 100,
 
-  standardHeaders:true,
+  standardHeaders: true,
 
-  legacyHeaders:false,
+  legacyHeaders: false,
 
   message: {
     success: false,

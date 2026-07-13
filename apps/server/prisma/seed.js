@@ -3,235 +3,166 @@ import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-
 const adapter = new PrismaPg({
-    connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
 });
-
 
 const prisma = new PrismaClient({
-    adapter
+  adapter,
 });
 
+async function main() {
+  console.log("Starting database seed...");
 
-async function main(){
+  await prisma.profile.upsert({
+    where: {
+      id: "main-profile",
+    },
 
-    console.log("Starting database seed...");
+    update: {
+      title: "Software Engineering Student | Backend Developer",
 
+      bio: "Software Engineering student passionate about backend development, databases, and building practical software solutions.",
+      profileImage: "/public/images/Azaria-picture.jpg",
 
-    await prisma.profile.upsert({
+      github: "https://github.com/AzariaSW",
 
-        where:{
-            id:"main-profile"
-        },
+      linkedin: "https://www.linkedin.com/in/azaria-abenet-795875377",
+    },
 
-        update:{
+    create: {
+      id: "main-profile",
 
-            title:
-            "Software Engineering Student | Backend Developer",
+      fullName: "Azaria Abenet",
 
-            bio:
-            "Software Engineering student passionate about backend development, databases, and building practical software solutions.",
-            profileImage:
-            "/public/images/Azaria-picture.jpg",
+      title: "Software Engineering Student | Backend Developer",
 
-            github:
-            "https://github.com/AzariaSW",
+      bio: "Software Engineering student passionate about backend development, databases, and building practical software solutions.",
 
-            linkedin:
-            "https://www.linkedin.com/in/azaria-abenet-795875377"
+      location: "Addis Ababa, Ethiopia",
 
-        },
+      profileImage: "/public/images/Azaria-picture.jpg",
 
-        create:{
+      github: "https://github.com/AzariaSW",
 
-            id:"main-profile",
+      linkedin: "https://www.linkedin.com/in/azaria-abenet-795875377",
+    },
+  });
 
-            fullName:
-            "Azaria Abenet",
+  const skills = [
+    ["C++", "Programming Language", "Intermediate"],
 
-            title:
-            "Software Engineering Student | Backend Developer",
+    ["Java", "Programming Language", "Intermediate"],
 
-            bio:
-            "Software Engineering student passionate about backend development, databases, and building practical software solutions.",
+    ["JavaScript", "Programming Language", "Intermediate"],
 
-            location:
-            "Addis Ababa, Ethiopia",
+    ["Node.js", "Backend", "Learning"],
 
-            profileImage:
-            "/public/images/Azaria-picture.jpg",
+    ["Express.js", "Backend", "Learning"],
 
-            github:
-            "https://github.com/AzariaSW",
+    ["PostgreSQL", "Database", "Intermediate"],
 
-            linkedin:
-            "https://www.linkedin.com/in/azaria-abenet-795875377"
+    ["MySQL", "Database", "Intermediate"],
 
-        }
+    ["PHP", "Backend", "Intermediate"],
 
+    ["Python", "Backend", "Learning"],
+  ];
+
+  for (const skill of skills) {
+    await prisma.skill.upsert({
+      where: {
+        name: skill[0],
+      },
+
+      update: {
+        category: skill[1],
+
+        level: skill[2],
+      },
+
+      create: {
+        name: skill[0],
+
+        category: skill[1],
+
+        level: skill[2],
+      },
     });
+  }
 
+  const projects = [
+    {
+      title: "Student Internship and Job Portal",
 
+      description:
+        "A platform designed to connect students with internship and job opportunities.",
 
-    const skills=[
+      githubUrl: "https://github.com/AzariaSW/Internship-job-portal",
 
-        ["C++","Programming Language","Intermediate"],
+      featured: true,
+    },
+  ];
 
-        ["Java","Programming Language","Intermediate"],
+  for (const project of projects) {
+    await prisma.project.upsert({
+      where: {
+        title: project.title,
+      },
 
-        ["JavaScript","Programming Language","Intermediate"],
+      update: project,
 
-        ["Node.js","Backend","Learning"],
+      create: project,
+    });
+  }
 
-        ["Express.js","Backend","Learning"],
+  const education = [
+    {
+      institution: "Addis Ababa Science and Technology University",
 
-        ["PostgreSQL","Database","Intermediate"],
+      degree: "Bachelor of Science",
 
-        ["MySQL","Database","Intermediate"],
+      field: "Software Engineering",
 
-        ["PHP","Backend","Intermediate"],
+      startDate: new Date("2022-10-14"),
 
-        ["Python","Backend","Learning"]
+      endDate: null,
+    },
 
-    ];
+    {
+      institution: "Jimma University",
 
+      degree: "Bachelor of Science",
 
-    for(const skill of skills){
+      field: "Management",
 
-        await prisma.skill.upsert({
+      startDate: new Date("2024-10-17"),
 
-            where:{
-                name:skill[0]
-            },
+      endDate: null,
+    },
+  ];
 
-            update:{
-
-                category:skill[1],
-
-                level:skill[2]
-
-            },
-
-            create:{
-
-                name:skill[0],
-
-                category:skill[1],
-
-                level:skill[2]
-
-            }
-
-        });
-
-    }
-
-
-
-    const projects=[
-
-
-        {
-
-            title:
-            "Student Internship and Job Portal",
-
-            description:
-            "A platform designed to connect students with internship and job opportunities.",
-
-            githubUrl: "https://github.com/AzariaSW/Internship-job-portal",
-
-            featured:true
-
+  for (const edu of education) {
+    await prisma.education.upsert({
+      where: {
+        institution_degree: {
+          institution: edu.institution,
+          degree: edu.degree,
         },
+      },
 
+      update: edu,
 
+      create: edu,
+    });
+  }
 
-    ];
-
-
-    for(const project of projects){
-
-        await prisma.project.upsert({
-
-            where:{
-                title:project.title
-            },
-
-            update:project,
-
-            create:project
-
-        });}
-
-
-        const education = [
-        {
-                institution:
-            "Addis Ababa Science and Technology University",
-
-            degree:
-            "Bachelor of Science",
-
-            field:
-            "Software Engineering",
-
-            startDate:
-            new Date("2022-10-14"),
-
-            endDate:null
-            },
-
-            {
-            institution:
-            "Jimma University",
-
-            degree:
-            "Bachelor of Science",
-
-            field:
-            "Management",
-
-            startDate:
-            new Date("2024-10-17"),
-
-            endDate:null}
-    ];
-
-        for(const edu of education){
-        await prisma.education.upsert({
-            where: {
-                institution_degree: {
-                    institution:edu.institution,
-                    degree:edu.degree
-                }
-            },
-
-            update:edu,
-
-            create:edu
-        });}
-
-    
-
-    
-
-
-    console.log(
-        "Database seed completed successfully."
-    );
-
+  console.log("Database seed completed successfully.");
 }
 
-
-
 main()
+  .catch(console.error)
 
-.catch(console.error)
-
-.finally(async()=>{
-
+  .finally(async () => {
     await prisma.$disconnect();
-
-});
+  });

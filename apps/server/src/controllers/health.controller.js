@@ -1,39 +1,31 @@
-import {checkDatabase} from "../services/health.service.js";
-import {HTTP_STATUS} from "../constants/index.js";
+import { checkDatabase } from "../services/health.service.js";
+import { HTTP_STATUS } from "../constants/index.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
-import {createSlug} from "../utils/slug.js";
+import { createSlug } from "../utils/slug.js";
 
-import {getPagination}from "../utils/pagination.js";
+import { getPagination } from "../utils/pagination.js";
 
-export const healthCheck =
-asyncHandler(async(req,res)=>{
-    const startTime = Date.now();
+export const healthCheck = asyncHandler(async (req, res) => {
+  const startTime = Date.now();
 
-    await checkDatabase();
+  await checkDatabase();
 
-    console.log(
-    getPagination("2","20")
-);
+  console.log(getPagination("2", "20"));
 
-console.log(
- createSlug(
- "Smart Library Management System"
- )
-);
+  console.log(createSlug("Smart Library Management System"));
 
-    res.status(HTTP_STATUS.OK).json(
-      new ApiResponse(
-        HTTP_STATUS.OK,
-        {
-          status: "healthy",
-          database: "connected",
-          uptime: process.uptime(),
-          responseTime: `${Date.now() - startTime}ms`,
-        },
-        "Health check successful",
-      ),
-    );
-        
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
+      {
+        status: "healthy",
+        database: "connected",
+        uptime: process.uptime(),
+        responseTime: `${Date.now() - startTime}ms`,
+      },
+      "Health check successful",
+    ),
+  );
 });

@@ -7,11 +7,9 @@ import v1Routes from "./v1/index.js";
 const router = Router();
 
 router.use(
+  `/${API.VERSION}`,
 
-    `/${API.VERSION}`,
-
-    v1Routes
-
+  v1Routes,
 );
 
 export default router;

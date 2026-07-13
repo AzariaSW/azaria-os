@@ -1,33 +1,17 @@
 import { z } from "zod";
 
-
 export const projectSchema = z.object({
+  body: z.object({
+    title: z.string().min(3).max(100),
 
-    body: z.object({
+    description: z.string().min(10).max(1000),
 
-        title:
-            z.string()
-            .min(3)
-            .max(100),
+    githubUrl: z.string().url().optional(),
 
-        description:
-            z.string()
-            .min(10)
-            .max(1000),
+    featured: z.boolean().optional(),
+  }),
 
-        githubUrl:
-            z.string()
-            .url()
-            .optional(),
+  params: z.object({}),
 
-        featured:
-            z.boolean()
-            .optional()
-
-    }),
-
-    params: z.object({}),
-
-    query: z.object({})
-
+  query: z.object({}),
 });

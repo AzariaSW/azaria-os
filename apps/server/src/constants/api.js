@@ -1,3 +1,3 @@
 export const API = Object.freeze({
-    VERSION: "v1",
+  VERSION: "v1",
 });
