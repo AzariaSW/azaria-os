@@ -1,30 +1,65 @@
 import winston from "winston";
+import fs from "fs";
+import path from "path";
+
+
+const logDirectory = "logs";
+if (!fs.existsSync(logDirectory)) {
+
+    fs.mkdirSync(logDirectory);
+
+}
 
 const logger = winston.createLogger({
+  level: process.env.NODE_ENV === "production" ? "info" : "debug",
 
-    level: "info",
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json(),
+  ),
 
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
-    ),
+  transports: [
+    new winston.transports.Console({
+      format:
+        process.env.NODE_ENV === "production"
+          ? winston.format.json()
+          : winston.format.combine(
+              winston.format.colorize(),
 
-    transports: [
+              winston.format.timestamp({
+                format: "HH:mm:ss",
+              }),
 
-        new winston.transports.Console(),
+              winston.format.printf(
+                ({ timestamp, level, message }) =>
+                  `${timestamp} ${level}: ${message}`,
+              ),
+            ),
+    }),
 
+    new winston.transports.File({
+      filename: "logs/error.log",
+      level: "error",
+    }),
+
+    new winston.transports.File({
+      filename: "logs/combined.log"
+    })
+
+  ],
+
+  exceptionHandlers:[
         new winston.transports.File({
-            filename: "logs/error.log",
-            level: "error"
-        }),
+            filename:"logs/exceptions.log"
+        })  
+    ],
 
+    rejectionHandlers:[
         new winston.transports.File({
-            filename: "logs/combined.log"
+            filename:"logs/rejections.log"
         })
-
-    ]
+    ],
 
 });
-
 
 export default logger;

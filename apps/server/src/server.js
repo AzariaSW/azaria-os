@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 import app from "./app.js";
+import logger from "./logger/logger.js";
 
 import {
     connectDatabase,
@@ -26,8 +27,8 @@ async function startServer(){
         PORT,
         ()=>{
 
-            console.log(
-                `Server running on port ${PORT}`
+            logger.info(
+                `Server started on port ${PORT}`
             );
 
         }
@@ -43,8 +44,8 @@ process.on(
     "SIGINT",
     async()=>{
 
-        console.log(
-            "Shutting down server..."
+        logger.info(
+            "Gracefully shutting down..."
         );
 
 

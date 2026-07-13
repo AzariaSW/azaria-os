@@ -1,51 +1,34 @@
 import logger from "../logger/logger.js";
 
+export default function errorHandler(err, req, res, next) {
+  
+  logger.error({
+    requestId: req.id,
 
-export default function errorHandler(
-    err,
-    req,
-    res,
-    next
-){
+    method: req.method,
 
-    logger.error({
+    url: req.originalUrl,
 
-        requestId:req.id,
+    ip: req.ip,
 
-        message:err.message,
+    statusCode: err.statusCode || err.status || 500,
 
-        stack:err.stack
+    message: err.message,
 
-    });
+    stack: err.stack,
+  });
 
+  const statusCode = err.statusCode || err.status || 500;
 
-    const statusCode =
-        err.statusCode || 
-        err.status ||
-        500;
+  const message = err.success === false ? err.message : "Internal Server Error";
 
+  res.status(statusCode).json({
+    success: false,
 
+    message,
 
-    const message =
-        err.success === false
-        ? err.message
-        : "Internal Server Error";
+    errors: err.errors || [],
 
-
-
-    res
-    .status(statusCode)
-    .json({
-
-        success:false,
-
-        message,
-
-        errors:
-        err.errors || [],
-
-        requestId:req.id
-
-    });
-
+    requestId: req.id,
+  });
 }
