@@ -2,7 +2,7 @@ import authConfig from "../config/auth.config.js";
 
 import { compare } from "../utils/hash.js";
 
-import { sign } from "../utils/jwt.js";
+import { sign, verify } from "../utils/jwt.js";
 
 import ApiError from "../utils/ApiError.js";
 
@@ -34,6 +34,34 @@ export async function verifySequence(sequence) {
   );
 }
 
-export async function verifyCredentials() {
-  throw new Error("Not implemented.");
+export async function verifyCredentials(username, password, challengeToken) {
+  const payload = verify(challengeToken);
+
+  if (payload.type !== "challenge" || payload.authorized !== true) {
+    throw new ApiError(
+      HTTP_STATUS.UNAUTHORIZED,
+
+      "Invalid challenge.",
+    );
+  }
+
+  const validPassword = await compare(password, authConfig.passwordHash);
+
+  if (username !== authConfig.username || !validPassword) {
+    throw new ApiError(
+      HTTP_STATUS.UNAUTHORIZED,
+
+      "Invalid credentials.",
+    );
+  }
+
+  return sign(
+    {
+      role: "admin",
+
+      username,
+    },
+
+    authConfig.jwtExpiresIn,
+  );
 }

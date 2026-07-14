@@ -2,14 +2,26 @@ import { Router } from "express";
 
 import validate from "../middleware/validate.js";
 
-import { challenge } from "../controllers/admin.controller.js";
+import { login, challenge } from "../controllers/admin.controller.js";
 
-import { challengeSchema } from "../validators/admin.validator.js";
+import { loginSchema, challengeSchema } from "../validators/admin.validator.js";
 
-import { challengeLimiter } from "../middleware/security.js";
+import { loginLimiter, challengeLimiter } from "../middleware/security.js";
 
 const router = Router();
 
-router.post("/challenge", challengeLimiter, validate(challengeSchema), challenge);
+router.post(
+  "/challenge",
+  challengeLimiter,
+  validate(challengeSchema),
+  challenge,
+);
+
+router.post(
+  "/login",
+  loginLimiter,
+  validate(loginSchema),
+   login
+);
 
 export default router;
