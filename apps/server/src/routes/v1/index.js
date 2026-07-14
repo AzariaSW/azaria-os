@@ -6,6 +6,7 @@ import profileRoutes from "../profile.routes.js";
 import skillRoutes from "../skill.routes.js";
 import githubRoutes from "../github.routes.js";
 import contactRoutes from "../contact.routes.js";
+import adminRoutes from "../admin.routes.js";
 
 const router = Router();
 
@@ -20,5 +21,7 @@ router.use("/skills", skillRoutes);
 router.use("/github", githubRoutes);
 
 router.use("/contact", contactRoutes);
+
+router.use("/admin", adminRoutes);
 
 export default router;
