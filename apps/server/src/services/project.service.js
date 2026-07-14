@@ -5,17 +5,7 @@ import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 export async function getProjects(query = {}) {
-  const {
-    page,
-
-    limit,
-
-    skip,
-  } = getPagination(
-    query.page,
-
-    query.limit,
-  );
+  const { page, limit, skip } = getPagination(query.page, query.limit);
 
   const where = {};
 
@@ -105,5 +95,28 @@ export async function getFeaturedProjects() {
     },
 
     take: 6,
+  });
+}
+
+export async function createProjects(data) {
+  return prisma.project.create({
+    data,
+  });
+}
+
+export async function updateProjects(data, projectId) {
+  return prisma.project.update({
+    where: {
+      id: projectId
+    },
+    data
+  });
+}
+
+export async function deleteProjects(projectId) {
+  return prisma.project.delete({
+    where: {
+      id: projectId
+    }
   });
 }

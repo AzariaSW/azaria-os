@@ -6,60 +6,93 @@ import {
   getProjects,
   getProjectById,
   getFeaturedProjects,
+  createProjects,
+  updateProjects,
+  deleteProjects
 } from "../services/project.service.js";
 
 export const getAllProjects = asyncHandler(async (req, res) => {
   const result = await getProjects(req.query);
 
-  res
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
 
-    .status(HTTP_STATUS.OK)
+      result.projects,
 
-    .json(
-      new ApiResponse(
-        HTTP_STATUS.OK,
+      "Projects retrieved successfully",
 
-        result.projects,
-
-        "Projects retrieved successfully",
-
-        result.pagination,
-      ),
-    );
+      result.pagination,
+    ),
+  );
 });
 
 export const getProject = asyncHandler(async (req, res) => {
   const project = await getProjectById(req.params.id);
 
-  res
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
 
-    .status(HTTP_STATUS.OK)
+      project,
 
-    .json(
-      new ApiResponse(
-        HTTP_STATUS.OK,
-
-        project,
-
-        "Project retrieved successfully",
-      ),
-    );
+      "Project retrieved successfully",
+    ),
+  );
 });
 
 export const getFeatured = asyncHandler(async (req, res) => {
   const projects = await getFeaturedProjects();
 
-  res
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
 
-    .status(HTTP_STATUS.OK)
+      projects,
 
-    .json(
-      new ApiResponse(
-        HTTP_STATUS.OK,
+      "Featured projects retrieved successfully",
+    ),
+  );
+});
 
-        projects,
+export const createProject = asyncHandler(async (req, res) => {
+  const projects = await createProjects(req.body);
 
-        "Featured projects retrieved successfully",
-      ),
-    );
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
+
+      projects,
+
+      "Project created successfully",
+    ),
+  );
+});
+
+export const updateProject = asyncHandler(async (req, res) => {
+  const projects = await updateProjects(req.body,req.params.id);
+
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
+
+      projects,
+
+      "Project updated successfully",
+    ),
+  );
+});
+
+export const deleteProject = asyncHandler(async (req, res) => {
+  const projects = await deleteProjects(req.params.id);
+
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
+
+      projects,
+
+      "Project deleted successfully",
+    ),
+  );
 });
