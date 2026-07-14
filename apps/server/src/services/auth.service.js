@@ -60,6 +60,8 @@ export async function verifyCredentials(username, password, challengeToken) {
       role: "admin",
 
       username,
+
+      type:"access"
     },
 
     authConfig.jwtExpiresIn,

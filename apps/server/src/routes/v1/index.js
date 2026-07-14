@@ -7,8 +7,13 @@ import skillRoutes from "../skill.routes.js";
 import githubRoutes from "../github.routes.js";
 import contactRoutes from "../contact.routes.js";
 import adminRoutes from "../admin.routes.js";
+import verifyRoutes from "../test.routes.js";
+
+
 
 const router = Router();
+
+router.use("/test", verifyRoutes);
 
 router.use("/health", healthRoutes);
 
