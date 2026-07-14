@@ -3,22 +3,32 @@ import ApiResponse from "../utils/ApiResponse.js";
 
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-import { getProfile } from "../services/profile.service.js";
+import { getProfile,updateProfiles } from "../services/profile.service.js";
 
 export const getMyProfile = asyncHandler(async (req, res) => {
   const profile = await getProfile();
 
-  res
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
 
-    .status(HTTP_STATUS.OK)
+      profile,
 
-    .json(
-      new ApiResponse(
-        HTTP_STATUS.OK,
+      "Profile retrieved successfully",
+    ),
+  );
+});
 
-        profile,
+export const updateProfile = asyncHandler(async (req, res) => {
+  const profile = await updateProfiles(req.body);
 
-        "Profile retrieved successfully",
-      ),
-    );
+  res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(
+      HTTP_STATUS.OK,
+
+      profile,
+
+      "Profile updated.",
+    ),
+  );
 });

@@ -16,3 +16,13 @@ export async function getProfile() {
 
   return profile;
 }
+
+export async function updateProfiles(data) {
+  return prisma.profile.update({
+    where: {
+      id: "main-profile",
+    },
+
+    data,
+  });
+}

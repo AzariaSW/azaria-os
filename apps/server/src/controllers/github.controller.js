@@ -12,9 +12,7 @@ export const getActivity = asyncHandler(async (req, res) => {
   const activity = await getRecentActivity();
 
   res
-
     .status(HTTP_STATUS.OK)
-
     .json(
       new ApiResponse(
         HTTP_STATUS.OK,
@@ -30,9 +28,7 @@ export const getProfile = asyncHandler(async (req, res) => {
   const profile = await getGithubProfile();
 
   res
-
     .status(HTTP_STATUS.OK)
-
     .json(
       new ApiResponse(
         HTTP_STATUS.OK,
@@ -48,9 +44,7 @@ export const getRepository = asyncHandler(async (req, res) => {
   const repositories = await getRepositories();
 
   res
-
     .status(HTTP_STATUS.OK)
-
     .json(
       new ApiResponse(
         HTTP_STATUS.OK,
