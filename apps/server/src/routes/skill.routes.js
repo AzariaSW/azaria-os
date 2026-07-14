@@ -11,7 +11,7 @@ import {
   deleteSkill
 } from "../controllers/skill.controller.js";
 
-import authenticateAdmin from "../middleware/auth.js";
+import authenticateAdmin from "../middleware/authenticateAdmin.js";
 
 import { skillSchema, updateSkillSchema, skillIdSchema } from "../validators/skill.validator.js";
 
