@@ -19,7 +19,7 @@ router.get("/", getAllProjects);
 
 router.get("/featured", getFeatured);
 
-router.get("/:id", getProject);
+router.get("/:id", validate(projectIdSchema), getProject);
 
 router.post(
     "/",

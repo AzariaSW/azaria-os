@@ -58,7 +58,7 @@ export const getFeatured = asyncHandler(async (req, res) => {
 export const createProject = asyncHandler(async (req, res) => {
   const projects = await createProjects(req.body);
 
-  res.status(HTTP_STATUS.OK).json(
+  res.status(HTTP_STATUS.CREATED).json(
     new ApiResponse(
       HTTP_STATUS.OK,
 

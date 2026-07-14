@@ -105,6 +105,7 @@ export async function createProjects(data) {
 }
 
 export async function updateProjects(data, projectId) {
+  await getProjectById(projectId);
   return prisma.project.update({
     where: {
       id: projectId
@@ -114,6 +115,7 @@ export async function updateProjects(data, projectId) {
 }
 
 export async function deleteProjects(projectId) {
+  await getProjectById(projectId);
   return prisma.project.delete({
     where: {
       id: projectId

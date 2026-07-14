@@ -56,3 +56,36 @@ export async function getCategories() {
 
   return result.map((item) => item.category);
 }
+
+
+
+export async function createSkills(data) {
+  return prisma.skill.create({
+    data,
+  });
+}
+
+
+
+export async function updateSkills(data, skillId) {
+  await getSkillById(skillId);  
+  
+  return prisma.skill.update({
+    where: {
+      id: skillId
+    },
+    data
+  });
+}
+
+
+
+export async function deleteSkills(skillId) {
+  await getSkillById(skillId);
+  
+  return prisma.skill.delete({
+    where: {
+      id: skillId
+    }
+  });
+}
