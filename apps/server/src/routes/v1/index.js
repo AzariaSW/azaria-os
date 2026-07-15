@@ -9,7 +9,7 @@ import contactRoutes from "../contact.routes.js";
 import authRoutes from "../auth.routes.js";
 import testRoutes from "../test.routes.js";
 import experienceRoutes from "../experience.routes.js";
-
+import educationRoutes from "../education.routes.js";
 
 
 const router = Router();
@@ -18,11 +18,11 @@ router.use("/test", testRoutes);
 
 router.use("/health", healthRoutes);
 
-router.use("/projects", projectRoutes);
+router.use("/project", projectRoutes);
 
 router.use("/profile", profileRoutes);
 
-router.use("/skills", skillRoutes);
+router.use("/skill", skillRoutes);
 
 router.use("/github", githubRoutes);
 
@@ -31,5 +31,7 @@ router.use("/contact", contactRoutes);
 router.use("/auth", authRoutes);
 
 router.use("/experience", experienceRoutes);
+
+router.use("/education", educationRoutes);
 
 export default router;

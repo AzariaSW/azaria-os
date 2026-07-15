@@ -69,7 +69,7 @@ export const createExperience = asyncHandler(async (req, res) => {
 });
 
 export const updateExperience = asyncHandler(async (req, res) => {
-  const experience = await updateExperienceService(req.body, req.params.id);
+  const experience = await updateExperienceService(req.validated.body, req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
