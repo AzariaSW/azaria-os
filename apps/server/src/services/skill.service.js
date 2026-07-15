@@ -68,24 +68,41 @@ export async function createSkills(data) {
 
 
 export async function updateSkills(data, skillId) {
-  await getSkillById(skillId);  
-  
-  return prisma.skill.update({
-    where: {
-      id: skillId
-    },
-    data
-  });
+ try {
+    return await prisma.skill.update({
+      where: {
+        id: skillId
+      },
+      data
+    });
+  } catch (error) {
+    if (error.code === "P2025") {
+      throw new ApiError(
+        HTTP_STATUS.NOT_FOUND,
+        "Skill not found"
+      );
+    }
+      throw error;
+  }
 }
 
 
 
 export async function deleteSkills(skillId) {
-  await getSkillById(skillId);
   
-  return prisma.skill.delete({
+  try {
+    return await prisma.skill.delete({
     where: {
       id: skillId
     }
   });
+} catch (error) {
+    if (error.code === "P2025") {
+      throw new ApiError(
+        HTTP_STATUS.NOT_FOUND,
+        "Skill not found"
+      );
+    }
+
+      throw error;
 }

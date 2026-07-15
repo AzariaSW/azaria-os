@@ -105,20 +105,35 @@ export async function createProjects(data) {
 }
 
 export async function updateProjects(data, projectId) {
-  await getProjectById(projectId);
-  return prisma.project.update({
-    where: {
-      id: projectId
-    },
-    data
-  });
+  try {
+    return prisma.project.update({
+      where: {
+        id: projectId,
+      },
+      data,
+    });
+  } catch (error) {
+    if (error.code === "P2025") {
+      throw new ApiError(
+        HTTP_STATUS.NOT_FOUND,
+        "Project not found"
+      );
+    }
+      throw error;
+  }
 }
 
 export async function deleteProjects(projectId) {
-  await getProjectById(projectId);
-  return prisma.project.delete({
-    where: {
-      id: projectId
+  try {
+    return prisma.project.delete({
+      where: {
+        id: projectId,
+      },
+    });
+  } catch (error) {
+    if (error.code === "P2025") {
+      throw new ApiError(HTTP_STATUS.NOT_FOUND, "Project not found");
     }
-  });
+    throw error;
+  }
 }
