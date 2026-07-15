@@ -13,7 +13,7 @@ import {
 
 import authenticateAdmin from "../middleware/authenticateAdmin.js";
 
-import { skillSchema, updateSkillSchema, skillIdSchema } from "../validators/skill.validator.js";
+import { skillSchema, updateSkillSchema, idSchema } from "../validators/skill.validator.js";
 
 const router = Router();
 
@@ -21,7 +21,7 @@ router.get("/", getAllSkills);
 
 router.get("/categories", getSkillCategories);
 
-router.get("/:id", validate(skillIdSchema), getSkill);
+router.get("/:id", validate(idSchema), getSkill);
 
 router.post(
     "/",
@@ -40,7 +40,7 @@ router.put(
 router.delete(
     "/:id",
     authenticateAdmin,
-    validate(skillIdSchema),
+    validate(idSchema),
     deleteSkill
 );
 

@@ -59,7 +59,7 @@ export const createSkill = asyncHandler(async (req, res) => {
 
   res.status(HTTP_STATUS.CREATED).json(
     new ApiResponse(
-      HTTP_STATUS.OK,
+      HTTP_STATUS.CREATED,
 
       skills,
 

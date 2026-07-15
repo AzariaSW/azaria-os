@@ -1,4 +1,5 @@
 import { z } from "zod";
+import id from "./id.validator.js";
 
 export const projectSchema = z.object({
   body: z.object({
@@ -35,15 +36,9 @@ export const updateProjectSchema = z.object({
     featured: z.boolean().optional(),
   }),
 
-  params: z.object({
-    id: z.string().uuid(),
-  }),
+  params: id.shape.params,
 
   query: z.object({}),
 });
 
-export const projectIdSchema = z.object({
-  params: z.object({
-    id: z.string().uuid(),
-  }),
-});
+export const idSchema=id;

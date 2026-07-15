@@ -1,7 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 
 import ApiResponse from "../utils/ApiResponse.js";
-
+import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import { verifySequence, verifyCredentials } from "../services/auth.service.js";

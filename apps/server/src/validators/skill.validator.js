@@ -1,4 +1,5 @@
 import { z } from "zod";
+import id from "./id.validator.js";
 
 export const skillSchema = z.object({
   body: z.object({
@@ -26,15 +27,9 @@ export const updateSkillSchema = z.object({
 
     icon: z.string().min(2).max(100).optional(),
   }),
-  params: z.object({
-    id: z.string().uuid(),
-  }),
+  params: id.shape.params,
 
   query: z.object({}),
 });
 
-export const skillIdSchema = z.object({
-  params: z.object({
-    id: z.string().uuid(),
-  }),
-});
+export const idSchema = id;

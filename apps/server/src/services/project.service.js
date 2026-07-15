@@ -114,12 +114,9 @@ export async function updateProjects(data, projectId) {
     });
   } catch (error) {
     if (error.code === "P2025") {
-      throw new ApiError(
-        HTTP_STATUS.NOT_FOUND,
-        "Project not found"
-      );
+      throw new ApiError(HTTP_STATUS.NOT_FOUND, "Project not found");
     }
-      throw error;
+    throw error;
   }
 }
 

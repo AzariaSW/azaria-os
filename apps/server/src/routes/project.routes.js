@@ -11,7 +11,7 @@ import {
   deleteProject
 } from "../controllers/project.controller.js";
 
-import { updateProjectSchema,projectIdSchema, projectSchema } from "../validators/project.validator.js";
+import { updateProjectSchema,idSchema, projectSchema } from "../validators/project.validator.js";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get("/", getAllProjects);
 
 router.get("/featured", getFeatured);
 
-router.get("/:id", validate(projectIdSchema), getProject);
+router.get("/:id", validate(idSchema), getProject);
 
 router.post(
     "/",
@@ -38,7 +38,7 @@ router.put(
 router.delete(
     "/:id",
     authenticateAdmin,
-    validate(projectIdSchema),
+    validate(idSchema),
     deleteProject
 );
 
