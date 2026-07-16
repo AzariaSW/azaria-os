@@ -3,16 +3,16 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
-  getProjects,
-  getProjectById,
-  getFeaturedProjects,
-  createProjects,
-  updateProjects,
-  deleteProjects
+  getAllProjects  as getAllProjectsService,
+  getProject as getProjectService,
+  getFeaturedProjects as getFeaturedProjectsService,
+  createProject as createProjectService,
+  updateProject as updateProjectService,
+  deleteProject as deleteProjectService
 } from "../services/project.service.js";
 
 export const getAllProjects = asyncHandler(async (req, res) => {
-  const result = await getProjects(req.query);
+  const result = await getAllProjectsService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -28,7 +28,7 @@ export const getAllProjects = asyncHandler(async (req, res) => {
 });
 
 export const getProject = asyncHandler(async (req, res) => {
-  const project = await getProjectById(req.params.id);
+  const project = await getProjectService(req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -41,8 +41,8 @@ export const getProject = asyncHandler(async (req, res) => {
   );
 });
 
-export const getFeatured = asyncHandler(async (req, res) => {
-  const projects = await getFeaturedProjects();
+export const getFeaturedProjects = asyncHandler(async (req, res) => {
+  const projects = await getFeaturedProjectsService();
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -56,7 +56,7 @@ export const getFeatured = asyncHandler(async (req, res) => {
 });
 
 export const createProject = asyncHandler(async (req, res) => {
-  const projects = await createProjects(req.body);
+  const projects = await createProjectService(req.body);
 
   res.status(HTTP_STATUS.CREATED).json(
     new ApiResponse(
@@ -70,7 +70,7 @@ export const createProject = asyncHandler(async (req, res) => {
 });
 
 export const updateProject = asyncHandler(async (req, res) => {
-  const projects = await updateProjects(req.body,req.params.id);
+  const projects = await updateProjectService(req.body,req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -84,7 +84,7 @@ export const updateProject = asyncHandler(async (req, res) => {
 });
 
 export const deleteProject = asyncHandler(async (req, res) => {
-  const projects = await deleteProjects(req.params.id);
+  const projects = await deleteProjectService(req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

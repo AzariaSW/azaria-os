@@ -11,6 +11,7 @@ import testRoutes from "../test.routes.js";
 import experienceRoutes from "../experience.routes.js";
 import educationRoutes from "../education.routes.js";
 import certificateRoutes from "../certificate.routes.js";
+import messageRoutes from "../message.routes.js";
 
 
 const router = Router();
@@ -36,5 +37,7 @@ router.use("/experience", experienceRoutes);
 router.use("/education", educationRoutes);
 
 router.use("/certificate", certificateRoutes);
+
+router.use("/message", messageRoutes);
 
 export default router;

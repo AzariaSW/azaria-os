@@ -4,7 +4,7 @@ import { getPagination } from "../utils/pagination.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-export async function getProjects(query = {}) {
+export async function getAllProjects(query = {}) {
   const { page, limit, skip } = getPagination(query.page, query.limit);
 
   const where = {};
@@ -66,7 +66,7 @@ export async function getProjects(query = {}) {
   };
 }
 
-export async function getProjectById(id) {
+export async function getProject(id) {
   const project = await prisma.project.findUnique({
     where: {
       id,
@@ -98,13 +98,13 @@ export async function getFeaturedProjects() {
   });
 }
 
-export async function createProjects(data) {
+export async function createProject(data) {
   return prisma.project.create({
     data,
   });
 }
 
-export async function updateProjects(data, projectId) {
+export async function updateProject(data, projectId) {
   try {
     return prisma.project.update({
       where: {
@@ -120,7 +120,7 @@ export async function updateProjects(data, projectId) {
   }
 }
 
-export async function deleteProjects(projectId) {
+export async function deleteProject(projectId) {
   try {
     return prisma.project.delete({
       where: {

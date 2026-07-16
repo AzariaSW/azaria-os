@@ -4,16 +4,16 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
-  getSkills,
-  getSkillById,
-  getCategories,
-  createSkills,
-  updateSkills,
-  deleteSkills,
+  getAllSkills as getAllSkillsService,
+  getSkill as getSkillService,
+  getSkillCategories as getSkillCategoriesService,
+  createSkill as createSkillService,
+  updateSkill as updateSkillService,
+  deleteSkill as deleteSkillService,
 } from "../services/skill.service.js";
 
 export const getAllSkills = asyncHandler(async (req, res) => {
-  const skills = await getSkills(req.query.category);
+  const skills = await getAllSkillsService(req.query.category);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -27,7 +27,7 @@ export const getAllSkills = asyncHandler(async (req, res) => {
 });
 
 export const getSkill = asyncHandler(async (req, res) => {
-  const skill = await getSkillById(req.params.id);
+  const skill = await getSkillService(req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -41,7 +41,7 @@ export const getSkill = asyncHandler(async (req, res) => {
 });
 
 export const getSkillCategories = asyncHandler(async (req, res) => {
-  const categories = await getCategories();
+  const categories = await getSkillCategoriesService();
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -55,13 +55,13 @@ export const getSkillCategories = asyncHandler(async (req, res) => {
 });
 
 export const createSkill = asyncHandler(async (req, res) => {
-  const skills = await createSkills(req.body);
+  const skill = await createSkillService(req.body);
 
   res.status(HTTP_STATUS.CREATED).json(
     new ApiResponse(
       HTTP_STATUS.CREATED,
 
-      skills,
+      skill,
 
       "Skill created successfully",
     ),
@@ -69,13 +69,13 @@ export const createSkill = asyncHandler(async (req, res) => {
 });
 
 export const updateSkill = asyncHandler(async (req, res) => {
-  const skills = await updateSkills(req.body, req.params.id);
+  const skill = await updateSkillService(req.body, req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
       HTTP_STATUS.OK,
 
-      skills,
+      skill,
 
       "Skill updated successfully",
     ),
@@ -83,13 +83,13 @@ export const updateSkill = asyncHandler(async (req, res) => {
 });
 
 export const deleteSkill = asyncHandler(async (req, res) => {
-  const skills = await deleteSkills(req.params.id);
+  const skill = await deleteSkillService(req.params.id);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
       HTTP_STATUS.OK,
 
-      skills,
+      skill,
 
       "Skill deleted successfully",
     ),

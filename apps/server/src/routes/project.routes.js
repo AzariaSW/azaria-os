@@ -5,7 +5,7 @@ import authenticateAdmin from "../middleware/authenticateAdmin.js";
 import {   
   getAllProjects,
   getProject,
-  getFeatured,
+  getFeaturedProjects,
   createProject,
   updateProject,
   deleteProject
@@ -17,7 +17,7 @@ const router = Router();
 
 router.get("/", getAllProjects);
 
-router.get("/featured", getFeatured);
+router.get("/featured", getFeaturedProjects);
 
 router.get("/:id", validate(idSchema), getProject);
 

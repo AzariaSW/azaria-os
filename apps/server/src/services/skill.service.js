@@ -3,7 +3,7 @@ import prisma from "../prisma/client.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-export async function getSkills(category) {
+export async function getAllSkills(category) {
   const where = {};
 
   if (category) {
@@ -25,7 +25,7 @@ export async function getSkills(category) {
   });
 }
 
-export async function getSkillById(id) {
+export async function getSkill(id) {
   const skill = await prisma.skill.findUnique({
     where: { id },
   });
@@ -41,7 +41,7 @@ export async function getSkillById(id) {
   return skill;
 }
 
-export async function getCategories() {
+export async function getSkillCategories() {
   const result = await prisma.skill.findMany({
     distinct: ["category"],
 
@@ -57,13 +57,13 @@ export async function getCategories() {
   return result.map((item) => item.category);
 }
 
-export async function createSkills(data) {
+export async function createSkill(data) {
   return prisma.skill.create({
     data,
   });
 }
 
-export async function updateSkills(data, skillId) {
+export async function updateSkill(data, skillId) {
   try {
     return await prisma.skill.update({
       where: {
@@ -79,7 +79,7 @@ export async function updateSkills(data, skillId) {
   }
 }
 
-export async function deleteSkills(skillId) {
+export async function deleteSkill(skillId) {
   try {
     return await prisma.skill.delete({
       where: {
