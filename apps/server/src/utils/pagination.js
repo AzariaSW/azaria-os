@@ -1,12 +1,6 @@
 import { PAGINATION } from "../constants/pagination.js";
 
-export function getPaginationMeta(
-  page,
-
-  limit,
-
-  total,
-) {
+export function getPaginationMeta(page, limit, total) {
   return {
     page,
 
@@ -14,17 +8,20 @@ export function getPaginationMeta(
 
     total,
 
-    totalPages: Math.ceil(total / limit),
+    totalPages: Math.max(1, Math.ceil(total / limit)),
   };
 }
 
 export function getPagination(pageQuery, limitQuery) {
-  const page = Math.max(Number(pageQuery) || PAGINATION.DEFAULT_PAGE, 1);
+  const page = Math.max(Number(pageQuery) || PAGINATION.DEFAULT_PAGE);
 
-  const limit = Math.min(
-    Number(limitQuery) || PAGINATION.DEFAULT_LIMIT,
+  const limit = Math.max(
+    1,
+    Math.min(
+      Number(limitQuery) || PAGINATION.DEFAULT_LIMIT,
 
-    PAGINATION.MAX_LIMIT,
+      PAGINATION.MAX_LIMIT,
+    ),
   );
 
   return {

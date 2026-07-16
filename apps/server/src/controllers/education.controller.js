@@ -13,7 +13,7 @@ import {
 } from "../services/education.service.js";
 
 export const getAllEducations = asyncHandler(async (req, res) => {
-  const educations = await getAllEducationsService(req.query.role);
+  const educations = await getAllEducationsService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

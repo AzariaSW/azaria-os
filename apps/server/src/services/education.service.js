@@ -2,27 +2,69 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
+import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 
-export async function getAllEducations(degree) {
+export async function getAllEducations(query) {
   const where = {};
+  const { page, limit, skip } = getPagination(query.page, query.limit);
 
-  if (degree) {
-    where.degree = degree;
-  }
-
-  return prisma.education.findMany({
-    where,
-
-    orderBy: [
+  if (query.search) {
+    where.OR = [
       {
-        degree: "asc",
+        institution: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
       },
 
+      {
+        field: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
+      },
+
+      {
+        degree: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
+      },
+    ];
+  }
+
+  const [total, educations] = await prisma.$transaction([
+    prisma.education.count({
+      where,
+    }),
+
+    prisma.education.findMany({
+      where,
+
+      skip,
+
+      take: limit,
+
+      orderBy: [
       {
         institution: "asc",
       },
+
+      {
+        degree: "asc",
+      },
     ],
-  });
+    }),
+  ]);
+
+  return {
+    items: educations,
+
+    pagination: getPaginationMeta(page, limit, total)
+  };
 }
 
 export async function getEducation(id) {
@@ -54,7 +96,7 @@ export async function getEducationDegrees() {
     },
   });
 
-  return result.map((item) => item.role);
+  return result.map((item) => item.degree);
 }
 
 

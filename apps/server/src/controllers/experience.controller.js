@@ -13,7 +13,7 @@ import {
 } from "../services/experience.service.js";
 
 export const getAllExperiences = asyncHandler(async (req, res) => {
-  const experiences = await getAllExperiencesService(req.query.role);
+  const experiences = await getAllExperiencesService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

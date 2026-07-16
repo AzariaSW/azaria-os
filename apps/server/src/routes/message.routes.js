@@ -5,7 +5,6 @@ import authenticateAdmin from "../middleware/authenticateAdmin.js";
 import {   
   getAllMessages,
   getMessage,
-  getUnreadMessages,
   createMessage,
   updateMessage,
   deleteMessage
@@ -16,8 +15,6 @@ import { messageSchema,idSchema } from "../validators/message.validator.js";
 const router = Router();
 
 router.get("/", authenticateAdmin, getAllMessages);
-
-router.get("/unread", authenticateAdmin, getUnreadMessages);
 
 router.get("/:id", authenticateAdmin, validate(idSchema), getMessage);
 

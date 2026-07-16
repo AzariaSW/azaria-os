@@ -12,7 +12,7 @@ import {
 } from "../services/certificate.service.js";
 
 export const getAllCertificates = asyncHandler(async (req, res) => {
-  const certificates = await getAllCertificatesService(req.query.role);
+  const certificates = await getAllCertificatesService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

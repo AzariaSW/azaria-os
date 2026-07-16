@@ -1,10 +1,10 @@
 import prisma from "../prisma/client.js";
 
-import { getPagination } from "../utils/pagination.js";
+import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-export async function getAllMessages(query = {}) {
+export async function getAllMessages(query) {
   const { page, limit, skip } = getPagination(query.page, query.limit);
 
   const where = {};
@@ -45,7 +45,7 @@ export async function getAllMessages(query = {}) {
 
           mode: "insensitive",
         },
-      }
+      },
     ];
   }
 
@@ -57,9 +57,14 @@ export async function getAllMessages(query = {}) {
 
       take: limit,
 
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: [
+        {
+          email: "asc",
+        },
+        {
+          createdAt: "desc",
+        },
+      ],
     }),
 
     prisma.ContactMessage.count({
@@ -70,15 +75,7 @@ export async function getAllMessages(query = {}) {
   return {
     messages,
 
-    pagination: {
-      page,
-
-      limit,
-
-      total,
-
-      totalPages: Math.ceil(total / limit),
-    },
+    pagination: getPaginationMeta(page, limit, total)
   };
 }
 
@@ -100,20 +97,6 @@ export async function getMessage(id) {
   return message;
 }
 
-export async function getUnreadMessages() {
-  return prisma.ContactMessage.findMany({
-    where: {
-      isRead: false,
-    },
-
-    orderBy: {
-      createdAt: "desc",
-    },
-
-    take: 6,
-  });
-}
-
 export async function createMessage(data) {
   return prisma.ContactMessage.create({
     data,
@@ -128,7 +111,7 @@ export async function updateMessage(messageId) {
       },
       data: {
         isRead: true,
-      }
+      },
     });
   } catch (error) {
     if (error.code === "P2025") {

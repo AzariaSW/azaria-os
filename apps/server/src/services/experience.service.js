@@ -2,27 +2,64 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
+import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 
-export async function getAllExperiences(role) {
+export async function getAllExperiences(query) {
   const where = {};
+  const { page, limit, skip } = getPagination(query.page, query.limit);
 
-  if (role) {
-    where.role = role;
+  if (query.role) {
+    where.role = query.role;
   }
 
-  return prisma.experience.findMany({
-    where,
-
-    orderBy: [
+  if (query.search) {
+    where.OR = [
       {
-        role: "asc",
+        company: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
       },
 
       {
-        company: "asc",
+        description: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
       },
-    ],
-  });
+    ];
+  }
+
+  const [total, experiences] = await prisma.$transaction([
+    prisma.experience.count({
+      where,
+    }),
+
+    prisma.experience.findMany({
+      where,
+
+      skip,
+
+      take: limit,
+
+      orderBy: [
+        {
+          role: "asc",
+        },
+        {
+          company: "asc",
+        },
+      ],
+    }),
+  ]);
+
+  return {
+    items: experiences,
+
+    pagination: getPaginationMeta(page, limit, total)
+  };
 }
 
 export async function getExperience(id) {
@@ -57,52 +94,40 @@ export async function getExperienceRoles() {
   return result.map((item) => item.role);
 }
 
-
-
 export async function createExperience(data) {
   return prisma.experience.create({
     data,
   });
 }
 
-
-
 export async function updateExperience(data, experienceId) {
- try {
+  try {
     return await prisma.experience.update({
       where: {
-        id: experienceId
+        id: experienceId,
       },
-      data
+      data,
     });
   } catch (error) {
     if (error.code === "P2025") {
-      throw new ApiError(
-        HTTP_STATUS.NOT_FOUND,
-        "Experience not found"
-      );
+      throw new ApiError(HTTP_STATUS.NOT_FOUND, "Experience not found");
     }
-      throw error;
+    throw error;
   }
 }
 
-
-
-export async function deleteExperience(experienceId) { 
+export async function deleteExperience(experienceId) {
   try {
     return await prisma.experience.delete({
-    where: {
-      id: experienceId
-    }
-  });
-} catch (error) {
+      where: {
+        id: experienceId,
+      },
+    });
+  } catch (error) {
     if (error.code === "P2025") {
-      throw new ApiError(
-        HTTP_STATUS.NOT_FOUND,
-        "Experience not found"
-      );
+      throw new ApiError(HTTP_STATUS.NOT_FOUND, "Experience not found");
     }
 
-      throw error;
-}
+    throw error;
+  }
 }

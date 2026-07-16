@@ -5,7 +5,6 @@ import projectRoutes from "../project.routes.js";
 import profileRoutes from "../profile.routes.js";
 import skillRoutes from "../skill.routes.js";
 import githubRoutes from "../github.routes.js";
-import contactRoutes from "../contact.routes.js";
 import authRoutes from "../auth.routes.js";
 import testRoutes from "../test.routes.js";
 import experienceRoutes from "../experience.routes.js";
@@ -27,8 +26,6 @@ router.use("/profile", profileRoutes);
 router.use("/skill", skillRoutes);
 
 router.use("/github", githubRoutes);
-
-router.use("/contact", contactRoutes);
 
 router.use("/auth", authRoutes);
 

@@ -5,7 +5,6 @@ import { HTTP_STATUS } from "../constants/httpStatus.js";
 import {
   getAllMessages  as getAllMessagesService,
   getMessage as getMessageService,
-  getUnreadMessages as getUnreadMessagesService,
   createMessage as createMessageService,
   updateMessage as updateMessageService,
   deleteMessage as deleteMessageService
@@ -37,20 +36,6 @@ export const getMessage = asyncHandler(async (req, res) => {
       message,
 
       "Message retrieved successfully",
-    ),
-  );
-});
-
-export const getUnreadMessages = asyncHandler(async (req, res) => {
-  const messages = await getUnreadMessagesService();
-
-  res.status(HTTP_STATUS.OK).json(
-    new ApiResponse(
-      HTTP_STATUS.OK,
-
-      messages,
-
-      "Unread messages retrieved successfully",
     ),
   );
 });

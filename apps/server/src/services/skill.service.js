@@ -2,27 +2,57 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
+import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 
-export async function getAllSkills(category) {
+export async function getAllSkills(query) {
   const where = {};
+  const { page, limit, skip } = getPagination(query.page, query.limit);
 
-  if (category) {
-    where.category = category;
+  if (query.category) {
+    where.category = query.category;
   }
 
-  return prisma.skill.findMany({
-    where,
-
-    orderBy: [
+  if (query.search) {
+    where.OR = [
       {
-        category: "asc",
-      },
+        name: {
+          contains: query.search,
 
-      {
-        name: "asc",
+          mode: "insensitive",
+        },
       },
-    ],
-  });
+    ];
+  }
+
+  const [total, skills] = await prisma.$transaction([
+    prisma.skill.count({
+      where,
+    }),
+
+    prisma.skill.findMany({
+      where,
+
+      skip,
+
+      take: limit,
+
+      orderBy: [
+        {
+          category: "asc",
+        },
+
+        {
+          name: "asc",
+        },
+      ],
+    }),
+  ]);
+
+  return {
+    items: skills,
+
+    pagination: getPaginationMeta(page, limit, total),
+  };
 }
 
 export async function getSkill(id) {

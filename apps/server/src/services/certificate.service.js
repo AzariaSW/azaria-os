@@ -2,22 +2,61 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
+import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 
-export async function getAllCertificates() {
+export async function getAllCertificates(query) {
   const where = {};
+  const { page, limit, skip } = getPagination(query.page, query.limit);
 
-  return prisma.certificate.findMany({
-
-    orderBy: [
+  if (query.search) {
+    where.OR = [
       {
-        issuer: "asc",
+        name: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
       },
 
       {
-        issueDate: "desc",
+        issuer: {
+          contains: query.search,
+
+          mode: "insensitive",
+        },
       },
-    ],
-  });
+    ];
+  }
+
+  const [total, certificates] = await prisma.$transaction([
+    prisma.certificate.count({
+      where,
+    }),
+
+    prisma.certificate.findMany({
+      where,
+
+      skip,
+
+      take: limit,
+
+      orderBy: [
+        {
+          name: "asc",
+        },
+
+        {
+          issueDate: "desc",
+        },
+      ],
+    }),
+  ]);
+
+  return {
+    items: certificates,
+
+    pagination: getPaginationMeta(page, limit, total)
+  };
 }
 
 export async function getCertificate(id) {
@@ -36,52 +75,40 @@ export async function getCertificate(id) {
   return certificate;
 }
 
-
-
 export async function createCertificate(data) {
   return prisma.certificate.create({
     data,
   });
 }
 
-
-
 export async function updateCertificate(data, certificateId) {
- try {
+  try {
     return await prisma.certificate.update({
       where: {
-        id: certificateId
+        id: certificateId,
       },
-      data
+      data,
     });
   } catch (error) {
     if (error.code === "P2025") {
-      throw new ApiError(
-        HTTP_STATUS.NOT_FOUND,
-        "Certificate not found"
-      );
+      throw new ApiError(HTTP_STATUS.NOT_FOUND, "Certificate not found");
     }
-      throw error;
+    throw error;
   }
 }
 
-
-
-export async function deleteCertificate(certificateId) { 
+export async function deleteCertificate(certificateId) {
   try {
     return await prisma.certificate.delete({
-    where: {
-      id: certificateId
-    }
-  });
-} catch (error) {
+      where: {
+        id: certificateId,
+      },
+    });
+  } catch (error) {
     if (error.code === "P2025") {
-      throw new ApiError(
-        HTTP_STATUS.NOT_FOUND,
-        "Experience not found"
-      );
+      throw new ApiError(HTTP_STATUS.NOT_FOUND, "Experience not found");
     }
 
-      throw error;
-}
+    throw error;
+  }
 }

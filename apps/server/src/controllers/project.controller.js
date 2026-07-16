@@ -5,7 +5,6 @@ import { HTTP_STATUS } from "../constants/httpStatus.js";
 import {
   getAllProjects  as getAllProjectsService,
   getProject as getProjectService,
-  getFeaturedProjects as getFeaturedProjectsService,
   createProject as createProjectService,
   updateProject as updateProjectService,
   deleteProject as deleteProjectService
@@ -37,20 +36,6 @@ export const getProject = asyncHandler(async (req, res) => {
       project,
 
       "Project retrieved successfully",
-    ),
-  );
-});
-
-export const getFeaturedProjects = asyncHandler(async (req, res) => {
-  const projects = await getFeaturedProjectsService();
-
-  res.status(HTTP_STATUS.OK).json(
-    new ApiResponse(
-      HTTP_STATUS.OK,
-
-      projects,
-
-      "Featured projects retrieved successfully",
     ),
   );
 });

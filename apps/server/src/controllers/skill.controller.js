@@ -13,7 +13,7 @@ import {
 } from "../services/skill.service.js";
 
 export const getAllSkills = asyncHandler(async (req, res) => {
-  const skills = await getAllSkillsService(req.query.category);
+  const skills = await getAllSkillsService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

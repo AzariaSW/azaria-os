@@ -1,10 +1,10 @@
 import prisma from "../prisma/client.js";
 
-import { getPagination } from "../utils/pagination.js";
+import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-export async function getAllProjects(query = {}) {
+export async function getAllProjects(query) {
   const { page, limit, skip } = getPagination(query.page, query.limit);
 
   const where = {};
@@ -52,17 +52,9 @@ export async function getAllProjects(query = {}) {
   ]);
 
   return {
-    projects,
+    items: projects,
 
-    pagination: {
-      page,
-
-      limit,
-
-      total,
-
-      totalPages: Math.ceil(total / limit),
-    },
+    pagination: getPaginationMeta(page, limit, total)
   };
 }
 
@@ -82,20 +74,6 @@ export async function getProject(id) {
   }
 
   return project;
-}
-
-export async function getFeaturedProjects() {
-  return prisma.project.findMany({
-    where: {
-      featured: true,
-    },
-
-    orderBy: {
-      createdAt: "desc",
-    },
-
-    take: 6,
-  });
 }
 
 export async function createProject(data) {
