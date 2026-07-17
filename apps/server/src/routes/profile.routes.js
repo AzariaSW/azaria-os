@@ -22,7 +22,7 @@ router.get("/", getProfile);
 
 router.put(
   "/",
-  
+  authenticateAdmin,
   uploadProfile.single("profileImage"),
   validate(updateProfileSchema),
   updateProfile,

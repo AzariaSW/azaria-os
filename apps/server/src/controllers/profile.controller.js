@@ -3,10 +3,10 @@ import ApiResponse from "../utils/ApiResponse.js";
 
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-import { 
+import {
   getProfile as getProfileService,
-  updateProfile as updateProfileService
- } from "../services/profile.service.js";
+  updateProfile as updateProfileService,
+} from "../services/profile.service.js";
 
 export const getProfile = asyncHandler(async (req, res) => {
   const profile = await getProfileService();
@@ -23,13 +23,13 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
+  try {
   const data = { ...req.validated.body };
   if (req.file) {
     data.profileImage = `/uploads/profile/${req.file.filename}`;
   }
-  const profile = await updateProfileService(data);
-
-  res.status(HTTP_STATUS.OK).json(
+    const profile = await updateProfileService(data);
+    res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
       HTTP_STATUS.OK,
 
@@ -38,4 +38,11 @@ export const updateProfile = asyncHandler(async (req, res) => {
       "Profile updated.",
     ),
   );
+  } catch (error) {
+    if (req.file) {
+      await deleteFile(req.file.path);
+    }
+
+    throw error;
+  }
 });
