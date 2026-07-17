@@ -3,9 +3,16 @@ import prisma from "../prisma/client.js";
 import { getPagination, getPaginationMeta } from "../utils/pagination.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
+import { getSorting } from "../utils/sorting.js";
 
 export async function getAllMessages(query) {
   const { page, limit, skip } = getPagination(query.page, query.limit);
+  const orderBy = getSorting(
+    query.sort,
+    query.order,
+    ["name", "email", "subject", "message","createdAt", "isRead"],
+    [{ email: "asc" }, { createdAt: "desc" }],
+  );
 
   const where = {};
 
@@ -57,14 +64,7 @@ export async function getAllMessages(query) {
 
       take: limit,
 
-      orderBy: [
-        {
-          email: "asc",
-        },
-        {
-          createdAt: "desc",
-        },
-      ],
+      orderBy: orderBy
     }),
 
     prisma.ContactMessage.count({

@@ -11,17 +11,15 @@ import {
 } from "../services/project.service.js";
 
 export const getAllProjects = asyncHandler(async (req, res) => {
-  const result = await getAllProjectsService(req.query);
+  const projects = await getAllProjectsService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
       HTTP_STATUS.OK,
 
-      result.projects,
+      projects,
 
       "Projects retrieved successfully",
-
-      result.pagination,
     ),
   );
 });

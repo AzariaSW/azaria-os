@@ -11,17 +11,16 @@ import {
 } from "../services/message.service.js";
 
 export const getAllMessages = asyncHandler(async (req, res) => {
-  const result = await getAllMessagesService(req.query);
+  const messages = await getAllMessagesService(req.query);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
       HTTP_STATUS.OK,
 
-      result.messages,
+      messages,
 
       "Messages retrieved successfully",
 
-      result.pagination,
     ),
   );
 });

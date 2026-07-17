@@ -3,10 +3,17 @@ import prisma from "../prisma/client.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 import { getPagination, getPaginationMeta } from "../utils/pagination.js";
+import { getSorting } from "../utils/sorting.js";
 
 export async function getAllSkills(query) {
   const where = {};
   const { page, limit, skip } = getPagination(query.page, query.limit);
+  const orderBy = getSorting(
+    query.sort,
+    query.order,
+    ["name", "category", "createdAt", "level","icon"],
+    [{ category: "asc" }, { name: "asc" }],
+  );
 
   if (query.category) {
     where.category = query.category;
@@ -36,15 +43,7 @@ export async function getAllSkills(query) {
 
       take: limit,
 
-      orderBy: [
-        {
-          category: "asc",
-        },
-
-        {
-          name: "asc",
-        },
-      ],
+      orderBy: orderBy
     }),
   ]);
 
