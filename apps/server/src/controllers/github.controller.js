@@ -3,13 +3,13 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
-  getGithubProfile,
-  getRepositories,
-  getRecentActivity,
+  getGithubProfile as getGithubProfileService,
+  getRepositories as getRepositoriesService,
+  getRecentActivity as getRecentActivityService,
 } from "../services/github.service.js";
 
-export const getActivity = asyncHandler(async (req, res) => {
-  const activity = await getRecentActivity();
+export const getRecentActivity = asyncHandler(async (req, res) => {
+  const activity = await getRecentActivityService();
 
   res
     .status(HTTP_STATUS.OK)
@@ -24,8 +24,8 @@ export const getActivity = asyncHandler(async (req, res) => {
     );
 });
 
-export const getProfile = asyncHandler(async (req, res) => {
-  const profile = await getGithubProfile();
+export const getGithubProfile = asyncHandler(async (req, res) => {
+  const profile = await getGithubProfileService();
 
   res
     .status(HTTP_STATUS.OK)
@@ -40,8 +40,8 @@ export const getProfile = asyncHandler(async (req, res) => {
     );
 });
 
-export const getRepository = asyncHandler(async (req, res) => {
-  const repositories = await getRepositories();
+export const getRepositories = asyncHandler(async (req, res) => {
+  const repositories = await getRepositoriesService();
 
   res
     .status(HTTP_STATUS.OK)

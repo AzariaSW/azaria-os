@@ -39,7 +39,7 @@ export async function getAllProjects(query) {
 
     where,
 
-    allowedSortFields: ["title", "description","featured","createdAt", "updatedAt", "imageUrl", "liveUrl", "githubUrl"],
+    allowedSortFields: ["title", "description","createdAt", "updatedAt"],
 
     defaultSort: [{ createdAt: "desc" }]
   });

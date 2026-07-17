@@ -5,8 +5,6 @@ class ApiResponse {
     data = null,
 
     message = "Success",
-
-    metadata = null,
   ) {
     this.success = true;
 
@@ -15,10 +13,6 @@ class ApiResponse {
     this.message = message;
 
     this.data = data;
-
-    if (metadata) {
-      this.metadata = metadata;
-    }
   }
 }
 

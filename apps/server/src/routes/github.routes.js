@@ -1,17 +1,17 @@
 import { Router } from "express";
 
 import {
-  getProfile,
-  getRepository,
-  getActivity,
+  getGithubProfile,
+  getRepositories,
+  getRecentActivity,
 } from "../controllers/github.controller.js";
 
 const router = Router();
 
-router.get("/profile", getProfile);
+router.get("/profile", getGithubProfile);
 
-router.get("/repositories", getRepository);
+router.get("/repositories", getRepositories);
 
-router.get("/activity", getActivity);
+router.get("/activity", getRecentActivity);
 
 export default router;

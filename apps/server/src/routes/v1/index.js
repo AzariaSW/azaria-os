@@ -19,22 +19,22 @@ router.use("/test", testRoutes);
 
 router.use("/health", healthRoutes);
 
-router.use("/project", projectRoutes);
+router.use("/projects", projectRoutes);
 
 router.use("/profile", profileRoutes);
 
-router.use("/skill", skillRoutes);
+router.use("/skills", skillRoutes);
 
 router.use("/github", githubRoutes);
 
 router.use("/auth", authRoutes);
 
-router.use("/experience", experienceRoutes);
+router.use("/experiences", experienceRoutes);
 
 router.use("/education", educationRoutes);
 
-router.use("/certificate", certificateRoutes);
+router.use("/certificates", certificateRoutes);
 
-router.use("/message", messageRoutes);
+router.use("/messages", messageRoutes);
 
 export default router;

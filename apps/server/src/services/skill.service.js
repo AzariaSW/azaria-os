@@ -30,7 +30,7 @@ export async function getAllSkills(query) {
 
     where,
 
-    allowedSortFields: ["name", "category", "createdAt", "level","icon"],
+    allowedSortFields: ["name", "category", "createdAt", "level"],
 
     defaultSort: [{ category: "asc" }, { name: "asc" }]
   });

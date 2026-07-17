@@ -34,7 +34,7 @@ export async function getAllCertificates(query) {
 
     where,
 
-    allowedSortFields: ["name", "issuer", "createdAt", "issueDate","credentialUrl"],
+    allowedSortFields: ["name", "issuer", "createdAt", "issueDate"],
 
     defaultSort: [{ name: "asc" }, { issueDate: "desc" }],
   });
