@@ -20,7 +20,19 @@ export const UPLOAD = Object.freeze({
     "image/webp",
   ],
 
+  IMAGE_EXTENSIONS: [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp"
+  ],
+
   DOCUMENT_TYPES: [
     "application/pdf",
   ],
+
+  DOCUMENT_EXTENSIONS: [
+
+    ".pdf"
+  ]
 });

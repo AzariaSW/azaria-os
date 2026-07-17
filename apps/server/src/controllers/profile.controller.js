@@ -26,6 +26,9 @@ export const updateProfile = asyncHandler(async (req, res) => {
   try {
   const data = { ...req.validated.body };
   if (req.file) {
+    if (!req.file.size) {
+      return new ApiError(HTTP_STATUS.BAD_REQUEST, "Uploaded file is empty.");
+    }
     data.profileImage = `/uploads/profile/${req.file.filename}`;
   }
     const profile = await updateProfileService(data);
