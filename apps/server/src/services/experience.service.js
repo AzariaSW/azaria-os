@@ -2,18 +2,11 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-import { getPagination, getPaginationMeta } from "../utils/pagination.js";
-import { getSorting } from "../utils/sorting.js";
+import { queryBuilder } from "./query.service.js";
+
 
 export async function getAllExperiences(query) {
   const where = {};
-  const { page, limit, skip } = getPagination(query.page, query.limit);
-  const orderBy = getSorting(
-    query.sort,
-    query.order,
-    ["company", "role", "createdAt", "startDate"],
-    [{ role: "asc" }, { company: "asc" }],
-  );
 
   if (query.role) {
     where.role = query.role;
@@ -39,27 +32,17 @@ export async function getAllExperiences(query) {
     ];
   }
 
-  const [total, experiences] = await prisma.$transaction([
-    prisma.experience.count({
-      where,
-    }),
+  return queryBuilder({
+    model: prisma.Experience,
 
-    prisma.experience.findMany({
-      where,
+    query,
 
-      skip,
+    where,
 
-      take: limit,
+    allowedSortFields: ["company", "role", "createdAt", "startDate"],
 
-      orderBy: orderBy,
-    }),
-  ]);
-
-  return {
-    items: experiences,
-
-    pagination: getPaginationMeta(page, limit, total),
-  };
+    defaultSort: [{ role: "asc" }, { company: "asc" }],
+  });
 }
 
 export async function getExperience(id) {

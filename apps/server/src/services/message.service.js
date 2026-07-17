@@ -1,19 +1,10 @@
 import prisma from "../prisma/client.js";
 
-import { getPagination, getPaginationMeta } from "../utils/pagination.js";
+import { queryBuilder } from "./query.service.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-import { getSorting } from "../utils/sorting.js";
 
 export async function getAllMessages(query) {
-  const { page, limit, skip } = getPagination(query.page, query.limit);
-  const orderBy = getSorting(
-    query.sort,
-    query.order,
-    ["name", "email", "subject", "message","createdAt", "isRead"],
-    [{ email: "asc" }, { createdAt: "desc" }],
-  );
-
   const where = {};
 
   if (query.isRead === "false") {
@@ -56,27 +47,18 @@ export async function getAllMessages(query) {
     ];
   }
 
-  const [messages, total] = await prisma.$transaction([
-    prisma.ContactMessage.findMany({
-      where,
+  return queryBuilder({
+    model: prisma.ContactMessage,
 
-      skip,
+    query,
 
-      take: limit,
+    where,
 
-      orderBy: orderBy
-    }),
+    allowedSortFields: ["name", "email", "subject", "message","createdAt", "isRead"],
+    
 
-    prisma.ContactMessage.count({
-      where,
-    }),
-  ]);
-
-  return {
-    messages,
-
-    pagination: getPaginationMeta(page, limit, total)
-  };
+    defaultSort: [{ email: "asc" }, { createdAt: "desc" }]
+  });
 }
 
 export async function getMessage(id) {

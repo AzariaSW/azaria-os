@@ -1,19 +1,11 @@
 import prisma from "../prisma/client.js";
 
-import { getPagination, getPaginationMeta } from "../utils/pagination.js";
+import { queryBuilder } from "./query.service.js";
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-import { getSorting } from "../utils/sorting.js";
+
 
 export async function getAllProjects(query) {
-  const { page, limit, skip } = getPagination(query.page, query.limit);
-  const orderBy = getSorting(
-    query.sort,
-    query.order,
-    ["title", "description","featured","createdAt", "updatedAt", "imageUrl", "liveUrl", "githubUrl"],
-    [{ createdAt: "desc" }],
-  );
-
   const where = {};
 
   if (query.featured === "true") {
@@ -40,27 +32,17 @@ export async function getAllProjects(query) {
     ];
   }
 
-  const [projects, total] = await prisma.$transaction([
-    prisma.project.findMany({
-      where,
+  return queryBuilder({
+    model: prisma.Project,
 
-      skip,
+    query,
 
-      take: limit,
+    where,
 
-      orderBy: orderBy
-    }),
+    allowedSortFields: ["title", "description","featured","createdAt", "updatedAt", "imageUrl", "liveUrl", "githubUrl"],
 
-    prisma.project.count({
-      where,
-    }),
-  ]);
-
-  return {
-    items: projects,
-
-    pagination: getPaginationMeta(page, limit, total)
-  };
+    defaultSort: [{ createdAt: "desc" }]
+  });
 }
 
 export async function getProject(id) {

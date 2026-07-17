@@ -2,18 +2,10 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-import { getPagination, getPaginationMeta } from "../utils/pagination.js";
-import { getSorting } from "../utils/sorting.js";
+import { queryBuilder } from "./query.service.js";
 
 export async function getAllEducations(query) {
   const where = {};
-  const { page, limit, skip } = getPagination(query.page, query.limit);
-  const orderBy = getSorting(
-    query.sort,
-    query.order,
-    ["institution", "degree", "field","endDate","createdAt", "startDate"],
-    [{ institution: "asc" }, { degree: "desc" }],
-  );
 
   if (query.search) {
     where.OR = [
@@ -43,27 +35,17 @@ export async function getAllEducations(query) {
     ];
   }
 
-  const [total, educations] = await prisma.$transaction([
-    prisma.education.count({
-      where,
-    }),
+  return queryBuilder({
+    model: prisma.Education,
 
-    prisma.education.findMany({
-      where,
+    query,
 
-      skip,
+    where,
 
-      take: limit,
+    allowedSortFields: ["institution", "degree", "field","endDate","createdAt", "startDate"],
 
-      orderBy: orderBy
-    }),
-  ]);
-
-  return {
-    items: educations,
-
-    pagination: getPaginationMeta(page, limit, total)
-  };
+    defaultSort: [{ institution: "asc" }, { degree: "desc" }],
+  });
 }
 
 export async function getEducation(id) {
@@ -120,7 +102,7 @@ export async function updateEducation(data, educationId) {
     if (error.code === "P2025") {
       throw new ApiError(
         HTTP_STATUS.NOT_FOUND,
-        "Experience not found"
+        "Education not found"
       );
     }
       throw error;
@@ -140,7 +122,7 @@ export async function deleteEducation(educationId) {
     if (error.code === "P2025") {
       throw new ApiError(
         HTTP_STATUS.NOT_FOUND,
-        "Experience not found"
+        "Education not found"
       );
     }
 

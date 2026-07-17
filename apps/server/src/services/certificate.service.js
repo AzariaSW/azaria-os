@@ -2,18 +2,10 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-import { getPagination, getPaginationMeta } from "../utils/pagination.js";
-import { getSorting } from "../utils/sorting.js";
+import { queryBuilder } from "./query.service.js";
 
 export async function getAllCertificates(query) {
   const where = {};
-  const { page, limit, skip } = getPagination(query.page, query.limit);
-  const orderBy = getSorting(
-    query.sort,
-    query.order,
-    ["name", "issuer", "createdAt", "issueDate","credentialUrl"],
-    [{ name: "asc" }, { issueDate: "desc" }],
-  );
 
   if (query.search) {
     where.OR = [
@@ -35,27 +27,17 @@ export async function getAllCertificates(query) {
     ];
   }
 
-  const [total, certificates] = await prisma.$transaction([
-    prisma.certificate.count({
-      where,
-    }),
+  return queryBuilder({
+    model: prisma.Certificate,
 
-    prisma.certificate.findMany({
-      where,
+    query,
 
-      skip,
+    where,
 
-      take: limit,
+    allowedSortFields: ["name", "issuer", "createdAt", "issueDate","credentialUrl"],
 
-      orderBy: orderBy
-    }),
-  ]);
-
-  return {
-    items: certificates,
-
-    pagination: getPaginationMeta(page, limit, total)
-  };
+    defaultSort: [{ name: "asc" }, { issueDate: "desc" }],
+  });
 }
 
 export async function getCertificate(id) {
