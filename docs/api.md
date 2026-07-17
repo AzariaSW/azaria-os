@@ -60,6 +60,8 @@ Authorization: Bearer <token>
   "email": "example@gmail.com",
   "location": "Addis Ababa",
   "profileImage": "/picture/azaria.jpg",
+  "resumeUrl": "/uploads/....",
+  "cvUrl": "/uploads/....",
   "github": "http://www.github.com/Azari_SW",
   "linkedin": "https://www.linkedin.com/in/azaria-abenet-795875377"
 }

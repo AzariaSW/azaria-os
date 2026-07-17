@@ -7,7 +7,7 @@ export const skillSchema = z.object({
 
     category: z.string().min(5).max(50),
 
-    level: z.string().min(3).max(30).optional(),
+    level: z.string().min(3).max(30),
 
     icon: z.string().min(2).max(100).optional(),
   }),

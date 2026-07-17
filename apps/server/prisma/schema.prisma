@@ -25,6 +25,9 @@ model Profile {
 
   profileImage String?
 
+  resumeUrl String?
+
+  cvUrl String?
 
   github String?
 
@@ -51,7 +54,7 @@ model Skill {
   category String
 
 
-  level String?
+  level String
 
 
   icon String?
@@ -134,7 +137,7 @@ model Education {
 
   @@unique([institution, degree])
 
-  field String?
+  field String
 
 
   startDate DateTime
