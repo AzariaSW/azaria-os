@@ -8,7 +8,7 @@ export const educationSchema = z.object({
 
     degree: z.string().min(5).max(50),
 
-    field: z.string().min(10).max(1000),
+    field: z.string().min(5).max(100),
 
     startDate: z.preprocess(
       (value) => toDate(value),
@@ -33,7 +33,7 @@ export const updateEducationSchema = z.object({
 
     degree: z.string().min(5).max(50).optional(),
 
-    field: z.string().min(10).max(1000).optional(),
+    field: z.string().min(5).max(100).optional(),
 
     startDate: z.preprocess(
       (value) => toDate(value),

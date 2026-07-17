@@ -9,7 +9,7 @@ export const messageSchema = z.object({
 
     subject: z.string().min(10).max(100),
 
-    message: z.string().min(5).max(1000),   
+    message: z.string().min(5).max(2000),   
 
   }),
 

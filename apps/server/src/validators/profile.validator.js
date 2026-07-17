@@ -20,7 +20,7 @@ export const updateProfileSchema = z.object({
 
     linkedin: z.string().url().optional(),
 
-    profileImage: z.string().optional(),
+    profileImage: z.string().url().optional(),
   }),
 
   params: z.object({}),

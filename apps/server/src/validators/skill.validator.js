@@ -9,7 +9,7 @@ export const skillSchema = z.object({
 
     level: z.string().min(3).max(30),
 
-    icon: z.string().min(2).max(100).optional(),
+    icon: z.string().url().optional(),
   }),
 
   params: z.object({}),

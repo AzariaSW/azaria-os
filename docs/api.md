@@ -54,11 +54,11 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "fullName": "Azaria Abenet",
-  "title": "Software Engineer",
-  "bio": "...",
+  "fullName": "3-100 character",
+  "title": "upto 150 character",
+  "bio": "upto 3000 character",
   "email": "example@gmail.com",
-  "location": "Addis Ababa",
+  "location": "upto 100 character",
   "profileImage": "/picture/azaria.jpg",
   "resumeUrl": "/uploads/....",
   "cvUrl": "/uploads/....",
@@ -99,8 +99,8 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "title": "ProjectX(REQUIRED)",
-  "description": "...(REQUIRED)",
+  "title": "3-100 character(REQUIRED)",
+  "description": "10-1000 character(REQUIRED)",
   "githubUrl": "http://www.github.com/Azari_SW/...",
   "liveUrl": "http://...",
   "imageUrl": "/picture/ex.png",
@@ -119,8 +119,8 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "title": "ProjectX",
-  "description": "...",
+  "title": "3-100 character",
+  "description": "10-1000 character",
   "githubUrl": "http://www.github.com/Azari_SW/...",
   "liveUrl": "http://...",
   "imageUrl": "/picture/ex.png",
@@ -167,9 +167,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "name": "c++(REQUIRED)",
-  "category": "...(REQUIRED)",
-  "level": "http://www.github.com/Azari_SW/...",
+  "name": "2-100 character(REQUIRED)",
+  "category": "5-50 character(REQUIRED)",
+  "level": "3-30 character(REQUIRED)",
   "icon": "http://..."
 }
 ```
@@ -185,9 +185,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "name": "c++",
-  "category": "...",
-  "level": "http://www.github.com/Azari_SW/...",
+  "name": "2-100 character",
+  "category": "5-50 character",
+  "level": "3-30 character",
   "icon": "http://..."
 }
 ```
@@ -231,9 +231,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "company": "company name(REQUIRED)",
-  "role": "role(REQUIRED)",
-  "description": "...(REQUIRED)",
+  "company": "2-100 character(REQUIRED)",
+  "role": "5-50 character(REQUIRED)",
+  "description": "10-1000 character(REQUIRED)",
   "startDate": "dd/mm/yyyy(REQUIRED)",
   "endDate": "dd/mm/yyyy"
 }
@@ -250,9 +250,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "company": "company name",
-  "role": "role",
-  "description": "...",
+  "company": "2-100 character",
+  "role": "5-50 character",
+  "description": "10-1000 character",
   "startDate": "dd/mm/yyyy",
   "endDate": "dd/mm/yyyy"
 }
@@ -300,9 +300,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "institution": "institution name(REQUIRED)",
-  "degree": "Bachelor of Science(REQUIRED)",
-  "field": "Software Engineering",
+  "institution": "2-100 character(REQUIRED)",
+  "degree": "5-50 character(REQUIRED)",
+  "field": "5-100 character(REQUIRED)",
   "startDate": "dd/mm/yyyy(REQUIRED)",
   "endDate": "dd/mm/yyyy"
 }
@@ -319,9 +319,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "institution": "institution name",
-  "degree": "Bachelor of Science",
-  "field": "Software Engineering",
+  "institution": "2-100 character",
+  "degree": "5-50 character",
+  "field": "5-100 character",
   "startDate": "dd/mm/yyyy",
   "endDate": "dd/mm/yyyy"
 }
@@ -365,8 +365,8 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "name": "cerificate name(REQUIRED)",
-  "issuer": "issuer name(REQUIRED)",
+  "name": "2-100 character(REQUIRED)",
+  "issuer": "5-100 character(REQUIRED)",
   "issuDate": "dd/mm/yyyy(REQUIRED)",
   "credentialUrl": "https://...."
 }
@@ -383,8 +383,8 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "name": "cerificate name",
-  "issuer": "issuer name",
+  "name": "2-100 character",
+  "issuer": "5-100 character",
   "issuDate": "dd/mm/yyyy",
   "credentialUrl": "https://...."
 }
@@ -450,10 +450,10 @@ Sends a message.
 
 ```json
 {
-  "name": "sender name(REQUIRED)",
-  "email": "sender email(REQUIRED)",
-  "subject": "subject(REQUIRED)",
-  "message": "message(REQUIRED)"
+  "name": "2-100 character(REQUIRED)",
+  "email": "eg@gmail.com(REQUIRED)",
+  "subject": "10-100 character(REQUIRED)",
+  "message": "5-2000 character(REQUIRED)"
 }
 ```
 
