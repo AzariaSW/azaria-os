@@ -3,10 +3,13 @@ import ApiResponse from "../utils/ApiResponse.js";
 
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
-import { getProfile,updateProfiles } from "../services/profile.service.js";
+import { 
+  getProfile as getProfileService,
+  updateProfile as updateProfileService
+ } from "../services/profile.service.js";
 
-export const getMyProfile = asyncHandler(async (req, res) => {
-  const profile = await getProfile();
+export const getProfile = asyncHandler(async (req, res) => {
+  const profile = await getProfileService();
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(
@@ -20,7 +23,11 @@ export const getMyProfile = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-  const profile = await updateProfiles(req.body);
+  const data = { ...req.validated.body };
+  if (req.file) {
+    data.profileImage = `/uploads/profile/${req.file.filename}`;
+  }
+  const profile = await updateProfileService(data);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

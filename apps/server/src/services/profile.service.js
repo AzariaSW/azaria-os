@@ -17,7 +17,7 @@ export async function getProfile() {
   return profile;
 }
 
-export async function updateProfiles(data) {
+export async function updateProfile(data) {
   return prisma.profile.update({
     where: {
       id: "main-profile",
