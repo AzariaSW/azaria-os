@@ -1,8 +1,8 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
-
+import ApiError from "../utils/ApiError.js";
+import { deleteFile } from "../services/file.service.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-
 import {
   getProfile as getProfileService,
   updateProfile as updateProfileService,
@@ -22,28 +22,44 @@ export const getProfile = asyncHandler(async (req, res) => {
   );
 });
 
+function getUploadedFile(req, field) {
+  return req.files?.[field]?.[0] ?? null;
+}
+
 export const updateProfile = asyncHandler(async (req, res) => {
-  try {
   const data = { ...req.validated.body };
-  if (req.file) {
-    if (!req.file.size) {
-      return new ApiError(HTTP_STATUS.BAD_REQUEST, "Uploaded file is empty.");
+  const profileImage = getUploadedFile(req, "profileImage");
+  const resume = getUploadedFile(req, "resume");
+  const cv = getUploadedFile(req, "cv");
+
+  try {
+    if (profileImage) {
+      data.profileImage = `/uploads/profile/${profileImage.filename}`;
     }
-    data.profileImage = `/uploads/profile/${req.file.filename}`;
-  }
+
+    if (resume) {
+      data.resumeUrl = `/uploads/resume/${resume.filename}`;
+    }
+
+    if (cv) {
+      data.cvUrl = `/uploads/cv/${cv.filename}`;
+    }
+
     const profile = await updateProfileService(data);
     res.status(HTTP_STATUS.OK).json(
-    new ApiResponse(
-      HTTP_STATUS.OK,
+      new ApiResponse(
+        HTTP_STATUS.OK,
 
-      profile,
+        profile,
 
-      "Profile updated.",
-    ),
-  );
+        "Profile updated.",
+      ),
+    );
   } catch (error) {
-    if (req.file) {
-      await deleteFile(req.file.path);
+    if (req.files) {
+      await deleteFile(profileImage?.path);
+      await deleteFile(resume?.path);
+      await deleteFile(cv?.path);
     }
 
     throw error;

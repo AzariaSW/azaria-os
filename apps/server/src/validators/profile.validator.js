@@ -14,13 +14,8 @@ export const updateProfileSchema = z.object({
 
     github: z.string().url().optional(),
 
-    resumeUrl: z.string().url().optional(),
-
-    cvUrl: z.string().url().optional(),
-
     linkedin: z.string().url().optional(),
 
-    profileImage: z.string().url().optional(),
   }),
 
   params: z.object({}),

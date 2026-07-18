@@ -9,71 +9,116 @@ import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import { UPLOAD } from "../config/upload.config.js";
 
-export const imageUploader = (folder) =>
-  createUploader({
-    folder,
-    allowedTypes: UPLOAD.IMAGE_TYPES,
-    allowedExtensions: UPLOAD.IMAGE_EXTENSIONS,
-    maxSize: UPLOAD.MAX_IMAGE_SIZE,
-  });
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    let folder;
 
-export const pdfUploader = (folder) =>
-  createUploader({
-    folder,
-    allowedTypes: UPLOAD.DOCUMENT_TYPES,
-    allowedExtensions: UPLOAD.DOCUMENT_EXTENSIONS,
-    maxSize: UPLOAD.MAX_RESUME_SIZE,
-  });
+    switch (file.fieldname) {
+      case "profileImage":
+        folder = UPLOAD.DESTINATIONS.PROFILE;
+        break;
 
-const storage = (folder) =>
-  multer.diskStorage({
-    destination(req, file, cb) {
-      const destination = path.join(UPLOAD.BASE_DIRECTORY, folder);
+      case "resume":
+        folder = UPLOAD.DESTINATIONS.RESUME;
+        break;
 
-      fs.mkdirSync(destination, {
-        recursive: true,
-      });
+      case "cv":
+        folder = UPLOAD.DESTINATIONS.CV;
+        break;
 
-      cb(null, destination);
-    },
+      default:
+        return cb(
+          new ApiError(
+            HTTP_STATUS.BAD_REQUEST,
+            "Unexpected upload field.",
+          ),
+        );
+    }
 
-    filename(req, file, cb) {
-      const extension = path.extname(file.originalname).toLowerCase();
+    const destination = path.join(
+      UPLOAD.BASE_DIRECTORY,
+      folder,
+    );
 
-      const filename = `${Date.now()}-${crypto.randomUUID()}${extension}`;
+    fs.mkdirSync(destination, {
+      recursive: true,
+    });
 
-      cb(null, filename);
-    },
-  });
+    cb(null, destination);
+  },
 
-function fileFilter(allowedTypes, allowedExtensions) {
-  return (req, file, cb) => {
+  filename(req, file, cb) {
     const extension = path.extname(file.originalname).toLowerCase();
-    if (!allowedExtensions.includes(extension)) {
+
+    cb(
+      null,
+      `${Date.now()}-${crypto.randomUUID()}${extension}`,
+    );
+  },
+});
+
+function fileFilter(req, file, cb) {
+  let allowedTypes;
+  let allowedExtensions;
+
+  switch (file.fieldname) {
+    case "profileImage":
+      allowedTypes = UPLOAD.IMAGE_TYPES;
+      allowedExtensions = UPLOAD.IMAGE_EXTENSIONS;
+      break;
+
+    case "resume":
+    case "cv":
+      allowedTypes = UPLOAD.DOCUMENT_TYPES;
+      allowedExtensions = UPLOAD.DOCUMENT_EXTENSIONS;
+      break;
+
+    default:
       return cb(
-        new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid file extension."),
+        new ApiError(
+          HTTP_STATUS.BAD_REQUEST,
+          "Unexpected upload field.",
+        ),
       );
-    }
+  }
 
-    if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new ApiError(HTTP_STATUS.BAD_REQUEST, "Unsupported file type"));
-    }
+  const extension = path
+    .extname(file.originalname)
+    .toLowerCase();
 
-    cb(null, true);
-  };
+  if (!allowedExtensions.includes(extension)) {
+    return cb(
+      new ApiError(
+        HTTP_STATUS.BAD_REQUEST,
+        "Invalid file extension.",
+      ),
+    );
+  }
+
+  if (!allowedTypes.includes(file.mimetype)) {
+    return cb(
+      new ApiError(
+        HTTP_STATUS.BAD_REQUEST,
+        "Unsupported file type.",
+      ),
+    );
+  }
+
+  cb(null, true);
 }
 
-function createUploader({ folder, allowedTypes, allowedExtensions, maxSize }) {
+function createUploader() {
   return multer({
-    storage: storage(folder),
-
-    fileFilter: fileFilter(allowedTypes, allowedExtensions),
-
+    storage,
+    fileFilter,
     limits: {
-      fileSize: maxSize,
+      fileSize: UPLOAD.MAX_FILE_SIZE,
     },
   });
 }
+
+
+export const profileUploader = createUploader();
 
 export function handleUpload(upload) {
   return (req, res, next) => {

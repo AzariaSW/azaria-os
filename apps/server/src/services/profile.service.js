@@ -29,11 +29,15 @@ export async function updateProfile(data) {
     data,
   });
 
-  if (
-    data.profileImage &&
-    current.profileImage &&
-    current.profileImage !== data.profileImage
-  ) {
-    await deleteFile(current.profileImage);
+  const uploadedFields = ["profileImage", "resumeUrl", "cvUrl"];
+
+  for (const field of uploadedFields) {
+    if (data[field] && current[field] && data[field] !== current[field]) {
+      await deleteFile(current[field]);
+    }
   }
+
+  return update;
+
+  return update;
 }

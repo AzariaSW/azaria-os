@@ -7,7 +7,7 @@ import {
 import { updateProfileSchema } from "../validators/profile.validator.js";
 import authenticateAdmin from "../middleware/authenticateAdmin.js";
 import validate from "../middleware/validate.js";
-import { imageUploader } from "../middleware/upload.js";
+import { profileUploader, handleUpload } from "../middleware/upload.js";
 import { UPLOAD } from "../config/upload.config.js";
 
 const router = Router();
@@ -17,7 +17,23 @@ router.get("/", getProfile);
 router.put(
   "/",
   authenticateAdmin,
-  imageUploader(UPLOAD.DESTINATIONS.PROFILE).single("profileImage"),
+  handleUpload(
+    profileUploader.fields([
+      {
+        name: "profileImage",
+        maxCount: 1,
+      },
+      {
+        name: "resume",
+        maxCount: 1,
+      },
+      {
+        name: "cv",
+        maxCount: 1,
+      },
+    ]),
+  ),
+
   validate(updateProfileSchema),
   updateProfile,
 );
