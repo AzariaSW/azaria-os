@@ -1,13 +1,14 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
+import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
-  getAllProjects  as getAllProjectsService,
+  getAllProjects as getAllProjectsService,
   getProject as getProjectService,
   createProject as createProjectService,
   updateProject as updateProjectService,
-  deleteProject as deleteProjectService
+  deleteProject as deleteProjectService,
 } from "../services/project.service.js";
 
 export const getAllProjects = asyncHandler(async (req, res) => {
@@ -39,13 +40,18 @@ export const getProject = asyncHandler(async (req, res) => {
 });
 
 export const createProject = asyncHandler(async (req, res) => {
-  const projects = await createProjectService(req.body);
+  const data = { ...req.body };
+  
+  const project = await createProjectService(
+    data,
+    req.files ?? [],
+  );
 
   res.status(HTTP_STATUS.CREATED).json(
     new ApiResponse(
       HTTP_STATUS.CREATED,
 
-      projects,
+      project,
 
       "Project created successfully",
     ),
@@ -53,7 +59,13 @@ export const createProject = asyncHandler(async (req, res) => {
 });
 
 export const updateProject = asyncHandler(async (req, res) => {
-  const projects = await updateProjectService(req.body,req.params.id);
+  const data = { ...req.body };
+
+  const projects = await updateProjectService(
+    data,
+    req.params.id,
+    req.files ?? [],
+  );
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

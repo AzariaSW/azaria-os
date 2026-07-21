@@ -8,7 +8,8 @@ export const UPLOAD = Object.freeze({
     PROJECTS: "projects",
     CERTIFICATES: "certificates",
     RESUME: "resume",
-    CV:"cv"
+    CV:"cv",
+    TEMP:"temp"
   },
 
   MAX_FILE_SIZE: 10 * 1024 * 1024,

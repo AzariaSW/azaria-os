@@ -26,19 +26,17 @@ const storage = multer.diskStorage({
         folder = UPLOAD.DESTINATIONS.CV;
         break;
 
+      case "images":
+        folder = UPLOAD.DESTINATIONS.TEMP;
+        break;
+
       default:
         return cb(
-          new ApiError(
-            HTTP_STATUS.BAD_REQUEST,
-            "Unexpected upload field.",
-          ),
+          new ApiError(HTTP_STATUS.BAD_REQUEST, "Unexpected upload field."),
         );
     }
 
-    const destination = path.join(
-      UPLOAD.BASE_DIRECTORY,
-      folder,
-    );
+    const destination = path.join(UPLOAD.BASE_DIRECTORY, folder);
 
     fs.mkdirSync(destination, {
       recursive: true,
@@ -50,10 +48,7 @@ const storage = multer.diskStorage({
   filename(req, file, cb) {
     const extension = path.extname(file.originalname).toLowerCase();
 
-    cb(
-      null,
-      `${Date.now()}-${crypto.randomUUID()}${extension}`,
-    );
+    cb(null, `${Date.now()}-${crypto.randomUUID()}${extension}`);
   },
 });
 
@@ -72,36 +67,26 @@ function fileFilter(req, file, cb) {
       allowedTypes = UPLOAD.DOCUMENT_TYPES;
       allowedExtensions = UPLOAD.DOCUMENT_EXTENSIONS;
       break;
+    
+      case "images":
+      allowedTypes = UPLOAD.IMAGE_TYPES;
+      allowedExtensions = UPLOAD.IMAGE_EXTENSIONS;
+      break;
 
     default:
       return cb(
-        new ApiError(
-          HTTP_STATUS.BAD_REQUEST,
-          "Unexpected upload field.",
-        ),
+        new ApiError(HTTP_STATUS.BAD_REQUEST, "Unexpected upload field."),
       );
   }
 
-  const extension = path
-    .extname(file.originalname)
-    .toLowerCase();
+  const extension = path.extname(file.originalname).toLowerCase();
 
   if (!allowedExtensions.includes(extension)) {
-    return cb(
-      new ApiError(
-        HTTP_STATUS.BAD_REQUEST,
-        "Invalid file extension.",
-      ),
-    );
+    return cb(new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid file extension."));
   }
 
   if (!allowedTypes.includes(file.mimetype)) {
-    return cb(
-      new ApiError(
-        HTTP_STATUS.BAD_REQUEST,
-        "Unsupported file type.",
-      ),
-    );
+    return cb(new ApiError(HTTP_STATUS.BAD_REQUEST, "Unsupported file type."));
   }
 
   cb(null, true);
@@ -117,8 +102,7 @@ function createUploader() {
   });
 }
 
-
-export const profileUploader = createUploader();
+export const uploader = createUploader();
 
 export function handleUpload(upload) {
   return (req, res, next) => {

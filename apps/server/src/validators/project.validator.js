@@ -14,6 +14,18 @@ export const projectSchema = z.object({
     imageUrl: z.string().url().optional(),
 
     featured: z.boolean().optional(),
+
+    deletedImages: z.array(z.string().uuid()).optional(),
+
+    imageOrder: z
+      .array(
+        z.object({
+          id: z.string().uuid(),
+
+          order: z.number().int().nonnegative(),
+        }),
+      )
+      .optional(),
   }),
 
   params: z.object({}),
@@ -34,6 +46,18 @@ export const updateProjectSchema = z.object({
     imageUrl: z.string().url().optional(),
 
     featured: z.boolean().optional(),
+
+    deletedImages: z.array(z.string().uuid()).optional(),
+
+    imageOrder: z
+      .array(
+        z.object({
+          id: z.string().uuid(),
+
+          order: z.number().int().nonnegative(),
+        }),
+      )
+      .optional(),
   }),
 
   params: id.shape.params,
@@ -41,4 +65,4 @@ export const updateProjectSchema = z.object({
   query: z.object({}),
 });
 
-export const idSchema=id;
+export const idSchema = id;

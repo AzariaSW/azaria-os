@@ -83,7 +83,7 @@ model Project {
   liveUrl String?
 
 
-  imageUrl String?
+  images ProjectImage[]
 
 
   featured Boolean @default(false)
@@ -96,7 +96,26 @@ model Project {
 }
 
 
+model ProjectImage {
 
+  id String @id @default(uuid())
+
+  projectId String
+
+  url String
+
+  order Int @default(0)
+
+  altText String?
+
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+
+  @@index([order])
+}
 
 
 model Experience {

@@ -7,6 +7,7 @@ import {
   getProfile as getProfileService,
   updateProfile as updateProfileService,
 } from "../services/profile.service.js";
+import {validateUploadedFile} from "../services/file.service.js";
 
 export const getProfile = asyncHandler(async (req, res) => {
   const profile = await getProfileService();
@@ -34,14 +35,17 @@ export const updateProfile = asyncHandler(async (req, res) => {
 
   try {
     if (profileImage) {
+      await validateUploadedFile(profileImage, UPLOAD.IMAGE_TYPES);
       data.profileImage = `/uploads/profile/${profileImage.filename}`;
     }
 
     if (resume) {
+      await validateUploadedFile(resume, UPLOAD.DOCUMENT_TYPES);
       data.resumeUrl = `/uploads/resume/${resume.filename}`;
     }
 
     if (cv) {
+      await validateUploadedFile(cv, UPLOAD.DOCUMENT_TYPES);
       data.cvUrl = `/uploads/cv/${cv.filename}`;
     }
 
