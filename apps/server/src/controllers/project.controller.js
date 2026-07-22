@@ -64,7 +64,7 @@ export const updateProject = asyncHandler(async (req, res) => {
   const projects = await updateProjectService(
     data,
     req.params.id,
-    req.files ?? [],
+    req.files ?? []
   );
 
   res.status(HTTP_STATUS.OK).json(

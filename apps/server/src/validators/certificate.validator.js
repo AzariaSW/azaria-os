@@ -13,7 +13,9 @@ export const certificateSchema = z.object({
       z.date()
     ),
 
-    credentialUrl: z.string().url().optional(),
+    image: z.url().optional(),
+
+    credentialUrl: z.url().optional(),
 
   }),
 
@@ -33,7 +35,9 @@ export const updateCertificateSchema = z.object({
       z.date().optional()
     ),
 
-    credentialUrl: z.string().url().optional(),
+    image: z.url().optional(),
+
+    credentialUrl: z.url().optional(),
 
   }),
 

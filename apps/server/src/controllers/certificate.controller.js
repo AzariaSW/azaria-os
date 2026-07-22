@@ -40,7 +40,8 @@ export const getCertificate = asyncHandler(async (req, res) => {
 });
 
 export const createCertificate = asyncHandler(async (req, res) => {
-  const certificate = await createCertificateService(req.validated.body);
+  const data = { ...req.validated.body }
+  const certificate = await createCertificateService(data, req.files ?? []);
 
   res.status(HTTP_STATUS.CREATED).json(
     new ApiResponse(
@@ -54,7 +55,8 @@ export const createCertificate = asyncHandler(async (req, res) => {
 });
 
 export const updateCertificate = asyncHandler(async (req, res) => {
-  const certificate = await updateCertificateService(req.validated.body, req.params.id);
+  const data = { ...req.validated.body }
+  const certificate = await updateCertificateService(data, req.params.id, req.files ?? []);
 
   res.status(HTTP_STATUS.OK).json(
     new ApiResponse(

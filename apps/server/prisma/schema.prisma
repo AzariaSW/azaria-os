@@ -182,8 +182,11 @@ model Certificate {
 
   issuer String
 
+
   @@unique([name, issuer])
 
+  image String?
+  
   issueDate DateTime
 
 

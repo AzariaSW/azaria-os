@@ -2,7 +2,8 @@ import prisma from "../prisma/client.js";
 
 import ApiError from "../utils/ApiError.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
-import { deleteFile } from "./file.service.js";
+import { validateUploadedFile, deleteFile } from "./file.service.js";
+import { UPLOAD } from "../config/upload.config.js";
 
 export async function getProfile() {
   const profile = await prisma.profile.findUnique({
@@ -18,26 +19,57 @@ export async function getProfile() {
   return profile;
 }
 
-export async function updateProfile(data) {
-  const current = await getProfile();
+function getUploadedFile(files, field) {
+  return files?.[field]?.[0] ?? null;
+}
 
-  const update = await prisma.profile.update({
-    where: {
-      id: "main-profile",
-    },
+export async function updateProfile(data, files) {
+  const profileImage = getUploadedFile(files, "profileImage");
+  const resume = getUploadedFile(files, "resume");
+  const cv = getUploadedFile(files, "cv");
 
-    data,
-  });
-
-  const uploadedFields = ["profileImage", "resumeUrl", "cvUrl"];
-
-  for (const field of uploadedFields) {
-    if (data[field] && current[field] && data[field] !== current[field]) {
-      await deleteFile(current[field]);
+  try {
+    if (profileImage) {
+      await validateUploadedFile(profileImage, UPLOAD.IMAGE_TYPES);
+      data.profileImage = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.PROFILE}/${profileImage.filename}`;
     }
+
+    if (resume) {
+      await validateUploadedFile(resume, UPLOAD.DOCUMENT_TYPES);
+      data.resumeUrl = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.RESUME}/${resume.filename}`;
+    }
+
+    if (cv) {
+      await validateUploadedFile(cv, UPLOAD.DOCUMENT_TYPES);
+      data.cvUrl = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.CV}/${cv.filename}`;
+    }
+
+    const current = await getProfile();
+
+    const update = await prisma.profile.update({
+      where: {
+        id: "main-profile",
+      },
+
+      data,
+    });
+
+    const uploadedFields = ["profileImage", "resumeUrl", "cvUrl"];
+
+    for (const field of uploadedFields) {
+      if (data[field] && current[field] && data[field] !== current[field]) {
+        await deleteFile(current[field]);
+      }
+    }
+
+    return update;
+  } catch (error) {
+    if (files) {
+      await deleteFile(profileImage?.path);
+      await deleteFile(resume?.path);
+      await deleteFile(cv?.path);
+    }
+
+    throw error;
   }
-
-  return update;
-
-  return update;
 }

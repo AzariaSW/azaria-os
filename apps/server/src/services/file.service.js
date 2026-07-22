@@ -35,10 +35,10 @@ export async function deleteFile(filePath) {
       process.cwd(),
       filePath.startsWith("/") ? filePath.slice(1) : filePath,
     );
-
+    
     await fs.unlink(absolutePath);
+
   } catch (error) {
-    // Ignore missing files
     if (error.code !== "ENOENT") {
       throw error;
     }
@@ -53,6 +53,7 @@ export async function createDirectory(directory) {
 
 export async function moveFile(oldPath, newPath) {
   await fs.rename(oldPath, newPath);
+  return true;
 }
 
 export async function deleteDirectory(directoryPath) {

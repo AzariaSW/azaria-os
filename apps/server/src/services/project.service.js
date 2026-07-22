@@ -94,10 +94,7 @@ export async function createProject(data, files) {
     await createDirectory(projectDirectory);
 
     for (const file of files) {
-      await moveFile(
-        file.path,
-        path.join(projectDirectory, file.filename),
-      );
+      await moveFile(file.path, path.join(projectDirectory, file.filename));
     }
 
     return await prisma.$transaction(async (tx) => {
@@ -136,19 +133,13 @@ export async function createProject(data, files) {
   }
 }
 
-
 export async function updateProject(data, projectId, files) {
-  const {
-    deletedImages = [],
-    imageOrder = [],
-    ...projectData
-  } = data;
+  const { deletedImages = [], imageOrder = [], ...projectData } = data;
 
   let projectDirectory;
   const movedFiles = [];
 
   try {
-    // Get current project
     const currentProject = await getProject(projectId);
 
     projectDirectory = path.join(
@@ -159,7 +150,8 @@ export async function updateProject(data, projectId, files) {
 
     await createDirectory(projectDirectory);
 
-    // Move newly uploaded files
+
+
     for (const file of files) {
       const destination = path.join(projectDirectory, file.filename);
 
@@ -168,10 +160,10 @@ export async function updateProject(data, projectId, files) {
       movedFiles.push(destination);
     }
 
-    // Database transaction
+    
+    
     const project = await prisma.$transaction(async (tx) => {
-
-      // Delete selected image records
+      
       if (deletedImages.length > 0) {
         await tx.projectImage.deleteMany({
           where: {
@@ -182,7 +174,7 @@ export async function updateProject(data, projectId, files) {
         });
       }
 
-      // Next image order
+      
       const lastImage = await tx.projectImage.findFirst({
         where: {
           projectId,
@@ -193,11 +185,9 @@ export async function updateProject(data, projectId, files) {
         },
       });
 
-      let nextOrder = lastImage
-        ? lastImage.order + 1
-        : 1;
+      let nextOrder = lastImage ? lastImage.order + 1 : 1;
 
-      // Insert uploaded images
+      
       if (files.length > 0) {
         await tx.projectImage.createMany({
           data: files.map((file) => ({
@@ -210,7 +200,7 @@ export async function updateProject(data, projectId, files) {
         });
       }
 
-      // Update image order
+      
       if (imageOrder.length > 0) {
         await Promise.all(
           imageOrder.map((image) =>
@@ -227,7 +217,7 @@ export async function updateProject(data, projectId, files) {
         );
       }
 
-      // Update project
+    
       await tx.project.update({
         where: {
           id: projectId,
@@ -245,7 +235,7 @@ export async function updateProject(data, projectId, files) {
       });
     });
 
-    // Delete removed files AFTER transaction succeeds
+  
     const imagesToDelete = currentProject.images.filter((image) =>
       deletedImages.includes(image.id),
     );
@@ -255,9 +245,7 @@ export async function updateProject(data, projectId, files) {
     }
 
     return project;
-
   } catch (error) {
-
     for (const file of movedFiles) {
       await deleteFile(file);
     }
@@ -271,7 +259,6 @@ export async function updateProject(data, projectId, files) {
 }
 
 export async function deleteProject(projectId) {
-  
   try {
     const project = await prisma.project.findUnique({
       where: {

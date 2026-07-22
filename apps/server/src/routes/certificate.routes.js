@@ -1,18 +1,20 @@
 import { Router } from "express";
 
 import validate from "../middleware/validate.js";
-
 import {
   getAllCertificates,
   getCertificate,
   createCertificate,
   updateCertificate,
-  deleteCertificate
+  deleteCertificate,
 } from "../controllers/certificate.controller.js";
-
 import authenticateAdmin from "../middleware/authenticateAdmin.js";
-
-import { certificateSchema, updateCertificateSchema, idSchema } from "../validators/certificate.validator.js";
+import { uploader, handleUpload } from "../middleware/upload.js";
+import {
+  certificateSchema,
+  updateCertificateSchema,
+  idSchema,
+} from "../validators/certificate.validator.js";
 
 const router = Router();
 
@@ -21,24 +23,35 @@ router.get("/", getAllCertificates);
 router.get("/:id", validate(idSchema), getCertificate);
 
 router.post(
-    "/",
-    authenticateAdmin,
-    validate(certificateSchema),
-    createCertificate
+  "/",
+  authenticateAdmin,
+  handleUpload(
+    uploader.fields([
+      {
+        name: "image",
+        maxCount: 1,
+      },
+    ]),
+  ),
+  validate(certificateSchema),
+  createCertificate,
 );
 
 router.put(
-    "/:id",
-    authenticateAdmin,
-    validate(updateCertificateSchema),
-    updateCertificate
+  "/:id",
+  authenticateAdmin,
+  handleUpload(
+    uploader.fields([
+      {
+        name: "image",
+        maxCount: 1,
+      },
+    ]),
+  ),
+  validate(updateCertificateSchema),
+  updateCertificate,
 );
 
-router.delete(
-    "/:id",
-    authenticateAdmin,
-    validate(idSchema),
-    deleteCertificate
-);
+router.delete("/:id", authenticateAdmin, validate(idSchema), deleteCertificate);
 
 export default router;

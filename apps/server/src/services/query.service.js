@@ -48,7 +48,6 @@ export async function queryBuilder({
 
   return {
     items,
-
     pagination: getPaginationMeta(page, limit, total),
   };
 }

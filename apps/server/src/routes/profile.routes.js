@@ -8,7 +8,6 @@ import { updateProfileSchema } from "../validators/profile.validator.js";
 import authenticateAdmin from "../middleware/authenticateAdmin.js";
 import validate from "../middleware/validate.js";
 import { uploader, handleUpload } from "../middleware/upload.js";
-import { UPLOAD } from "../config/upload.config.js";
 
 const router = Router();
 

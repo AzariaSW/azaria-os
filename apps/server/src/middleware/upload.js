@@ -30,6 +30,10 @@ const storage = multer.diskStorage({
         folder = UPLOAD.DESTINATIONS.TEMP;
         break;
 
+      case "image":
+        folder = UPLOAD.DESTINATIONS.CERTIFICATES;
+        break;
+
       default:
         return cb(
           new ApiError(HTTP_STATUS.BAD_REQUEST, "Unexpected upload field."),
@@ -58,6 +62,7 @@ function fileFilter(req, file, cb) {
 
   switch (file.fieldname) {
     case "profileImage":
+    case "image":
       allowedTypes = UPLOAD.IMAGE_TYPES;
       allowedExtensions = UPLOAD.IMAGE_EXTENSIONS;
       break;
