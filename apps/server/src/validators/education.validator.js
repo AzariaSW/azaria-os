@@ -4,11 +4,11 @@ import toDate from "../utils/dateConverter.js";
 
 export const educationSchema = z.object({
   body: z.object({
-    institution: z.string().min(2).max(100),
+    institution: z.string().max(100),
 
-    degree: z.string().min(5).max(50),
+    degree: z.string().max(50),
 
-    field: z.string().min(5).max(100),
+    field: z.string().max(100),
 
     startDate: z.preprocess(
       (value) => toDate(value),
@@ -29,11 +29,11 @@ export const educationSchema = z.object({
 
 export const updateEducationSchema = z.object({
   body: z.object({
-    institution: z.string().min(2).max(100).optional(),
+    institution: z.string().max(100).optional(),
 
-    degree: z.string().min(5).max(50).optional(),
+    degree: z.string().max(50).optional(),
 
-    field: z.string().min(5).max(100).optional(),
+    field: z.string().max(100).optional(),
 
     startDate: z.preprocess(
       (value) => toDate(value),

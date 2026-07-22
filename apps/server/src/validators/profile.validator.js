@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const updateProfileSchema = z.object({
   body: z.object({
-    fullName: z.string().min(3).max(100).optional(),
+    fullName: z.string().max(100).optional(),
 
     title: z.string().max(150).optional(),
 

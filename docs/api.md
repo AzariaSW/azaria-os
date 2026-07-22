@@ -1,19 +1,158 @@
 # Azaria-OS Backend API
 
+# 1. Overview
+
 ## Base URL
 
 ```
 http://localhost:5000/api/v1
 ```
 
+All API endpoints are relative to this base URL.
+
+---
+
 ## Authentication
+
+Administrative endpoints require a JSON Web Token (JWT).
+
+Authentication is performed in two steps:
+
+1. Obtain a temporary challenge token.
+
+```
+POST /auth/challenge
+```
+
+2. Exchange the challenge token for an admin access token.
+
+```
+POST /auth/login
+```
+
+Protected endpoints require the following request header:
+
+```
+Authorization: Bearer <access_token>
+```
+
+If the token is missing, invalid, or expired, the API returns a `401 Unauthorized` response.
+
+---
+
+## Content Types
+
+The API accepts two request formats depending on the endpoint.
+
+### JSON
+
+Used for standard CRUD operations.
+
+```
+Content-Type: application/json
+```
+
+### Multipart Form Data
+
+Used when uploading files.
+
+```
+Content-Type: multipart/form-data
+```
+
+Multipart requests may contain both files and regular form fields.
+
+---
+
+## Standard Response Format
+
+Successful requests follow a consistent response structure.
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Operation completed successfully.",
+  "data": {}
+}
+```
+
+Paginated endpoints return:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Resources retrieved successfully.",
+  "data": {
+    "items": [],
+    "pagination": {
+      "page": 1,
+      "limit": 10,
+      "total": 0,
+      "totalPages": 0
+    }
+  }
+}
+```
+
+---
+
+## Error Response Format
+
+All errors follow the same structure.
+
+```json
+{
+  "success": false,
+  "message": "Validation failed.",
+  "errors": [],
+  "requestId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+```
+
+The `requestId` uniquely identifies each request and can be used for server-side log tracing.
+
+---
+
+## Common Query Parameters
+
+Many collection endpoints support pagination, searching, filtering, and sorting.
+
+| Parameter | Description                                             |
+| --------- | ------------------------------------------------------- |
+| `page`    | Page number (default: `1`)                              |
+| `limit`   | Number of items per page (default: `10`, maximum: `50`) |
+| `search`  | Case-insensitive search                                 |
+| `sort`    | Field used for sorting                                  |
+| `order`   | `asc` or `desc`                                         |
+
+Some resources expose additional filters (such as `featured`, `category`, `role`, or `isRead`) which are documented with their respective endpoints.
+
+---
+
+## HTTP Status Codes
+
+| Status                      | Meaning                                  |
+| --------------------------- | ---------------------------------------- |
+| `200 OK`                    | Request completed successfully           |
+| `201 Created`               | Resource created successfully            |
+| `400 Bad Request`           | Invalid request or validation error      |
+| `401 Unauthorized`          | Authentication required or token invalid |
+| `403 Forbidden`             | Access denied                            |
+| `404 Not Found`             | Requested resource does not exist        |
+| `409 Conflict`              | Resource conflict                        |
+| `429 Too Many Requests`     | Rate limit exceeded                      |
+| `500 Internal Server Error` | Unexpected server error                  |
+
+# 2. Authentication
 
 | Method | Endpoint          | Authentication                | Description            |
 | ------ | ----------------- | ----------------------------- | ---------------------- |
 | POST   | `/auth/challenge` | X-Admin-Challenge: <token>    | Verify admin challenge |
 | POST   | `/auth/login`     | Authorization: Bearer <token> | Login                  |
 
-## Health
+# 3. Health
 
 ## GET /health
 
@@ -33,11 +172,11 @@ Returns the health status of the API and database connection.
         "uptime": 3644.2243995,
         "responseTime": "103ms"
     }
-}
+ }
 }
 ```
 
-## Profile
+# 4. Profile
 
 ## GET /profile
 
@@ -48,109 +187,127 @@ Returns portfolio profile.
 Updates the portfolio profile.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
-```json
-{
-  "fullName": "3-100 character",
-  "title": "upto 150 character",
-  "bio": "upto 3000 character",
-  "email": "example@gmail.com",
-  "location": "upto 100 character",
-  "profileImage": "/picture/azaria.jpg",
-  "resumeUrl": "/uploads/....",
-  "cvUrl": "/uploads/....",
-  "github": "http://www.github.com/Azari_SW",
-  "linkedin": "https://www.linkedin.com/in/azaria-abenet-795875377"
-}
-```
+multipart/form-data
 
-## Projects
+| Field        | Type                      | Max Size  |
+| ------------ | ------------------------- | --------- |
+| fullName     | string                    | 100 char  |
+| title        | string                    | 150 char  |
+| bio          | String                    | 3000 char |
+| email        | String(email)             |           |
+| location     | String                    | 100 char  |
+| profileImage | file(jpg, jpeg,png, webp) | 10mb      |
+| resume       | pdf                       | 10mb      |
+| cv           | pdf                       | 10mb      |
+| github       | String(url)               |           |
+| linkedin     | String(url)               |           |
+
+# 5. Projects
 
 ## GET /projects
 
-Returns paginated projects.
+Returns paginated projects including paths of the images they contains.
 
-### Query Parameters
+### Unique Query Parameters
 
-| Parameter | Type    | Default         | Description                                       |
-| --------- | ------- | --------------- | ------------------------------------------------- |
-| page      | number  | 1               | Page number                                       |
-| limit     | number  | 10              | Maximum 50                                        |
-| sort      | string  | createdAt(desc) | `title`, `createdAt`,`description` or `updatedAt` |
-| order     | string  | asc             | `asc` or `desc`                                   |
-| featured  | boolean |                 | Filter featured projects                          |
-| search    | string  |                 | Search title/description                          |
+| Parameter | Type    | Description                                       |
+| --------- | ------- | ------------------------------------------------- |
+| sort      | string  | `title`, `createdAt`,`description` or `updatedAt` |
+| featured  | boolean | Filter featured projects                          |
 
 ## GET /projects/:id
 
-Returns specific project.
+Returns specific project including the paths of the images it contains.
 
 ## POST /projects
 
 Creates a project.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
-```json
-{
-  "title": "3-100 character(REQUIRED)",
-  "description": "10-1000 character(REQUIRED)",
-  "githubUrl": "http://www.github.com/Azari_SW/...",
-  "liveUrl": "http://...",
-  "imageUrl": "/picture/ex.png",
-  "featured": true
-}
-```
+## |JSON | multipart/form-data |
+
+multipart/form-data
+
+| Field                 | Type                      | Max Size  |
+| --------------------- | ------------------------- | --------- |
+| title(REQUIRED)       | string                    | 100 char  |
+| description(REQUIRED) | string                    | 1000 char |
+| githubUrl             | String(url)               |           |
+| liveUrl               | String(url)               |           |
+| images                | file(jpg, jpeg,png, webp) | 10mb      |
+| images                | file(jpg, jpeg,png, webp) | 10mb      |
+| images                | file(jpg, jpeg,png, webp) | 10mb      |
+| images                | file(jpg, jpeg,png, webp) | 10mb      |
+| .                     | .                         | .         |
+| .                     | .                         | .         |
+| .                     | .                         | .         |
+upto 20 images
 
 ## PUT /projects/:id
 
 updates a project.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
-```json
-{
-  "title": "3-100 character",
-  "description": "10-1000 character",
-  "githubUrl": "http://www.github.com/Azari_SW/...",
-  "liveUrl": "http://...",
-  "imageUrl": "/picture/ex.png",
-  "featured": true
-}
-```
+multipart/form-data
+
+| Field       | Type                      | Max Size  |
+| ----------- | ------------------------- | --------- |
+| title       | string                    | 100 char  |
+| description | string                    | 1000 char |
+| githubUrl   | String(url)               |           |
+| liveUrl     | String(url)               |           |
+| images      | file(jpg, jpeg,png, webp) | 10mb      |
+| images      | file(jpg, jpeg,png, webp) | 10mb      |
+| images      | file(jpg, jpeg,png, webp) | 10mb      |
+| images      | file(jpg, jpeg,png, webp) | 10mb      |
+| .           | .                         | .         |
+| .           | .                         | .         |
+| .           | .                         | .         |
+upto 20 images
 
 ## DELETE /projects/:id
 
 Deletes a project.
 
 Authentication Required:
-Authorization: Bearer <token>
 
-## Skills
+```
+Authorization: Bearer <token>
+```
+
+# 6. Skills
 
 ## GET /skills
 
 Returns paginated skills.
 
-### Query Parameters
+### Unique Query Parameters
 
-| Parameter | Type   | Default       | Description                              |
-| --------- | ------ | ------------- | ---------------------------------------- |
-| page      | number | 1             | Page number                              |
-| limit     | number | 10            | Maximum 50                               |
-| sort      | string | category(asc) | `name`, `category`,`createdAt`or `level` |
-| order     | string | asc           | `asc` or `desc`                          |
-| category  | string |               | search for the specific category skills  |
-| search    | string |               | Search name                              |
+| Parameter | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| sort      | string | `name`, `category`,`createdAt`or `level` |
+| category  | string | search for the specific category skills  |
 
 ## GET /skills/:id
 
@@ -161,15 +318,18 @@ Returns specific skill.
 Creates a skill.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
 ```json
 {
-  "name": "2-100 character(REQUIRED)",
-  "category": "5-50 character(REQUIRED)",
-  "level": "3-30 character(REQUIRED)",
+  "name": "skill name (Max 100 characters)(REQUIRED)",
+  "category": "category name (Max 100 characters)(REQUIRED)",
+  "level": "3-30 character(Max 50 characters)(REQUIRED)",
   "icon": "http://..."
 }
 ```
@@ -179,15 +339,18 @@ Authorization: Bearer <token>
 updates a skill.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
 ```json
 {
-  "name": "2-100 character",
-  "category": "5-50 character",
-  "level": "3-30 character",
+  "name": "skill name (Max 100 character)",
+  "category": "category name (Max 100 characters)",
+  "level": "3-30 character(Max 50 characters)",
   "icon": "http://..."
 }
 ```
@@ -197,24 +360,23 @@ Authorization: Bearer <token>
 Deletes a skill.
 
 Authentication Required:
-Authorization: Bearer <token>
 
-## Experiences
+```
+Authorization: Bearer <token>
+```
+
+# 7. Experiences
 
 ## GET /experiences
 
 Returns paginated experiences.
 
-### Query Parameters
+### Unique Query Parameters
 
-| Parameter | Type   | Default   | Description                                 |
-| --------- | ------ | --------- | ------------------------------------------- |
-| page      | number | 1         | Page number                                 |
-| limit     | number | 10        | Maximum 50                                  |
-| sort      | string | role(asc) | `company`, `role`,`createdAt`or `startDate` |
-| order     | string | asc       | `asc` or `desc`                             |
-| role      | string |           | search for the specific role experiences    |
-| search    | string |           | Search company/description                  |
+| Parameter | Type   | Description                                 |
+| --------- | ------ | ------------------------------------------- |
+| sort      | string | `company`, `role`,`createdAt`or `startDate` |
+| role      | string | search for the specific role experiences    |
 
 ## GET /experiences/:id
 
@@ -225,15 +387,18 @@ Returns specific experience.
 Creates an experience.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
 ```json
 {
-  "company": "2-100 character(REQUIRED)",
-  "role": "5-50 character(REQUIRED)",
-  "description": "10-1000 character(REQUIRED)",
+  "company": "company name (Max 100 characters)(REQUIRED)",
+  "role": "role (Max 50 characters)(REQUIRED)",
+  "description": "description (Max 1000 characters)(REQUIRED)",
   "startDate": "dd/mm/yyyy(REQUIRED)",
   "endDate": "dd/mm/yyyy"
 }
@@ -244,15 +409,18 @@ Authorization: Bearer <token>
 updates a experience.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
 ```json
 {
-  "company": "2-100 character",
-  "role": "5-50 character",
-  "description": "10-1000 character",
+  "company": "company name (Max 100 characters)",
+  "role": "role (Max 50 characters)",
+  "description": "description (Max 1000 characters)",
   "startDate": "dd/mm/yyyy",
   "endDate": "dd/mm/yyyy"
 }
@@ -263,23 +431,22 @@ Authorization: Bearer <token>
 Deletes a experience.
 
 Authentication Required:
-Authorization: Bearer <token>
 
-## Education
+```
+Authorization: Bearer <token>
+```
+
+# 8. Education
 
 ## GET /education
 
 Returns paginated educations.
 
-### Query Parameters
+### Unique Query Parameters
 
-| Parameter | Type   | Default         | Description                                                          |
-| --------- | ------ | --------------- | -------------------------------------------------------------------- |
-| page      | number | 1               | Page number                                                          |
-| limit     | number | 10              | Maximum 50                                                           |
-| sort      | string | intitution(asc) | `institution`, `degree`,`field`,`endDate`,`createdAt` or `startDate` |
-| order     | string | asc             | `asc` or `desc`                                                      |
-| search    | string |                 | Search institution/field/degree                                      |
+| Parameter | Type   | Description                                                          |
+| --------- | ------ | -------------------------------------------------------------------- |
+| sort      | string | `institution`, `degree`,`field`,`endDate`,`createdAt` or `startDate` |
 
 ## GET /education/degrees
 
@@ -300,9 +467,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "institution": "2-100 character(REQUIRED)",
-  "degree": "5-50 character(REQUIRED)",
-  "field": "5-100 character(REQUIRED)",
+  "institution": "institution name (Max 100 characters)(REQUIRED)",
+  "degree": "degree (Max 50 characters)(REQUIRED)",
+  "field": "field (Max 100 characters)(REQUIRED)",
   "startDate": "dd/mm/yyyy(REQUIRED)",
   "endDate": "dd/mm/yyyy"
 }
@@ -313,15 +480,18 @@ Authorization: Bearer <token>
 updates a education.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
 ```json
 {
-  "institution": "2-100 character",
-  "degree": "5-50 character",
-  "field": "5-100 character",
+  "institution": "institution name (Max 100 characters)",
+  "degree": "degree (Max 50 characters)",
+  "field": "field (Max 100 characters)",
   "startDate": "dd/mm/yyyy",
   "endDate": "dd/mm/yyyy"
 }
@@ -332,23 +502,22 @@ Authorization: Bearer <token>
 Deletes a education.
 
 Authentication Required:
-Authorization: Bearer <token>
 
-## Certificates
+```
+Authorization: Bearer <token>
+```
+
+# 9. Certificates
 
 ## GET /certificates
 
 Returns paginated certificates.
 
-### Query Parameters
+### Unique Query Parameters
 
-| Parameter | Type   | Default   | Description                                 |
-| --------- | ------ | --------- | ------------------------------------------- |
-| page      | number | 1         | Page number                                 |
-| limit     | number | 10        | Maximum 50                                  |
-| sort      | string | name(asc) | `name`, `issuer`,`createdAt` or `issueDate` |
-| order     | string | asc       | `asc` or `desc`                             |
-| search    | string |           | Search name/issuer                          |
+| Parameter | Type   | Description                                 |
+| --------- | ------ | ------------------------------------------- |
+| sort      | string | `name`, `issuer`,`createdAt` or `issueDate` |
 
 ## GET /certificates/:id
 
@@ -359,45 +528,124 @@ Returns specific certificate.
 Creates a certificate.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
-```json
-{
-  "name": "2-100 character(REQUIRED)",
-  "issuer": "5-100 character(REQUIRED)",
-  "issuDate": "dd/mm/yyyy(REQUIRED)",
-  "credentialUrl": "https://...."
-}
-```
+multipart/form-data
+
+| Field               | Type                      | Max Size |
+| ------------------- | ------------------------- | -------- |
+| name(REQUIRED)      | string                    | 100 char |
+| issuer(REQUIRED)    | string                    | 100 char |
+| issueDate(REQUIRED) | dd/mm/yyyy                |          |
+| credentialUrl       | String(url)               |          |
+| image               | file(jpg, jpeg,png, webp) | 10mb     |
 
 ## PUT /certificates/:id
 
 updates a certificate.
 
 Authentication Required:
+
+```
 Authorization: Bearer <token>
+```
 
 ### Request Body
 
-```json
-{
-  "name": "2-100 character",
-  "issuer": "5-100 character",
-  "issuDate": "dd/mm/yyyy",
-  "credentialUrl": "https://...."
-}
-```
+multipart/form-data
+
+| Field         | Type                      | Max Size |
+| ------------- | ------------------------- | -------- |
+| name          | string                    | 100 char |
+| issuer        | string                    | 100 char |
+| issueDate     | Date(dd/mm/yyyy)          |          |
+| credentialUrl | String(url)               |          |
+| image         | file(jpg, jpeg,png, webp) | 10mb     |
 
 ## DELETE /certificates/:id
 
 Deletes a certificate.
 
 Authentication Required:
-Authorization: Bearer <token>
 
-## GitHub
+```
+Authorization: Bearer <token>
+```
+
+# 10. Messages
+
+## GET /messages
+
+Returns paginated messages.
+
+Authentication Required:
+
+```
+Authorization: Bearer <token>
+```
+
+### Unique Query Parameters
+
+| Parameter | Type    | Description                                                |
+| --------- | ------- | ---------------------------------------------------------- |
+| sort      | string  | `name`,`email`,`subject`,`message`,`createdAt` or `isRead` |
+| isRead    | boolean | filter meassage                                            |
+
+## GET /messages/:id
+
+Returns specific message.
+
+Authentication Required:
+
+```
+Authorization: Bearer <token>
+```
+
+## POST /messages
+
+Sends a message.
+
+### Request Body
+
+```json
+{
+  "name": " name (Max 100 characters)(REQUIRED)",
+  "email": "eg@gmail.com(REQUIRED)",
+  "subject": "subject (Max 200 characters)(REQUIRED)",
+  "message": "message (Max 2000 characters)(REQUIRED)"
+}
+```
+
+## PATCH /messages/:id
+
+mark message as read.
+
+Authentication Required:
+
+```
+Authorization: Bearer <token>
+```
+
+### Request Body
+
+empty body {}
+
+## DELETE /messages/:id
+
+Deletes a message.
+
+Authentication Required:
+
+```
+Authorization: Bearer <token>
+```
+
+# 11. GitHub
 
 Cached for 15 minutes.
 
@@ -415,115 +663,162 @@ Returns repositories from github.
 
 Returns recent github activities.
 
-## Messages
+# 12. File Storage
 
-## GET /messages
+The API supports uploading and serving files for profile assets and project images.
 
-Returns paginated messages.
+Uploaded files are stored on the server filesystem and are publicly accessible through the `/uploads` route.
 
-Authentication Required:
-Authorization: Bearer <token>
+Base URL:
 
-### Query Parameters
+```
+http://localhost:5000/uploads
+```
 
-| Parameter | Type    | Default    | Description                                                |
-| --------- | ------- | ---------- | ---------------------------------------------------------- |
-| page      | number  | 1          | Page number                                                |
-| limit     | number  | 10         | Maximum 50                                                 |
-| sort      | string  | email(asc) | `name`,`email`,`subject`,`message`,`createdAt` or `isRead` |
-| order     | string  | asc        | `asc` or `desc`                                            |
-| isRead    | boolean |            | filter meassage                                            |
-| search    | string  |            | Search name/subject/message/email                          |
+---
 
-## GET /messages/:id
+## Directory Structure
 
-Returns specific message.
+```
+uploads/
+├── profile/
+│   └── profile-image.jpg
+│
+├── resume/
+│   └── resume.pdf
+│
+├── cv/
+│   └── cv.pdf
+│
+└── projects/
+    ├── {projectId}/
+    │   ├── image1.jpg
+    │   ├── image2.png
+    │   └── ...
+    └── ...
+```
 
-Authentication Required:
-Authorization: Bearer <token>
+Project images are grouped by their project ID.
 
-## POST /messages
+---
 
-Sends a message.
+## Supported File Types
 
-### Request Body
+### Images
+
+Used for:
+
+- Profile image
+- Project images
+
+Supported formats:
+
+- JPEG (`.jpg`, `.jpeg`)
+- PNG (`.png`)
+- WebP (`.webp`)
+
+---
+
+### Documents
+
+Used for:
+
+- Resume
+- Curriculum Vitae (CV)
+
+Supported format:
+
+- PDF (`.pdf`)
+
+---
+
+## Validation
+
+Before a file is accepted, the server validates:
+
+- File extension
+- MIME type
+- Maximum file size
+- Expected upload field
+
+Invalid uploads are rejected before reaching the application.
+
+---
+
+## Stored URLs
+
+Database records store relative URLs instead of absolute filesystem paths.
+
+Example:
+
+```text
+/uploads/profile/profile.jpg
+
+/uploads/resume/resume.pdf
+
+/uploads/cv/cv.pdf
+
+/uploads/projects/3f2d9b2b/image1.jpg
+```
+
+These URLs can be used directly by the frontend to access uploaded resources.
+
+---
+
+## Multipart Requests
+
+Endpoints that support file uploads use:
+
+```
+Content-Type: multipart/form-data
+```
+
+Files and regular form fields can be submitted in the same request.
+
+For example:
+
+```
+title
+description
+featured
+images[]
+```
+
+or
+
+```
+fullName
+bio
+profileImage
+resume
+cv
+```
+
+---
+
+## Project Images
+
+Each project may contain multiple images.
+
+Images are stored independently from the project itself and include ordering information.
+
+Each image record contains:
 
 ```json
 {
-  "name": "2-100 character(REQUIRED)",
-  "email": "eg@gmail.com(REQUIRED)",
-  "subject": "10-100 character(REQUIRED)",
-  "message": "5-2000 character(REQUIRED)"
+  "id": "uuid",
+  "url": "/uploads/projects/{projectId}/image.jpg",
+  "order": 1
 }
 ```
 
-## PATCH /messages/:id
+The `order` property determines the display sequence of images.
 
-mark message as read.
+---
 
-Authentication Required:
-Authorization: Bearer <token>
+## Notes
 
-### Request Body
-
-empty body {}
-
-## DELETE /messages/:id
-
-Deletes a message.
-
-Authentication Required:
-Authorization: Bearer <token>
-
-## Common Query Parameters
-
-| Parameter | Description                                     | Example                            |
-| --------- | ----------------------------------------------- | ---------------------------------- |
-| `page`    | Page number (default: 1)                        | GET /project?page=2                |
-| `limit`   | Number of items per page (default: 10, max: 50) | GET /project?limit=2               |
-| `search`  | Case-insensitive search                         | GET /project?search=node           |
-| `sort`    | Field to sort by                                | GET /project?sort=title            |
-| `order`   | `asc` or `desc`                                 | GET /project?sort=title&order=desc |
-
-## Response Format
-
-### For paginated multiple data
-
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Projects retrieved successfully",
-  "data": {
-    "item": [{}],
-    "pagination": {
-      "page": 1,
-      "limit": 10,
-      "total": 1,
-      "totalPages": 1
-    }
-  }
-}
-```
-
-### For single record
-
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Profile retrieved successfully",
-  "data": {}
-}
-```
-
-## Error Responses
-
-```json
-{
-  "success": false,
-  "message": "Project not found",
-  "errors": [],
-  "requestId": "..."
-}
-```
+- Uploaded files are renamed using a generated UUID to prevent filename collisions.
+- Required upload directories are created automatically.
+- Deleting a project or replacing uploaded assets removes obsolete files from the server.
+- File uploads are validated before any database changes are committed.

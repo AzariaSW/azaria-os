@@ -3,9 +3,9 @@ import id from "./id.validator.js";
 
 export const projectSchema = z.object({
   body: z.object({
-    title: z.string().min(3).max(100),
+    title: z.string().max(100),
 
-    description: z.string().min(10).max(1000),
+    description: z.string().max(1000),
 
     githubUrl: z.string().url().optional(),
 
@@ -24,8 +24,7 @@ export const projectSchema = z.object({
 
           order: z.number().int().nonnegative(),
         }),
-      )
-      .optional(),
+      ).optional(),
   }),
 
   params: z.object({}),
@@ -35,9 +34,9 @@ export const projectSchema = z.object({
 
 export const updateProjectSchema = z.object({
   body: z.object({
-    title: z.string().min(3).max(100).optional(),
+    title: z.string().max(100).optional(),
 
-    description: z.string().min(10).max(1000).optional(),
+    description: z.string().max(1000).optional(),
 
     githubUrl: z.string().url().optional(),
 

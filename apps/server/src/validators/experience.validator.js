@@ -4,11 +4,11 @@ import toDate from "../utils/dateConverter.js";
 
 export const experienceSchema = z.object({
   body: z.object({
-    company: z.string().min(2).max(100),
+    company: z.string().max(100),
 
-    role: z.string().min(5).max(50),
+    role: z.string().max(50),
 
-    description: z.string().min(10).max(1000),
+    description: z.string().max(1000),
 
     startDate: z.preprocess(
       (value) => toDate(value),
@@ -29,11 +29,11 @@ export const experienceSchema = z.object({
 
 export const updateExperienceSchema = z.object({
   body: z.object({
-    company: z.string().min(2).max(100).optional(),
+    company: z.string().max(100).optional(),
 
-    role: z.string().min(5).max(50).optional(),
+    role: z.string().max(50).optional(),
 
-    description: z.string().min(10).max(1000).optional(),
+    description: z.string().max(1000).optional(),
 
     startDate: z.preprocess(
       (value) => value ? toDate(value) : undefined,

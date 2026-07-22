@@ -3,14 +3,14 @@ import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 export default function parseDate(dateString) {
   if (!dateString || typeof dateString !== "string") {
-    throw new Error("Invalid date format");
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid date format, Expected dd/mm/yyyy or dd-mm-yyyy");
   }
 
   // Accept / or - as separators
   const parts = dateString.split(/[\/-]/);
 
   if (parts.length !== 3) {
-    throw new Error("Invalid date format. Expected dd/mm/yyyy or dd-mm-yyyy");
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid date format. Expected dd/mm/yyyy or dd-mm-yyyy");
   }
 
   let [day, month, year] = parts;
@@ -32,7 +32,7 @@ export default function parseDate(dateString) {
     date.getUTCMonth() + 1 !== Number(month) ||
     date.getUTCDate() !== Number(day)
   ) {
-    throw new Error("Invalid date value");
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid date value");
   }
 
   return date;

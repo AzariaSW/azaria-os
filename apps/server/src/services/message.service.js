@@ -48,7 +48,7 @@ export async function getAllMessages(query) {
   }
 
   return queryBuilder({
-    model: prisma.ContactMessage,
+    model: prisma.contactMessage,
 
     query,
 

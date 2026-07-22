@@ -34,7 +34,7 @@ export async function queryBuilder({
     orderBy,
   };
 
-  if (model === prisma.Project) {
+  if (model === prisma.project) {
     findManyOptions.include = projectInclude;
   }
 

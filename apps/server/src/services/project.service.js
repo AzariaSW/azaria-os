@@ -48,7 +48,7 @@ export async function getAllProjects(query) {
   }
 
   return queryBuilder({
-    model: prisma.Project,
+    model: prisma.project,
 
     query,
 

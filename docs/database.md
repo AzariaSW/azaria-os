@@ -20,6 +20,9 @@ Fields:
 - title
 - bio
 - social links
+- resume
+- cv
+- professional picture
 
 
 ### Skill
@@ -39,10 +42,19 @@ Stores portfolio projects.
 
 Includes:
 
+- title
 - description
 - GitHub link
-- demo link
-- images
+
+### ProjectImage
+
+contains the images of the projects 
+
+Includes:
+
+- url
+- project(foreign key)
+- order
 
 
 ### Experience

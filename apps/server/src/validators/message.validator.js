@@ -3,13 +3,13 @@ import id from "./id.validator.js";
 
 export const messageSchema = z.object({
   body: z.object({
-    name: z.string().min(2).max(100),
+    name: z.string().max(100),
 
     email: z.string().email(),
 
-    subject: z.string().min(10).max(100),
+    subject: z.string().max(200),
 
-    message: z.string().min(5).max(2000),   
+    message: z.string().max(2000),   
 
   }),
 

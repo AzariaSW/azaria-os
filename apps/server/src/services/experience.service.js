@@ -33,7 +33,7 @@ export async function getAllExperiences(query) {
   }
 
   return queryBuilder({
-    model: prisma.Experience,
+    model: prisma.experience,
 
     query,
 

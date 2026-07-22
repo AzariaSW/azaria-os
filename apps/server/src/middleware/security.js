@@ -1,7 +1,10 @@
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+
 import env from "../config/env.js";
+import auth from "../config/auth.config.js";
+import appConfig from "../config/app.config.js";
 
 export const securityMiddleware = [
   helmet({
@@ -26,8 +29,8 @@ export const securityMiddleware = [
 ];
 
 export const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: appConfig.LIMIT.Time,
+  max: appConfig.LIMIT.MaxAttempt,
   standardHeaders: true,
   legacyHeaders: false,
 
@@ -50,8 +53,8 @@ export const contactLimiter = rateLimit({
 });
 
 export const challengeLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
+  windowMs: auth.ChallengeLimit.Time,
+  max: auth.ChallengeLimit.MaxAttempt,
   standardHeaders: true,
   legacyHeaders: false,
 
@@ -62,8 +65,8 @@ export const challengeLimiter = rateLimit({
 });
 
 export const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
+  windowMs: auth.LoginLimit.Time,
+  max: auth.LoginLimit.MaxAttempt,
   standardHeaders: true,
   legacyHeaders: false,
 

@@ -36,7 +36,7 @@ export async function getAllEducations(query) {
   }
 
   return queryBuilder({
-    model: prisma.Education,
+    model: prisma.education,
 
     query,
 
