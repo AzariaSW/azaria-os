@@ -25,9 +25,6 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Uploads
-uploads/
-
 # Prisma
 prisma/*.db
 /structure.txt
