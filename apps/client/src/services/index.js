@@ -1,0 +1,9 @@
+export * as profileService from "./profile.service";
+export * as projectService from "./project.service";
+export * as skillService from "./skill.service";
+export * as experienceService from "./experience.service";
+export * as educationService from "./education.service";
+export * as certificateService from "./certificate.service";
+export * as githubService from "./github.service";
+export * as messageService from "./message.service";
+export * as authService from "./auth.service";
