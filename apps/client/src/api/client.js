@@ -1,7 +1,9 @@
 import axios from "axios";
 
+import env from "../config/env";
+
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: env.API_URL,
 
   timeout: 10000,
 
