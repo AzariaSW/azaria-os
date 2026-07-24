@@ -1,0 +1,38 @@
+.section {
+  padding-block: var(--space-8);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  margin-bottom: var(--space-2);
+}
+
+.description {
+  color: var(--color-text-muted);
+  max-width: 700px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.centered .description {
+  margin-inline: auto;
+}
+
+.container {
+  width: min(100% - 2rem, 1200px);
+  margin-inline: auto;
+}
+
+.narrow {
+  width: min(100% - 2rem, 800px);
+  margin-inline: auto;
+}
+
+.full {
+  width: 100%;
+}
