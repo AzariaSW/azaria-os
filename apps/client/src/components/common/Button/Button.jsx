@@ -11,12 +11,9 @@ function Button({
   return (
     <button
       type={type}
-      className={[
-        styles.button,
-        styles[variant],
-        styles[size],
-        className,
-      ].join(" ")}
+      className={[styles.button, styles[variant], styles[size], className].join(
+        " ",
+      )}
       {...props}
     >
       {children}

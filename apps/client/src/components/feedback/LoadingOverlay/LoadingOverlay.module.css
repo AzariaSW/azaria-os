@@ -1,0 +1,15 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(13, 17, 23, 0.65);
+
+  backdrop-filter: blur(2px);
+
+  z-index: var(--z-modal);
+}

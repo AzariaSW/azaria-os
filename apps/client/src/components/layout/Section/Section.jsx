@@ -11,33 +11,21 @@ function Section({
 }) {
   return (
     <section
-      className={[
-        styles.section,
-        centered && styles.centered,
-        className,
-      ]
+      className={[styles.section, centered && styles.centered, className]
         .filter(Boolean)
         .join(" ")}
       {...props}
     >
       <div className={styles[maxWidth]}>
-      {(title || description) && (
-        <header className={styles.header}>
-          {title && (
-            <h2 className={styles.title}>
-              {title}
-            </h2>
-          )}
+        {(title || description) && (
+          <header className={styles.header}>
+            {title && <h2 className={styles.title}>{title}</h2>}
 
-          {description && (
-            <p className={styles.description}>
-              {description}
-            </p>
-          )}
-        </header>
-      )}
+            {description && <p className={styles.description}>{description}</p>}
+          </header>
+        )}
 
-      {children}
+        {children}
       </div>
     </section>
   );

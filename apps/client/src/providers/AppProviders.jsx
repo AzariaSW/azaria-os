@@ -4,9 +4,7 @@ const queryClient = new QueryClient();
 
 function AppProviders({ children }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }
 
