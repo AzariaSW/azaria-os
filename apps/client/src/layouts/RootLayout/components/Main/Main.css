@@ -1,0 +1,13 @@
+.main {
+  flex: 1;
+  display: flex;
+  width: 100%;
+}
+
+.main__container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
