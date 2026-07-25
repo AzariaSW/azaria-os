@@ -1,3 +1,5 @@
+@import "../../../../styles/theme.css";
+
 .main {
   flex: 1;
   display: flex;
@@ -6,8 +8,8 @@
 
 .main__container {
   width: 100%;
-  max-width: 1440px;
+  max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem var(--layout-padding);
   box-sizing: border-box;
 }

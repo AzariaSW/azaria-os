@@ -1,0 +1,24 @@
+@import "../../../../styles/theme.css";
+
+.footer {
+  width: 100%;
+}
+
+.footer__container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 1rem var(--layout-padding);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+.footer__left,
+.footer__center,
+.footer__right {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,27 @@
+@import "../../../../styles/theme.css"
+
+.navbar {
+  width: 100%;
+}
+
+.navbar__container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 1rem var(--layout-padding);
+
+  display: flex;
+  align-items: center;
+}
+
+.navbar__brand {
+  flex-shrink: 0;
+}
+
+.navigation {
+  flex: 1;
+  justify-content: center;
+}
+
+.navigation-actions {
+  flex-shrink: 0;
+}

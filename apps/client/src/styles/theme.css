@@ -127,4 +127,9 @@
   --z-modal: 400;
 
   --z-toast: 500;
+
+  /* layout*/
+  --layout-max-width: 1440px;
+
+  --layout-padding: 2rem;
 }
