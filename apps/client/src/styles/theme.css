@@ -1,6 +1,18 @@
+/*
+  ==========================================
+  Azaria-OS Design Tokens
+  
+  Rules:
+  
+  1. Do not hardcode reusable values in components.
+  2. Add reusable values here first.
+  3. Components consume tokens via var(...).
+  4. Media queries should only override tokens.
+  ==========================================
+*/
+
 :root {
   /* ========================Colors========================== */
-
   /* Background */
   --color-bg: #0d1117;
 
@@ -34,80 +46,111 @@
 
   --color-info: #58a6ff;
 
+  /* Interactive */
+  --color-link: var(--color-primary);
 
-  /* ===========================Fonts========================= */
+  --color-link-hover: var(--color-primary-hover);
 
+  --color-focus: var(--color-primary);
+
+  /* Disabled */
+  --color-disabled: #6e7681;
+
+  --color-disabled-bg: #21262d;
+
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.6);
+
+  /* ===========================Typography========================= */
   /* Styles */
   --font-primary: Inter, system-ui, sans-serif;
 
   --font-code: "JetBrains Mono", Consolas, monospace;
 
   /* Sizes */
-  --text-xs: 0.75rem;
+  --font-size-xs: 0.75rem;
 
-  --text-sm: 0.875rem;
+  --font-size-sm: 0.875rem;
 
-  --text-md: 1rem;
+  --font-size-md: 1rem;
 
-  --text-lg: 1.125rem;
+  --font-size-lg: 1.125rem;
 
-  --text-xl: 1.25rem;
+  --font-size-xl: 1.25rem;
 
-  --text-2xl: 1.5rem;
+  --font-size-2xl: 1.5rem;
 
-  --text-3xl: 2rem;
+  --font-size-3xl: 2rem;
 
-  --text-4xl: 3rem;
+  --font-size-4xl: 3rem;
 
   /* Weights */
-  --font-light: 300;
+  --font-weight-light: 300;
 
-  --font-normal: 400;
+  --font-weight-normal: 400;
 
-  --font-medium: 500;
+  --font-weight-medium: 500;
 
-  --font-semibold: 600;
+  --font-weight-semibold: 600;
 
-  --font-bold: 700;
+  --font-weight-bold: 700;
 
+  /* ===========================Border========================= */
+  /* Radius */
+  --radius-none: 0;
 
-  /* Spacings */
-  --space-1: 0.25rem;
+  --radius-sm: 0.25rem;
 
-  --space-2: 0.5rem;
+  --radius-md: 0.5rem;
 
-  --space-3: 0.75rem;
+  --radius-lg: 0.75rem;
 
-  --space-4: 1rem;
+  --radius-xl: 1rem;
 
-  --space-5: 1.5rem;
+  --radius-full: 9999px;
 
-  --space-6: 2rem;
+  /* Width */
+  --border-width: 1px;
 
-  --space-7: 3rem;
+  /* Style */
+  --border-style: solid;
 
-  --space-8: 4rem;
+  /* Color */
+  --border-color: var(--color-border);
 
+  /* Spacing */
+  --space-0: 0;
 
-  /* Border Radius */
-  --radius-sm: 4px;
+  --space-1: 0.25rem; /* 4px */
 
-  --radius-md: 8px;
+  --space-2: 0.5rem; /* 8px */
 
-  --radius-lg: 12px;
+  --space-3: 0.75rem; /* 12px */
 
-  --radius-xl: 20px;
+  --space-4: 1rem; /* 16px */
 
-  --radius-full: 999px;
+  --space-5: 1.25rem; /* 20px */
 
+  --space-6: 1.5rem; /* 24px */
+
+  --space-8: 2rem; /* 32px */
+
+  --space-10: 2.5rem; /* 40px */
+
+  --space-12: 3rem; /* 48px */
+
+  --space-16: 4rem; /* 64px */
+
+  --space-20: 5rem; /* 80px */
+
+  --space-24: 6rem; /* 96px */
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 2px rgba(0 0 0 / 0.08);
 
-  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0 0 0 / 0.12);
 
-  --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.4);
-
+  --shadow-lg: 0 10px 20px rgba(0 0 0 / 0.18);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -116,20 +159,91 @@
 
   --transition-slow: 400ms ease;
 
-  
   /* z-index */
+  --z-base: 1;
+
   --z-dropdown: 100;
 
   --z-sticky: 200;
 
   --z-fixed: 300;
 
-  --z-modal: 400;
+  --z-modal: 1000;
 
-  --z-toast: 500;
+  --z-toast: 1100;
 
   /* layout*/
   --layout-max-width: 1440px;
 
   --layout-padding: 2rem;
+
+  /* Heights */
+  --size-xs: 1.5rem;
+
+  --size-sm: 2rem;
+
+  --size-md: 2.5rem;
+
+  --size-lg: 3rem;
+
+  --size-xl: 3.5rem;
+
+  /*Icon Size*/
+  --icon-xs: 0.75rem;
+
+  --icon-sm: 1rem;
+
+  --icon-md: 1.25rem;
+
+  --icon-lg: 1.5rem;
+
+  --icon-xl: 2rem;
+
+  /* Opacity */
+  --opacity-disabled: 0.4;
+
+  --opacity-muted: 0.7;
+
+  --opacity-hover: 0.85;
+
+  /* Motion */
+  --ease-standard: ease;
+
+  --ease-in: ease-in;
+
+  --ease-out: ease-out;
+
+  --ease-in-out: ease-in-out;
+}
+
+/* ====================   BREAKPOINTS (Documentation)======================== */
+
+/*
+  Mobile: 0px–639px
+  Tablet: 640px–1023px
+  Laptop: 1024px–1279px
+  Desktop: 1280px–1535px
+  Wide: 1536px+
+*/
+
+@media (max-width: 1024px) {
+  :root {
+    --layout-padding: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --layout-padding: 1rem;
+
+    --font-size-4xl: 2.25rem;
+    --font-size-3xl: 1.75rem;
+    --font-size-2xl: 1.375rem;
+
+    --space-20: 4rem;
+    --space-24: 5rem;
+
+    --size-lg: 2.75rem;
+    --size-xl: 3rem;
+  }
 }
