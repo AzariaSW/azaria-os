@@ -39,7 +39,7 @@ export default function About() {
   ];
   return (
     <section id="about">
-      <Section title="About Me" subtitle="Get to know me better.">
+      <Section title="About Me" description="Get to know me better.">
         <div className="about">
           <div className="about__content">
             <h3 className="about__heading">Who I Am</h3>

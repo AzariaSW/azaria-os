@@ -1,0 +1,50 @@
+@import "../../../styles/theme.css";
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-3) var(--space-5);
+
+  justify-content: center;
+
+  cursor: default;
+  min-height: 3rem;
+
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.skill:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.skills__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.skills__group-title {
+  margin: 0;
+  color: var(--color-heading);
+}
+
+.skills__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.skill__name {
+  font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 640px) {
+  .skills {
+    gap: var(--space-8);
+  }
+}

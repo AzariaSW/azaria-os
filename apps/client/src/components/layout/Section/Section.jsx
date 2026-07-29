@@ -19,7 +19,7 @@ function Section({
       <div className={styles[maxWidth]}>
         {(title || description) && (
           <header className={styles.header}>
-            {title && <h2 className={styles.title}>{title}</h2>}
+            {title && <h1 className={styles.title}>{title}</h1>}
 
             {description && <p className={styles.description}>{description}</p>}
           </header>
