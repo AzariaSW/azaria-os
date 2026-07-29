@@ -14,6 +14,8 @@ export {
   Trash2,
   Plus,
   Minus,
+  Languages,
+  Target,
   Search,
   Settings,
   User,
