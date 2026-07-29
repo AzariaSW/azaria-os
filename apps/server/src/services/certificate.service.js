@@ -74,7 +74,7 @@ export async function createCertificate(data, files) {
     if (image) {
       await validateUploadedFile(image, UPLOAD.IMAGE_TYPES);
       imagename = certificateId + path.extname(image.filename);
-      data.image = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.CERTIFICATES}/${imagename}`;
+      data.image = `/${UPLOAD.DESTINATIONS.CERTIFICATES}/${imagename}`;
       moved = await moveFile(
         image.path,
         path.join(
@@ -115,7 +115,7 @@ export async function updateCertificate(data, certificateId, files) {
     if (image) {
       await validateUploadedFile(image, UPLOAD.IMAGE_TYPES);
       imagename = certificateId + path.extname(image.filename);
-      data.image = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.CERTIFICATES}/${imagename}`;
+      data.image = `/${UPLOAD.DESTINATIONS.CERTIFICATES}/${imagename}`;
     }
 
     const current = await getCertificate(certificateId);

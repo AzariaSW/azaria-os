@@ -109,7 +109,7 @@ export async function createProject(data, files) {
         await tx.projectImage.createMany({
           data: files.map((file, index) => ({
             projectId,
-            url: `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.PROJECTS}/${projectId}/${file.filename}`,
+            url: `/${UPLOAD.DESTINATIONS.PROJECTS}/${projectId}/${file.filename}`,
             order: index + 1,
           })),
         });
@@ -193,7 +193,7 @@ export async function updateProject(data, projectId, files) {
           data: files.map((file) => ({
             projectId,
 
-            url: `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.PROJECTS}/${projectId}/${file.filename}`,
+            url: `/${UPLOAD.DESTINATIONS.PROJECTS}/${projectId}/${file.filename}`,
 
             order: nextOrder++,
           })),

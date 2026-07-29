@@ -1,12 +1,12 @@
-import Hero from "./sections/Hero/Hero";
-import About from "./sections/About/About";
-import Skills from "./sections/Skills/Skills";
-import Experience from "./sections/Experience/Experience";
-import Projects from "./sections/Projects/Projects";
-import Certificates from "./sections/Certificates/Certificates";
-import Github from "./sections/Github/Github";
-import Contact from "./sections/Contact/Contact";
-import Footer from "./sections/Footer/Footer";
+import Hero from "../../features/home/Hero/Hero";
+import About from "../../features/home/About/About";
+import Skills from "../../features/home/Skills/Skills";
+import Experience from "../../features/home/Experience/Experience";
+import Projects from "../../features/home/Projects/Projects";
+import Certificates from "../../features/home/Certificates/Certificates";
+import Github from "../../features/home/Github/Github";
+import Contact from "../../features/home/Contact/Contact";
+import Footer from "../../features/home/Footer/Footer";
 
 function HomePage() {
   return (

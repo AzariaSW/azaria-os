@@ -31,17 +31,17 @@ export async function updateProfile(data, files) {
   try {
     if (profileImage) {
       await validateUploadedFile(profileImage, UPLOAD.IMAGE_TYPES);
-      data.profileImage = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.PROFILE}/${profileImage.filename}`;
+      data.profileImage = `/${UPLOAD.DESTINATIONS.PROFILE}/${profileImage.filename}`;
     }
 
     if (resume) {
       await validateUploadedFile(resume, UPLOAD.DOCUMENT_TYPES);
-      data.resumeUrl = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.RESUME}/${resume.filename}`;
+      data.resumeUrl = `/${UPLOAD.DESTINATIONS.RESUME}/${resume.filename}`;
     }
 
     if (cv) {
       await validateUploadedFile(cv, UPLOAD.DOCUMENT_TYPES);
-      data.cvUrl = `/${UPLOAD.BASE_DIRECTORY}/${UPLOAD.DESTINATIONS.CV}/${cv.filename}`;
+      data.cvUrl = `/${UPLOAD.DESTINATIONS.CV}/${cv.filename}`;
     }
 
     const current = await getProfile();

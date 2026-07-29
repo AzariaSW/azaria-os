@@ -1,6 +1,8 @@
 @import "../../styles/theme.css";
 
 .icon {
+  display: inline-block;
+  vertical-align: middle;
   flex-shrink: 0;
   stroke-width: 2;
 }

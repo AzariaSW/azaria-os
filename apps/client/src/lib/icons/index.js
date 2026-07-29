@@ -1,6 +1,4 @@
 export {
-  Github,
-  Linkedin,
   Mail,
   Phone,
   MapPin,
@@ -8,6 +6,7 @@ export {
   X,
   ArrowRight,
   ArrowLeft,
+  ArrowDown,
   ExternalLink,
   Download,
   Upload,
@@ -29,5 +28,7 @@ export {
   LoaderCircle,
   Check,
   AlertCircle,
+  Dot,
   Info,
 } from "lucide-react";
+export { FaGithub as Github, FaLinkedin as Linkedin } from "react-icons/fa6";
