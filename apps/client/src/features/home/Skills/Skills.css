@@ -6,14 +6,19 @@
   gap: var(--space-12);
   padding: var(--space-3) var(--space-5);
 
-  justify-content: center;
-
   cursor: default;
   min-height: 3rem;
 
   transition:
     transform var(--transition-fast),
     border-color var(--transition-fast);
+}
+
+.skills__none{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
 
 .skill:hover {

@@ -8,12 +8,15 @@ import "./About.css";
 
 export default function About() {
   const { data: profile, isLoading, isError } = useProfile();
+  
   if (isLoading) {
     return <Skeleton />;
   }
+  
   if (isError) {
-    return <section id="about">Failed to load About information.</section>;
+    return <section id="about" className="failed">Failed to load About information.</section>;
   }
+  
   const { bio, location, availability } = profile || {};
   const highlights = [
     {

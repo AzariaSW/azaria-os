@@ -1,20 +1,39 @@
+@import "../../../styles/theme.css";
+
 .skeleton {
-  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+
+  min-height: 1.25rem;
+
+  border-radius: var(--radius-md);
 
   background: linear-gradient(
     90deg,
-    var(--color-surface),
-    var(--color-surface-light),
-    var(--color-surface)
+    var(--color-surface) 0%,
+    var(--color-surface-light) 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    var(--color-surface-light) 70%,
+    var(--color-surface) 100%
   );
 
-  background-size: 200% 100%;
+  background-size: 300% 100%;
 
-  animation: shimmer 1.4s infinite linear;
+  animation: shimmer 6s ease infinite;
+
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
 }
 
 @keyframes shimmer {
-  to {
-    background-position: -200% 0;
+  0% {
+    background-position: 300% 0;
+  }
+
+  50% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: -300% 0;
   }
 }

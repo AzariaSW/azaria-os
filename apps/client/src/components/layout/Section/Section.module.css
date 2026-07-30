@@ -1,3 +1,5 @@
+@import "../../../styles/theme.css";
+
 .section {
   padding-block: var(--space-8);
 }
@@ -36,3 +38,4 @@
 .full {
   width: 100%;
 }
+

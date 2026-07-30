@@ -11,14 +11,14 @@ export default function Skills() {
     return <Skeleton />;
   }
   if (isError) {
-    return <section id="skills">Failed to load skills.</section>;
+    return <section id="skills" className="failed">Failed to load skills.</section>;
   }
 
   if (!items.length) {
     return (
       <section id="skills">
         <Section title="Skills" description="Technologies I use.">
-          <p>No skills available.</p>
+          <p className="skills skills__none">No skills available.</p>
         </Section>
       </section>
     );

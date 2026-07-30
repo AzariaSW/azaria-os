@@ -19,12 +19,15 @@ export default function Hero() {
   const { fullName, title, bio, github, linkedin, email, profileImage } =
     profile ?? {};
   const emailLink = `mailTo:${email}`;
+  
   if (isLoading) {
     return <Skeleton />;
   }
+  
   if (isError) {
-    return <section id="hero">Failed to load profile.</section>;
+    return <section id="hero" className="failed">Failed to load profile.</section>;
   }
+
   return (
     <section id="hero">
       <div className="hero">
