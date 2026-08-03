@@ -9,7 +9,6 @@
 .project {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 
   transition:
     transform var(--transition-normal),
@@ -17,7 +16,6 @@
 }
 
 .project:hover {
-  transform: translateY(-4px);
   border-color: var(--color-primary);
 }
 

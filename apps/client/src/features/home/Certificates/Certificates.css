@@ -1,0 +1,44 @@
+.certificates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-8);
+}
+
+.certificate {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.certificate__body {
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-3);
+  padding: var(--space-6);
+  flex: 1;
+}
+
+.certificate__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.certificate__issuer {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+.certificate__date {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 1023px) {
+  .certificates {
+    grid-template-columns: 1fr;
+  }
+}
