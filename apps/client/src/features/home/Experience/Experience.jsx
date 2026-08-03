@@ -1,5 +1,5 @@
 import { Section } from "../../../components/layout";
-import useExperiences from "../../experience/hooks/useExperience";
+import useExperiences from "../../experience/hooks/useExperiences";
 import { Skeleton } from "../../../components/feedback";
 import formatDateRange from "../../../utils/formatDateRange";
 import "./Experience.css";

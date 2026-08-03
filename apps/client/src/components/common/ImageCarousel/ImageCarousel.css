@@ -1,0 +1,97 @@
+@import "../../../styles/theme.css";
+
+.image-carousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.image-carousel__image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-carousel__image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.image-carousel__button {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast);
+
+  z-index: 2;
+}
+
+.image-carousel__button--previous {
+  left: var(--space-3);
+}
+
+.image-carousel__button--next {
+  right: var(--space-3);
+}
+
+.image-carousel__button:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.image-carousel__indicators {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-4);
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-2);
+  z-index: 2;
+}
+
+.image-carousel__indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all var(--transition-fast);
+}
+
+.image-carousel__indicator--active {
+  background: var(--color-primary);
+  transform: scale(1.2);
+}
+
+.image-carousel--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+}
+
+@media (max-width: 640px) {
+  .image-carousel__button {
+    width: 2rem;
+    height: 2rem;
+  }
+}

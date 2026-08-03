@@ -7,6 +7,8 @@ export {
   ArrowRight,
   ArrowLeft,
   ArrowDown,
+  ChevronLeft,
+  ChevronRight,
   ExternalLink,
   Download,
   Upload,
