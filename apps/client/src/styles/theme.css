@@ -61,6 +61,8 @@
   /* Overlay */
   --color-overlay: rgba(0, 0, 0, 0.6);
 
+  --color-overlay-hover: rgba(0, 0, 0, 0.75);
+
   /* ===========================Typography========================= */
   /* Styles */
   --font-primary: Inter, system-ui, sans-serif;
@@ -171,6 +173,8 @@
   --z-modal: 1000;
 
   --z-toast: 1100;
+
+  --z-max: 9999;
 
   /* layout*/
   --layout-max-width: 1440px;

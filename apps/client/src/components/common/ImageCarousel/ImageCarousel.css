@@ -33,15 +33,15 @@
   top: 50%;
 
   transform: translateY(-50%);
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--size-md);
+  height: var(--size-md);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
+  background: var(--color-overlay);
   color: white;
 
   transition:
@@ -60,7 +60,7 @@
 }
 
 .image-carousel__button:hover {
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--color-overlay-hover);
 }
 
 .image-carousel__indicators {
@@ -74,8 +74,8 @@
 }
 
 .image-carousel__indicator {
-  width: 10px;
-  height: 10px;
+  width: var(--size-xs);
+  height: var(--size-xs);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   transition: all var(--transition-fast);
@@ -95,8 +95,8 @@
   justify-content: center;
   align-items: center;
 
-  background: rgba(0, 0, 0, 0.85);
-  z-index: 9999;
+  background: var(--color-overlay);
+  z-index: var(--z-max);
 }
 
 .image-carousel__modal {
@@ -118,8 +118,8 @@
   top: 1rem;
   right: 1rem;
 
-  width: 2.75rem;
-  height: 2.75rem;
+  width: var(--size-lg);
+  height: var(--size-lg);
 
   display: flex;
   align-items: center;
@@ -142,7 +142,7 @@
 
 @media (max-width: 640px) {
   .image-carousel__button {
-    width: 2rem;
-    height: 2rem;
+    width: var(--size-sm);
+    height: var(--size-sm);
   }
 }

@@ -15,7 +15,11 @@ export const queryKeys = {
 
   certificates: ["certificates"],
 
-  github: ["github"],
+  github: {
+    profile: ["github", "profile"],
+    repositories: ["github", "repositories"],
+    activity: ["github", "activity"],
+  },
 
   messages: ["messages"],
 };

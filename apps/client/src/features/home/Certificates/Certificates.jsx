@@ -37,7 +37,7 @@ export default function Certificates() {
     <section id="certificates">
       <Section
         title="Certificates"
-        subtitle="Professional certifications and achievements."
+        description="Professional certifications and achievements."
       >
         <div className="certificates">
           {items.map((certificate) => (
