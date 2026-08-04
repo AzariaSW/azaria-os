@@ -1,19 +1,35 @@
 @import "../../../../styles/theme.css";
 
-.footer {
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
+  background: var(--color-surface);
+  z-index: var(--z-index-footer);
 }
 
 .footer__container {
   max-width: var(--layout-max-width);
   margin: 0 auto;
   padding: 1rem var(--layout-padding);
+  padding-bottom: var(--size-xxxs);
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   gap: 1rem;
+}
+
+.footer__social{
+  display: flex;
+  gap: var(--space-3);
+}
+
+.footer__social h3{
+  padding: var(--space-3) 0;
+  margin: 0;
 }
 
 .footer__left,

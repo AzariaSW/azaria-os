@@ -74,8 +74,8 @@
 }
 
 .image-carousel__indicator {
-  width: var(--size-xs);
-  height: var(--size-xs);
+  width: var(--size-xxs);
+  height: var(--size-xxs);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   transition: all var(--transition-fast);

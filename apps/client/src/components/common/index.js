@@ -3,3 +3,4 @@ export { default as Card } from "./Card/Card";
 export { default as Input } from "./Input/Input";
 export { default as ImageCarousel } from "./ImageCarousel/ImageCarousel";
 export { default as StatCard } from "./StatCard/StatCard";
+export { default as SocialLinks } from "./SocialLinks/SocialLinks";

@@ -9,6 +9,7 @@ export {
   ArrowDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   ExternalLink,
   Download,
   Upload,
@@ -35,4 +36,10 @@ export {
   Dot,
   Info,
 } from "lucide-react";
-export { FaGithub as Github, FaLinkedin as Linkedin } from "react-icons/fa6";
+export {
+  FaGithub as Github,
+  FaLinkedin as Linkedin,
+  FaFacebook as Facebook,
+  FaTelegram as Send,
+  FaGlobe as Globe,
+} from "react-icons/fa6";

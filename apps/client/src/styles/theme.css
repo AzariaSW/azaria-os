@@ -23,7 +23,7 @@
   /* Primary */
   --color-primary: #00ff88;
 
-  --color-primary-hover: #2cff9f;
+  --color-primary-hover: #5bc997;
 
   --color-primary-dark: #00cc6a;
 
@@ -174,6 +174,8 @@
 
   --z-toast: 1100;
 
+  --z-footer: 1200;
+  
   --z-max: 9999;
 
   /* layout*/
@@ -182,6 +184,10 @@
   --layout-padding: 2rem;
 
   /* Heights */
+  --size-xxxs: 0.5rem;
+  
+  --size-xxs: 0.65rem;
+
   --size-xs: 1.5rem;
 
   --size-sm: 2rem;
