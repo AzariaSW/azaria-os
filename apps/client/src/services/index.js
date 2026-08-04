@@ -5,5 +5,5 @@ export * as experienceService from "./experience.service";
 export * as educationService from "./education.service";
 export * as certificateService from "./certificate.service";
 export * as githubService from "./github.service";
-export * as messageService from "./message.service";
+export * as contactService from "./contact.service";
 export * as authService from "./auth.service";

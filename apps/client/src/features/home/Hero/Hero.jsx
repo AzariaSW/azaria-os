@@ -18,7 +18,6 @@ export default function Hero() {
   const { data: profile, isLoading, isError } = useProfile();
   const { fullName, title, bio, github, linkedin, email, profileImage } =
     profile ?? {};
-  const emailLink = `mailTo:${email}`;
   
   if (isLoading) {
     return <Skeleton />;
@@ -79,7 +78,7 @@ export default function Hero() {
             </a>
 
             <a
-              href={emailLink}
+              href={`mailto:${email}`}
               aria-label="Email"
               target="_blank"
               rel="noopener noreferrer"

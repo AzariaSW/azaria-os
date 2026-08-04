@@ -10,6 +10,8 @@ export const updateProfileSchema = z.object({
 
     email: z.string().email().optional(),
 
+    phone: z.string().max(20).optional(),
+
     location: z.string().max(100).optional(),
 
     github: z.string().url().optional(),

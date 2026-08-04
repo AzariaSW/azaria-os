@@ -1,0 +1,63 @@
+@import "../../../styles/theme.css";
+
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--space-12);
+  align-items: start;
+  padding: var(--space-3) var(--space-5);
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.contact__form h3 {
+  margin: 0;
+}
+
+.contact__form form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.contact__form button {
+  width: 100%;
+}
+
+.contact__item {
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.contact__item h4 {
+  margin: 0;
+  color: var(--color-primary);
+}
+
+.contact__item p,
+.contact__item a {
+  margin: 0;
+}
+
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+@media (max-width: 639px) {
+  .contact {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}

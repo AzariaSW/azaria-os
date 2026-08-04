@@ -202,6 +202,7 @@ multipart/form-data
 | title        | string                    | 150 char  |
 | bio          | String                    | 3000 char |
 | email        | String(email)             |           |
+| phone        | String(phone number)      | 20 char   |
 | location     | String                    | 100 char  |
 | profileImage | file(jpg, jpeg,png, webp) | 10mb      |
 | resume       | pdf                       | 10mb      |
@@ -255,6 +256,7 @@ multipart/form-data
 | .                     | .                         | .         |
 | .                     | .                         | .         |
 | .                     | .                         | .         |
+
 upto 20 images
 
 ## PUT /projects/:id
@@ -284,6 +286,7 @@ multipart/form-data
 | .           | .                         | .         |
 | .           | .                         | .         |
 | .           | .                         | .         |
+
 upto 20 images
 
 ## DELETE /projects/:id
