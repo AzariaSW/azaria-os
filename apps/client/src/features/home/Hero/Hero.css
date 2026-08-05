@@ -2,18 +2,18 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) 420px;
   align-items: center;
 
   gap: var(--space-20);
-  min-height: calc(100vh - var(--nav-height));
+  min-height: calc(100vh - var(--size-xxl));
   padding-block: var(--space-20);
 }
 
 .hero__content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-6);
   max-width: 42rem;
 }
 
@@ -88,29 +88,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.hero__image-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 340px;
-  aspect-ratio: 1;
-
-  overflow: hidden;
-
-  border: var(--border-width) var(--border-style) var(--border-color);
-  border-radius: var(--radius-xl);
-
-  background: var(--color-surface);
-  color: var(--color-text-muted);
+  border: solid var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .hero__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--transition-slow) box-shadow var(--transition-slow);
+}
+
+.hero__image img:hover {
+  transform: scale(1.02);
+
+  box-shadow: var(--shadow-lg);
 }
 
 .hero__card {
@@ -143,7 +136,7 @@
   display: inline-flex;
   align-items: center;
   margin-inline: auto;
-  
+
   color: var(--color-success);
   gap: var(--space-2);
   font-size: var(--font-size-sm);
@@ -152,10 +145,11 @@
 }
 
 .hero__status-dot {
-  width: 8px;
-  height: 8\px;
+  width: var(--size-xxxs);
+  height: var(--size-xxxs);
   border-radius: 50%;
   background: var(--color-success);
+  animation: pulse var(--transition-super-slow) infinite;
 }
 
 .hero__terminal {
@@ -172,6 +166,38 @@
   color: var(--color-primary);
   font-size: var(--font-size-sm);
   margin: 0;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+
+  25% {
+    transform: scale(1.1);
+
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: scale(1.2);
+
+    opacity: 0.5;
+  }
+
+  75% {
+    transform: scale(1.1);
+
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1024px) {

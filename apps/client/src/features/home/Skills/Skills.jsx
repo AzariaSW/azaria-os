@@ -1,7 +1,7 @@
 import { Section } from "../../../components/layout";
 import useSkills from "../../skills/hooks/useSkills";
 import { Skeleton } from "../../../components/feedback";
-import { Card } from "../../../components/common";
+import { Card, Reveal } from "../../../components/common";
 import "./Skills.css";
 
 export default function Skills() {
@@ -11,7 +11,11 @@ export default function Skills() {
     return <Skeleton />;
   }
   if (isError) {
-    return <section id="skills" className="failed">Failed to load skills.</section>;
+    return (
+      <section id="skills" className="failed">
+        Failed to load skills.
+      </section>
+    );
   }
 
   if (!items.length) {
@@ -43,17 +47,19 @@ export default function Skills() {
         description="Technologies I use to build scalable and maintainable software."
       >
         <div className="skills">
-          {Object.entries(groupedSkills).map(([category, skills]) => (
-            <div key={category} className="skills__group">
-              <h3 className="skills__group-title">{category}</h3>
-              <div className="skills__list">
-                {skills.map((skill) => (
-                  <Card key={skill.id} className="skill" >
-                    <span className="skill__name">{skill.name}</span>
-                  </Card>
-                ))}
+          {Object.entries(groupedSkills).map(([category, skills], index) => (
+            <Reveal delay={index * 0.05}>
+              <div key={category} className="skills__group">
+                <h3 className="skills__group-title">{category}</h3>
+                <div className="skills__list">
+                  {skills.map((skill) => (
+                    <Card key={skill.id} className="skill">
+                      <span className="skill__name">{skill.name}</span>
+                    </Card>
+                  ))}
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>

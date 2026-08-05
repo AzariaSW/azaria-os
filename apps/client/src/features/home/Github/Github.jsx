@@ -3,7 +3,7 @@ import useGithubActivity from "../../github/hooks/useGithubActivity";
 import useGithubRepositories from "../../github/hooks/useGithubRepositories";
 import useGithubProfile from "../../github/hooks/useGithubProfile";
 import { Skeleton } from "../../../components/feedback";
-import { Button, Card, StatCard } from "../../../components/common";
+import { Button, Card, StatCard, Reveal } from "../../../components/common";
 import githubLanguageColor from "../../../utils/githubLanguageColor";
 import formatRelativeTime from "../../../utils/formatRelativeTime";
 import formatGithubEvent from "../../../utils/formatGithubEvent";
@@ -32,7 +32,11 @@ export default function Github() {
     profileQuery.isError || repositoriesQuery.isError || activityQuery.isError;
 
   if (isError) {
-    return <section id="github" className="failed">Failed to load GitHub activity.</section>;
+    return (
+      <section id="github" className="failed">
+        Failed to load GitHub activity.
+      </section>
+    );
   }
 
   const profile = profileQuery.data;
@@ -53,48 +57,54 @@ export default function Github() {
         title="GitHub Activity"
         description="Recent commits from my public repositories."
       >
-        <div className="github__stats">
-          <StatCard title="Repositories" value={profile.public_repos} />
+        <Reveal delay={0.5}>
+          <div className="github__stats">
+            <StatCard title="Repositories" value={profile.public_repos} />
 
-          <StatCard title="Followers" value={profile.followers} />
+            <StatCard title="Followers" value={profile.followers} />
 
-          <StatCard title="Following" value={profile.following} />
+            <StatCard title="Following" value={profile.following} />
 
-          <StatCard
-            title="GitHub Since"
-            value={formatDate(profile.created_at)}
-          />
-        </div>
+            <StatCard
+              title="GitHub Since"
+              value={formatDate(profile.created_at)}
+            />
+          </div>
+        </Reveal>
 
         <div className="github__repositories">
           <h3 className="github__heading">Latest Repositories</h3>
 
           <div className="github__repository-list">
-            {latestRepositories.map((repository) => (
-              <Card
-                as="a"
-                href={repository.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="github__repository-card"
-              >
-                <h4 className="github__repository-name">{repository.name}</h4>
+            {latestRepositories.map((repository, index) => (
+              <Reveal delay={index * 0.05}>
+                <Card
+                  as="a"
+                  href={repository.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="github__repository-card"
+                >
+                  <h4 className="github__repository-name">{repository.name}</h4>
 
-                <div className="github__language">
-                  <span
-                    className="github__language-dot"
-                    style={{
-                      backgroundColor: githubLanguageColor(repository.language),
-                    }}
-                  />
+                  <div className="github__language">
+                    <span
+                      className="github__language-dot"
+                      style={{
+                        backgroundColor: githubLanguageColor(
+                          repository.language,
+                        ),
+                      }}
+                    />
 
-                  <span>{repository.language}</span>
-                </div>
+                    <span>{repository.language}</span>
+                  </div>
 
-                <p className="github__repository-updated">
-                  Updated {formatRelativeTime(repository.updated_at)}
-                </p>
-              </Card>
+                  <p className="github__repository-updated">
+                    Updated {formatRelativeTime(repository.updated_at)}
+                  </p>
+                </Card>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -104,23 +114,25 @@ export default function Github() {
 
           <div className="github__activity-list">
             {latestActivity.length ? (
-              latestActivity.map((event) => {
+              latestActivity.map((event, index) => {
                 const Icon = githubEventIcon(event.type);
 
                 return (
-                  <Card key={event.id} className="github__activity-card">
-                    <h4 className="github__activity-type">
-                      <Icon size={18} />
+                  <Reveal delay={index * 0.05}>
+                    <Card key={event.id} className="github__activity-card">
+                      <h4 className="github__activity-type">
+                        <Icon size={18} />
 
-                      {formatGithubEvent(event.type)}
-                    </h4>
-                    <p className="github__activity-repository">
-                      {event.repo.name}
-                    </p>
-                    <p className="github__activity-date">
-                      {formatRelativeTime(event.created_at)}
-                    </p>
-                  </Card>
+                        {formatGithubEvent(event.type)}
+                      </h4>
+                      <p className="github__activity-repository">
+                        {event.repo.name}
+                      </p>
+                      <p className="github__activity-date">
+                        {formatRelativeTime(event.created_at)}
+                      </p>
+                    </Card>
+                  </Reveal>
                 );
               })
             ) : (

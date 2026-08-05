@@ -161,6 +161,8 @@
 
   --transition-slow: 400ms ease;
 
+  --transition-super-slow: 2s ease;
+
   /* z-index */
   --z-base: 1;
 
@@ -181,6 +183,8 @@
   /* layout*/
   --layout-max-width: 1440px;
 
+  --layout-content-width: 760px;
+  
   --layout-padding: 2rem;
 
   /* Heights */
@@ -197,6 +201,8 @@
   --size-lg: 3rem;
 
   --size-xl: 3.5rem;
+
+  --size-xxl: 4.5rem
 
   /*Icon Size*/
   --icon-xs: 0.75rem;

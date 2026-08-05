@@ -15,9 +15,14 @@ export const NAVIGATION_ITEMS = [
     path: "#skills",
   },
   {
-    id: "experience",
-    label: "Experience",
-    path: "#experience",
+    id: "education",
+    label: "Education",
+    path: "#education",
+  },
+  {
+    id: "certificates",
+    label: "Certificates",
+    path: "#certificates",
   },
   {
     id: "projects",
@@ -25,9 +30,9 @@ export const NAVIGATION_ITEMS = [
     path: "#projects",
   },
   {
-    id: "certificates",
-    label: "Certificates",
-    path: "#certificates",
+    id: "experience",
+    label: "Experience",
+    path: "#experience",
   },
   {
     id: "github",
