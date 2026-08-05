@@ -42,4 +42,5 @@ export {
   FaFacebook as Facebook,
   FaTelegram as Send,
   FaGlobe as Globe,
+  FaWhatsapp as whatsapp
 } from "react-icons/fa6";

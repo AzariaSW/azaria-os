@@ -39,7 +39,7 @@
   font-size: var(--font-size-sm);
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 639px) {
   .certificates {
     grid-template-columns: 1fr;
   }

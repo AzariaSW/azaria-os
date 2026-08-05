@@ -1,7 +1,12 @@
 @import "../../../../styles/theme.css";
 
 .navbar {
+  position: fixed;
+  top: 0;
+  left:0;
   width: 100%;
+  background: var(--color-surface);
+  z-index: var(--z-header);
 }
 
 .navbar__container {

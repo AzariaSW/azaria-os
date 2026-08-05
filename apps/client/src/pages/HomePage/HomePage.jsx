@@ -6,7 +6,6 @@ import Projects from "../../features/home/Projects/Projects";
 import Certificates from "../../features/home/Certificates/Certificates";
 import Github from "../../features/home/Github/Github";
 import Contact from "../../features/home/Contact/Contact";
-import Footer from "../../features/home/Footer/Footer";
 
 function HomePage() {
   return (
@@ -26,8 +25,6 @@ function HomePage() {
       <Github />
 
       <Contact />
-
-      <Footer />
     </>
   );
 }

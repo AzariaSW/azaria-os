@@ -1,29 +1,75 @@
 @import "../../../../styles/theme.css";
 
-#footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+.footer {
   width: 100%;
+  margin-top: var(--space-24);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
   background: var(--color-surface);
-  z-index: var(--z-index-footer);
 }
 
-.footer__container {
-  max-width: var(--layout-max-width);
-  margin: 0 auto;
-  padding: 1rem var(--layout-padding);
-  padding-bottom: var(--size-xxxs);
+.footer__top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: var(--space-2) var(--layout-padding);
+  margin-bottom: var(--space-6);
+}
 
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__divider {
+  border: 1px solid var(--color-border);
+  margin: 0;
+}
+
+.footer__top-button {
+  margin: var(--space-2) auto 0;
+  display: block;
+  color: var(--color-primary);
+  transition: color var(--transition-fast);
+}
+
+.footer__top-button:hover {
+  background: var(--color-surface-light);
+  color: var(--color-primary-hover);
+}
+
+.footer__top-button-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  gap: 1rem;
+  flex-direction: column;
+  padding: var(--space-2);
 }
 
 .footer__social{
   display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.footer__bottom {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 1rem var(--layout-padding);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__left,
+.footer__center,
+.footer__right {
+  display: flex;
+  align-items: center;
+}
+
+.footer__social{
+  display: flex;
+  align-items: center;
   gap: var(--space-3);
 }
 
@@ -32,9 +78,47 @@
   margin: 0;
 }
 
-.footer__left,
-.footer__center,
-.footer__right {
-  display: flex;
-  align-items: center;
+@media (max-width: 1023px) {
+  .footer__bottom {
+    gap: var(--space-3);
+  }
+
+  .footer__social {
+    gap: var(--space-2);
+  }
+
+  .footer__social h3 {
+    font-size: var(--font-size-sm);
+  }
+
+  p{
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 639px) {
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    gap: var(--space-1);
+  }
+
+  .footer__left,
+  .footer__center,
+  .footer__right {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .footer__social {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

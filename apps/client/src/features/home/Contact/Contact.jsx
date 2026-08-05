@@ -27,7 +27,7 @@ export default function Contact() {
   });
 
   const { data: profile } = useProfile();
-  const { location, phone, linkedin, email } =
+  const { location, phone, email } =
     profile ?? {};
 
   const sendMessage = useSendMessage({

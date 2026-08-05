@@ -9,10 +9,6 @@
   background: var(--color-surface);
 }
 
-.image-carousel:hover{
-  transform: scale(1.02);
-  transition: transform var(--transition-normal);
-}
 
 .image-carousel__image {
   width: 100%;
@@ -20,11 +16,26 @@
   cursor: zoom-in;
 }
 
+.image-carousel__image:hover{
+  transform: scale(1.02);
+  transition: transform var(--transition-normal);
+}
+
 .image-carousel__image img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+}
+
+.image-carousel--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: auto;
+  aspect-ratio: 16 / 9;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
 }
 
 .image-carousel__button {
@@ -47,8 +58,6 @@
   transition:
     background var(--transition-fast),
     transform var(--transition-fast);
-
-  z-index: 2;
 }
 
 .image-carousel__button--previous {
@@ -70,7 +79,6 @@
   transform: translateX(-50%);
   display: flex;
   gap: var(--space-2);
-  z-index: 2;
 }
 
 .image-carousel__indicator {
@@ -96,7 +104,7 @@
   align-items: center;
 
   background: var(--color-overlay);
-  z-index: var(--z-max);
+  z-index: var(--z-overlay);
 }
 
 .image-carousel__modal {
@@ -131,14 +139,6 @@
   color: white;
 }
 
-.image-carousel--empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 9;
-  color: var(--color-text-muted);
-  background: var(--color-surface);
-}
 
 @media (max-width: 640px) {
   .image-carousel__button {

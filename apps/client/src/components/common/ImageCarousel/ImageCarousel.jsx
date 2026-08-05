@@ -25,7 +25,7 @@ export default function ImageCarousel({ images = [], image = null, alt = "" }) {
   })();
   const [currentImage, setCurrentImage] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const current = normalizedImages[currentImage] ?? normalizedImages[0];
+  const current = normalizedImages[currentImage] ?? null;
 
   const nextImage = () => {
     setCurrentImage((current) =>
@@ -55,53 +55,53 @@ export default function ImageCarousel({ images = [], image = null, alt = "" }) {
     };
   }, [isOpen]);
 
-  if (!normalizedImages.length) {
-    return <div className="image-carousel image-carousel--empty">No Image</div>;
-  }
-
   return (
     <>
       <div className="image-carousel">
-        <div className="image-carousel__image">
-          <img
-            src={getAsset(current.url)}
-            alt={current.altText || alt}
-            onClick={() => setIsOpen(true)}
-          />
-          {normalizedImages.length > 1 && (
-            <>
-              <button
-                className="image-carousel__button image-carousel__button--previous"
-                onClick={previousImage}
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={20} />
-              </button>
+        {current ? (
+          <div className="image-carousel__image">
+            <img
+              src={getAsset(current.url)}
+              alt={current.altText || alt}
+              onClick={() => setIsOpen(true)}
+            />
+            {normalizedImages.length > 1 && (
+              <>
+                <button
+                  className="image-carousel__button image-carousel__button--previous"
+                  onClick={previousImage}
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={20} />
+                </button>
 
-              <button
-                className="image-carousel__button image-carousel__button--next"
-                onClick={nextImage}
-                aria-label="Next image"
-              >
-                <ChevronRight size={20} />
-              </button>
-              <div className="image-carousel__indicators">
-                {normalizedImages.map((image, index) => (
-                  <button
-                    key={image.id}
-                    className={`image-carousel__indicator ${
-                      index === currentImage
-                        ? "image-carousel__indicator--active"
-                        : ""
-                    }`}
-                    onClick={() => setCurrentImage(index)}
-                    aria-label={`Go to image ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+                <button
+                  className="image-carousel__button image-carousel__button--next"
+                  onClick={nextImage}
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={20} />
+                </button>
+                <div className="image-carousel__indicators">
+                  {normalizedImages.map((image, index) => (
+                    <button
+                      key={image.id}
+                      className={`image-carousel__indicator ${
+                        index === currentImage
+                          ? "image-carousel__indicator--active"
+                          : ""
+                      }`}
+                      onClick={() => setCurrentImage(index)}
+                      aria-label={`Go to image ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <div className="image-carousel--empty">{alt || "No Image"}</div>
+        )}
       </div>
       {isOpen && (
         <div
@@ -131,19 +131,19 @@ export default function ImageCarousel({ images = [], image = null, alt = "" }) {
                   <ChevronRight size={20} />
                 </button>
                 <div className="image-carousel__indicators">
-                {normalizedImages.map((image, index) => (
-                  <button
-                    key={image.id}
-                    className={`image-carousel__indicator ${
-                      index === currentImage
-                        ? "image-carousel__indicator--active"
-                        : ""
-                    }`}
-                    onClick={() => setCurrentImage(index)}
-                    aria-label={`Go to image ${index + 1}`}
-                  />
-                ))}
-              </div>
+                  {normalizedImages.map((image, index) => (
+                    <button
+                      key={image.id}
+                      className={`image-carousel__indicator ${
+                        index === currentImage
+                          ? "image-carousel__indicator--active"
+                          : ""
+                      }`}
+                      onClick={() => setCurrentImage(index)}
+                      aria-label={`Go to image ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </>
             )}
             <button

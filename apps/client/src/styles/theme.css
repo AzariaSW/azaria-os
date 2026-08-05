@@ -174,9 +174,9 @@
 
   --z-toast: 1100;
 
-  --z-footer: 1200;
-  
-  --z-max: 9999;
+  --z-overlay: 1300;
+
+  --z-header: 1200;
 
   /* layout*/
   --layout-max-width: 1440px;
@@ -185,7 +185,7 @@
 
   /* Heights */
   --size-xxxs: 0.5rem;
-  
+
   --size-xxs: 0.65rem;
 
   --size-xs: 1.5rem;

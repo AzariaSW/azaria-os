@@ -5,6 +5,7 @@ import {
   Mail,
   Send,
   Globe,
+  whatsapp
 } from "../../../lib/icons";
 import "./SocialLinks.css";
 
@@ -20,6 +21,8 @@ const ICONS = {
   telegram: Send,
 
   website: Globe,
+
+  whatsapp: whatsapp
 };
 
 export default function SocialLinks({ links = [], className = "" }) {

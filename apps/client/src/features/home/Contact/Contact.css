@@ -55,7 +55,7 @@
   gap: var(--space-6);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 1023px) {
   .contact {
     grid-template-columns: 1fr;
     gap: var(--space-8);

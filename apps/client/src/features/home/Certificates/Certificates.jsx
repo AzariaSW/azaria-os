@@ -44,10 +44,10 @@ export default function Certificates() {
             <Card key={certificate.id} className="certificate">
               <ImageCarousel
                 image={certificate.image}
-                alt={certificate.title}
+                alt={certificate.name}
               />
               <div className="certificate__body">
-                <h3 className="certificate__title">{certificate.title}</h3>
+                <h3 className="certificate__title">{certificate.name}</h3>
                 <p className="certificate__issuer">{certificate.issuer}</p>
                 <p className="certificate__date">
                   {formatDate(certificate.issueDate)}

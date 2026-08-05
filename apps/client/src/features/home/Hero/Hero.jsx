@@ -1,30 +1,30 @@
 import {
-  Github,
-  Linkedin,
-  Mail,
   ArrowRight,
-  ArrowDown,
   Download,
   Dot,
 } from "../../../lib/icons";
 import Icon from "../../../lib/icons/Icon";
 import useProfile from "../../profile/hooks/useProfile";
-import { Button } from "../../../components/common";
+import { Button, SocialLinks } from "../../../components/common";
 import { Skeleton } from "../../../components/feedback";
 import { getAsset } from "../../../utils/getAsset";
 import "./Hero.css";
 
 export default function Hero() {
   const { data: profile, isLoading, isError } = useProfile();
-  const { fullName, title, bio, github, linkedin, email, profileImage } =
+  const { fullName, title, bio, github, linkedin, email, phone, profileImage } =
     profile ?? {};
-  
+
   if (isLoading) {
     return <Skeleton />;
   }
-  
+
   if (isError) {
-    return <section id="hero" className="failed">Failed to load profile.</section>;
+    return (
+      <section id="hero" className="failed">
+        Failed to load profile.
+      </section>
+    );
   }
 
   return (
@@ -57,35 +57,26 @@ export default function Hero() {
           </div>
 
           <div className="hero__social">
-            <a
-              href={github}
-              aria-label="GitHub"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="hero__social-link"
-            >
-              <Icon icon={Github} />
-            </a>
-
-            <a
-              href={linkedin}
-              aria-label="LinkedIn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero__social-link"
-            >
-              <Icon icon={Linkedin} />
-            </a>
-
-            <a
-              href={`mailto:${email}`}
-              aria-label="Email"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero__social-link"
-            >
-              <Icon icon={Mail} />
-            </a>
+            <SocialLinks
+              links={[
+                {
+                  platform: "github",
+                  url: github,
+                },
+                {
+                  platform: "linkedin",
+                  url: linkedin,
+                },
+                {
+                  platform: "email",
+                  url: `mailto:${email}`,
+                },
+                {
+                  platform: "whatsapp",
+                  url: `https://wa.me/${phone}`,
+                },
+              ]}
+            />
           </div>
         </div>
 
@@ -128,13 +119,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-        <a
-          href="#about"
-          className="hero__scroll"
-          aria-label="Scroll to About section"
-        >
-          <Icon icon={ArrowDown} size="sm" /> Scroll
-        </a>
     </section>
   );
 }

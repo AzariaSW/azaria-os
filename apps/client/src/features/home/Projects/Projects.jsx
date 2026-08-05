@@ -13,7 +13,7 @@ export default function Projects() {
   }
 
   if (isError) {
-    return <section id="projects">Failed to load projects.</section>;
+    return <section id="projects" className="failed">Failed to load projects.</section>;
   }
 
   if (!items.length) {

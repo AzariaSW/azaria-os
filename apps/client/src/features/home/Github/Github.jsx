@@ -32,7 +32,7 @@ export default function Github() {
     profileQuery.isError || repositoriesQuery.isError || activityQuery.isError;
 
   if (isError) {
-    return <section id="github">Failed to load GitHub activity.</section>;
+    return <section id="github" className="failed">Failed to load GitHub activity.</section>;
   }
 
   const profile = profileQuery.data;

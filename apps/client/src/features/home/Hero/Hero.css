@@ -19,19 +19,20 @@
 
 .hero__greeting {
   color: var(--color-primary);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-medium);
   margin: 0;
 }
 
 .hero__name {
   margin: 0;
+  font-size: var(--font-size-3xl);
   line-height: 1.05;
 }
 
 .hero__role {
   color: var(--color-text-muted);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-medium);
   margin: 0;
 }
