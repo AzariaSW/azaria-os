@@ -1,5 +1,5 @@
 function App() {
-  return <h1>Azaria-OS</h1>;
+  return <h1>azaria-sw</h1>;
 }
 
 export default App;

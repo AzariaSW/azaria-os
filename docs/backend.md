@@ -1,8 +1,8 @@
-# Azaria-OS Backend
+# azaria-sw Backend
 
 ## Overview
 
-The Azaria-OS backend is a RESTful API built with Node.js and Express.js. It provides the data and administrative functionality for the portfolio website while emphasizing security, maintainability, and clean architecture.
+The azaria-sw backend is a RESTful API built with Node.js and Express.js. It provides the data and administrative functionality for the portfolio website while emphasizing security, maintainability, and clean architecture.
 
 The backend is responsible for:
 

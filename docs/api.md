@@ -1,4 +1,4 @@
-# Azaria-OS Backend API
+# azaria-sw Backend API
 
 # 1. Overview
 

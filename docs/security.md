@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Azaria-OS backend follows a layered security approach. Instead of relying on a single security mechanism, multiple independent protections are applied throughout the application to reduce attack surfaces and protect sensitive resources.
+The azaria-sw backend follows a layered security approach. Instead of relying on a single security mechanism, multiple independent protections are applied throughout the application to reduce attack surfaces and protect sensitive resources.
 
 The security implementation covers:
 
