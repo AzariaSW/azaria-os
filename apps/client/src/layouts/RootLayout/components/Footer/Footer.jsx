@@ -6,7 +6,7 @@ import "./Footer.css";
 
 function Footer() {
   const { data: profile, isLoading, isError } = useProfile();
-  const { email, github, linkedin, phone } = profile ?? {};
+  const { email, github, linkedin, phone, telegram } = profile ?? {};
 
   if (isLoading) {
     return <Skeleton />;
@@ -20,7 +20,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer__top">
         <div className="footer__brand">
-          <h2>Azaria-OS</h2>
+          <h2>Azaria-SW</h2>
 
           <p>Building scalable backend systems and modern web applications.</p>
         </div>
@@ -57,6 +57,10 @@ function Footer() {
               {
                 platform: "whatsapp",
                 url: `https://wa.me/${phone}`,
+              },
+              {
+                platform: "telegram",
+                url: `https://t.me/${telegram}`,
               }
             ]}
           />

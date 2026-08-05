@@ -11,6 +11,8 @@ export const updateProfileSchema = z.object({
     email: z.string().email().optional(),
 
     phone: z.string().max(20).optional(),
+    
+    telegram: z.string().min(5).max(32).optional(),
 
     location: z.string().max(100).optional(),
 

@@ -1,8 +1,4 @@
-import {
-  ArrowRight,
-  Download,
-  Dot,
-} from "../../../lib/icons";
+import { ArrowRight, Download, Dot } from "../../../lib/icons";
 import Icon from "../../../lib/icons/Icon";
 import useProfile from "../../profile/hooks/useProfile";
 import { Button, SocialLinks } from "../../../components/common";
@@ -12,8 +8,19 @@ import "./Hero.css";
 
 export default function Hero() {
   const { data: profile, isLoading, isError } = useProfile();
-  const { fullName, title, bio, github, linkedin, email, phone, profileImage } =
-    profile ?? {};
+  const {
+    fullName,
+    title,
+    bio,
+    github,
+    linkedin,
+    email,
+    phone,
+    telegram,
+    resumeUrl,
+    cvUrl,
+    profileImage,
+  } = profile ?? {};
 
   if (isLoading) {
     return <Skeleton />;
@@ -43,15 +50,27 @@ export default function Hero() {
           </p>
 
           <div className="hero__actions">
-            <Button>
+            <Button as="a" href="#projects">
               View Projects <Icon icon={ArrowRight} size="sm" />
             </Button>
 
-            <Button variant="secondary">
+            <Button
+              as="a"
+              href={getAsset(resumeUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+            >
               <Icon icon={Download} size="sm" /> Download Resume
             </Button>
 
-            <Button variant="secondary">
+            <Button
+              as="a"
+              href={getAsset(cvUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+            >
               <Icon icon={Download} size="sm" /> Download CV
             </Button>
           </div>
@@ -74,6 +93,10 @@ export default function Hero() {
                 {
                   platform: "whatsapp",
                   url: `https://wa.me/${phone}`,
+                },
+                {
+                  platform: "telegram",
+                  url: `https://t.me/${telegram}`,
                 },
               ]}
             />
@@ -101,7 +124,7 @@ export default function Hero() {
             </div>
 
             <div className="hero__terminal">
-              <p className="hero__terminal-path">azaria@os:~$</p>
+              <p className="hero__terminal-path">azaria@sw:~$</p>
               <p>$ whoami</p>
 
               <p>{fullName || "Azaria Abenet Fitta"}</p>

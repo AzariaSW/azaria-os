@@ -23,6 +23,8 @@ model Profile {
 
   phone String?
 
+  telegram String?
+
   location String?
 
   profileImage String?

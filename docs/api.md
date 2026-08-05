@@ -196,19 +196,20 @@ Authorization: Bearer <token>
 
 multipart/form-data
 
-| Field        | Type                      | Max Size  |
-| ------------ | ------------------------- | --------- |
-| fullName     | string                    | 100 char  |
-| title        | string                    | 150 char  |
-| bio          | String                    | 3000 char |
-| email        | String(email)             |           |
-| phone        | String(phone number)      | 20 char   |
-| location     | String                    | 100 char  |
-| profileImage | file(jpg, jpeg,png, webp) | 10mb      |
-| resume       | pdf                       | 10mb      |
-| cv           | pdf                       | 10mb      |
-| github       | String(url)               |           |
-| linkedin     | String(url)               |           |
+| Field        | Type                      | size limit |
+| ------------ | ------------------------- | ---------- |
+| fullName     | string                    | 100 char   |
+| title        | string                    | 150 char   |
+| bio          | String                    | 3000 char  |
+| email        | String(email)             |            |
+| phone        | String(phone number)      | 20 char    |
+| telegram     | String(username)          | 5-32 char  |
+| location     | String                    | 100 char   |
+| profileImage | file(jpg, jpeg,png, webp) | 10mb       |
+| resume       | pdf                       | 10mb       |
+| cv           | pdf                       | 10mb       |
+| github       | String(url)               |            |
+| linkedin     | String(url)               |            |
 
 # 5. Projects
 

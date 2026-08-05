@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar__container">
-        <Link className="navbar__brand">Azaria-OS</Link>
+        <Link className="navbar__brand">Azaria-SW</Link>
 
         <Navigation />
         <NavigationControls />

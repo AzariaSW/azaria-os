@@ -27,8 +27,7 @@ export default function Contact() {
   });
 
   const { data: profile } = useProfile();
-  const { location, phone, email } =
-    profile ?? {};
+  const { location, phone, linkedin, email, telegram } = profile ?? {};
 
   const sendMessage = useSendMessage({
     onSuccess: () => {
@@ -57,20 +56,24 @@ export default function Contact() {
             <div className="contact__item">
               <h4>Email</h4>
 
-              <a href={`mailto:${email}`}>
-                {email}
-              </a>
+              <a href={`mailto:${email}`}>{email}</a>
             </div>
 
             <div className="contact__item">
               <h4>Phone</h4>
 
-              <a href={`tel:${phone}`}>
-                {phone}
-              </a>
+              <a href={`tel:${phone}`}>{phone}</a>
             </div>
 
-            
+            <div className="contact__item">
+              <h4>Linkedin</h4>
+              <a href={linkedin}>{linkedin}</a>
+            </div>
+
+            <div className="contact__item">
+              <h4>Telegram</h4>
+              <a href={`https://t.me/${telegram}`}>{telegram}</a>
+            </div>
 
             <div className="contact__item">
               <h4>Location</h4>
